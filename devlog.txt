@@ -4,3 +4,6 @@ Nancy(3:36 PM): Figured out how to receive data from EventBrite API and store in
 Nancy(4:48 PM): Added inputs for keywords, sorting, address, radius, and price as search criteria for events. 
 Anthony(9:30 PM): Figured out how to send requests to Yelp API and parse the received data into a dictionary for later use.
 Anthony(10:30 PM): Modularized the function, allows for different modes of search, tested the function for bugs 
+Constantine(11:45 PM) Created GooglPlac() function, which uses the Google Maps Places API and the given inputs of location, radius, type of place, keywords, and api key to return the JSON data for those specifications.
+Constantine(12:15 AM) Created the crtLists() function, which uses the JSON data/dictionary as well as an extra parameter (price level) to return a list of results/places that fit all of the specifications of the user.
+Constantine(12:50 AM) Created the main function that combines all the user input and utilizes the GooglePlac and crtLists helper functions. Additionally, I was able to use an ip geolocator to that gives us the user's computer's location (which is then used in the main google maps function).
