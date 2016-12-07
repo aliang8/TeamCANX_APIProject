@@ -1,13 +1,17 @@
-from flask import Flask, redirect, request, render_template, url_for
-from utils import dumbbell
+from flask import Flask, redirect, request, render_template, url_for, session
+from utils import dumbbell as functions
 import hashlib, sqlite3, random
 
 app = Flask(__name__)
 app.secret_key = "canx"
 
 @app.route("/", methods=['POST','GET'])
-def index():
+def new():
     return render_template('home.html')
+
+@app.route("/<message>", methods=['POST','GET'])
+def home(message):
+    return render_template('home.html',message=message)
 
 @app.route("/authenticate/", methods = ['POST','GET'])
 def authenticate():
@@ -20,12 +24,12 @@ def authenticate():
                 session['username'] = username
                 return redirect(url_for("form"))
             else:
-                return redirect(url_for("home",message = "login failed"))
+                return redirect(url_for("home",message = "Login failed"))
         else:
             if functions.register(username,password):
-                return redirect(url_for("home",message = "registration successful"))
+                return redirect(url_for("home",message = "Registration successful"))
             else:
-                return redirect(url_for("home",message = "registration failed"))
+                return redirect(url_for("home",message = "Registration failed"))
 
 @app.route("/form/")
 def form():
@@ -34,10 +38,10 @@ def form():
 @app.route("/logout/")
 def logout():
     session.pop('username')
-    return redirect(url_for("home",message = "logout successful"))
+    return redirect(url_for("home",message = "Logout successful"))
 
 
 if __name__ == '__main__':
     app.debug = True
-    dumbbell.initializeTables()
+    functions.initializeTables()
     app.run()
