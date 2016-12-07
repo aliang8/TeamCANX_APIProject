@@ -9,14 +9,15 @@ from yelp.client import Client
 from yelp.oauth1_authenticator import Oauth1Authenticator
 import json
 
-#==========================YELP API=============================
+#==========================================YELP API============================================
 with open('config_secret.json') as cred:
     creds = json.load(cred)
     auth = Oauth1Authenticator(**creds)
     client = Client(auth)
 
 '''
-Params for query: term(string),limit(#),offset(#),sort(0-Best matched, 1-Distance, 2-Highest Rated,category_filter(string),radius_filter(#),deals_filter(bool)
+Params for query: term(string), limit(#), offset(#), sort(0-Best matched, 1-Distance, 
+2-Highest Rated, category_filter(string), radius_filter(#), deals_filter(bool)
 '''
 
 def get_search_params(term,limit,sort,category,radius,deals):
@@ -29,16 +30,23 @@ def get_search_params(term,limit,sort,category,radius,deals):
     params['deals_filter'] = deals
     return params
 
+
 '''
 Outputs from query: A list of dictionaries
 Name of the business is the key
-Properties outputted include: display phone, url, 
-'''
-
-def yelp_lookup(params,location):
+Properties outputted include: display phone, url, review count, categories,
+rating, snippet_text, location_address, location_coordinates, deals, snippet_image_url,
+menu_provider, reservation_url, eat24_url
+''' 
+def yelp_lookup(loc,coords,bounds,params):
     params = params
     ret = {}
-    response = client.search(location,**params)
+    if lat == '' and swlat == '':
+        response = client.search(loc,**params)
+    elif loc == '' and swlat == '':
+        response = client.search_by_coordinates(coords[0],coords[1], **params)
+    else:
+        response = client.search_by_bounding_box(bounds[0],bounds[1],bounds[2],bounds[3],**params)
     for business in response.businesses:
         name = business.name
         ret[name] = {}
@@ -58,19 +66,14 @@ def yelp_lookup(params,location):
         ret[name]['eat24_url'] = business.eat24_url
     return [ret]
 
-params = get_search_params('pastry',5,0,'food',1000,False)
-ret = yelp_lookup(params,'1946 76 Street Brooklyn New York 11214')
+#Test Queries
+params = get_search_params('food',5,0,'food',1000,False)
+ret = yelp_lookup('1946 76 Street Brooklyn New York 11214','','','','','','',params)
+#neat formatted json print
 print(json.dumps(ret, indent=4, sort_keys=True))
 
-def yelp_search_by_coordinates(params,lat,long):
-    params = params
-    response = client.search_by_coordinates(lat,long, **params)
-    data = response.json()
 
-def yelp_search_by_bounding_box(params,swlat,swlong,nelat,nelong):
-    params = params
-    response = client.search_by_bounding_box(swlat,swlong,nelat,nelong,**params)
-    data = response.json()
+#yelp_search_by_coordinates(37.77493,-122.419415,params)
 
 #====Eventbrite================================================================
 def getEvents(keywordInput, sortInput, addressInput, radiusInput, priceInput):
