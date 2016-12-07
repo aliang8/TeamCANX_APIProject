@@ -8,6 +8,19 @@ import datetime
 from yelp.client import Client
 from yelp.oauth1_authenticator import Oauth1Authenticator
 import json
+#---------------------------------------
+#Geolocation
+import urllib2
+
+# Automatically geolocate the connecting IP
+f = urllib2.urlopen('http://freegeoip.net/json/')
+json_string = f.read()
+f.close()
+location = json.loads(json_string)
+LAT = str(location["latitude"])
+LNG = str(location["longitude"])
+
+
 #----------------------------------------
 #Google Maps
 import urllib
@@ -22,12 +35,21 @@ def GooglPlac(lat, lng, radius, typeOfPlace,keyword, key):
     #We can also do types---aka specify more than one type of place
     #Additionally, we can have min/max prices for input
     #I believe it's possible to have more than one keyword
-    url = ('https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
-           'location=%s'
-           '&radius=%s'
-           '&type=%s'
-           '&keyword=%s'
-           '&sensor=false&key=%s') % (User_Location, radius, typeOfPlace,keyword, key)
+    print User_Location
+    print keyword
+    if keyword == "":
+        url = ('https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
+               'location=%s'
+               '&radius=%s'
+               '&type=%s'
+               '&key=%s') % (User_Location, radius, typeOfPlace, key)
+    else:
+        url = ('https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
+               'location=%s'
+               '&radius=%s'
+               '&type=%s'
+               '&keyword=%s'
+               '&key=%s') % (User_Location, radius, typeOfPlace,keyword, key)
 
     #Getting Json data
     urlInfo = urllib.urlopen(url)
@@ -64,15 +86,16 @@ def allInOneFunc(lat, lng, radius, typeOfPlace,keyword, minPriceLevel):
     
     return y
 
+
 #test case
-lat = -33.8670522
-lng = 151.1957362
 radius = 500
 typeOfPlace = "restaurant"
-keyword = "cruise"
-minPriceLevel = 3
+keyword = "pizza"
+minPriceLevel = 1
+##Lat and Lng are created at the top: they are the computer's ip address' location
+print allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, minPriceLevel)
 
-print allInOneFunc(lat,lng,radius, typeOfPlace, keyword, minPriceLevel)
+
 
 
 #==========================================YELP API============================================
