@@ -1,3 +1,4 @@
 12/6/16
 
 Nancy(3:36 PM): Figured out how to receive data from EventBrite API and store into a dictionary. Implemented in parse.py.
+Nancy(4:48 PM): Added inputs for keywords, sorting, address, radius, and price as search criteria for events. 

@@ -2,3 +2,5 @@
 
 Nancy(3:36 PM): Figured out how to receive data from EventBrite API and store into a dictionary. Implemented in parse.py.
 Nancy(4:48 PM): Added inputs for keywords, sorting, address, radius, and price as search criteria for events. 
+Anthony(9:30 PM): Figured out how to send requests to Yelp API and parse the received data into a dictionary for later use.
+Anthony(10:30 PM): Modularized the function, allows for different modes of search, tested the function for bugs 
