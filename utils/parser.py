@@ -12,9 +12,8 @@ import json
 #Google Maps
 import urllib
 
-key = "AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk"
+
 def GooglPlac(lat, lng, radius, typeOfPlace,keyword, key):
-    
     Latitude = str(lat)
     Longitude = str(lng)
     User_Location = Latitude + "," + Longitude
@@ -22,6 +21,7 @@ def GooglPlac(lat, lng, radius, typeOfPlace,keyword, key):
     
     #We can also do types---aka specify more than one type of place
     #Additionally, we can have min/max prices for input
+    #I believe it's possible to have more than one keyword
     url = ('https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
            'location=%s'
            '&radius=%s'
@@ -35,22 +35,44 @@ def GooglPlac(lat, lng, radius, typeOfPlace,keyword, key):
     jsonData = json.loads(jsonUntouched)
     return jsonData
 
+
+
+
+def crtLists(jsonData, minPriceLevel):
+    resList = []
+    res = jsonData["results"]
+    for i in res:
+      if "price_level" in i:
+          #THIS MEANS THAT WE MUST COMPLETELY IGNORE THE GOOGLE API RESULTS
+          #THAT DON'T HAVE PRICE LEVELS :(
+          if i["price_level"] >= minPriceLevel:
+              resList.append([i["name"], i["geometry"]["location"],i["vicinity"], i["price_level"]])
+    return resList
+
+
+
+
+###This is the main function
+###User inputs the latitude?, longitude?, radius, type of place, keyword, and minPricelevel----type of place and keyword must be strings
+def allInOneFunc(lat, lng, radius, typeOfPlace,keyword, minPriceLevel):
+    key = "AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk"
+    x = GooglPlac(lat, lng, radius, typeOfPlace,keyword, key)
+    #x is the dictionary parsed from the json data
+    
+    y = crtLists(x,minPriceLevel)
+    #y is the list of places that fit the user's parameters
+    
+    return y
+
 #test case
 lat = -33.8670522
 lng = 151.1957362
 radius = 500
 typeOfPlace = "restaurant"
 keyword = "cruise"
+minPriceLevel = 3
 
-print GooglPlac(lat, lng, radius, typeOfPlace,keyword, key)
-    
-    
-
-
-
-
-
-
+print allInOneFunc(lat,lng,radius, typeOfPlace, keyword, minPriceLevel)
 
 
 #==========================================YELP API============================================
