@@ -1,7 +1,72 @@
+#Eventbrite
 import os
 import requests
 import eventbrite
 import datetime
+#----------------------------------------
+#Yelp
+from yelp.client import Client
+from yelp.oauth1_authenticator import Oauth1Authenticator
+import json
+import urllib2
+
+#==========================YELP API=============================
+with open('config_secret.json') as cred:
+    creds = json.load(cred)
+    auth = Oauth1Authenticator(**creds)
+    client = Client(auth)
+
+'''
+response2 = client.search_by_bounding_box(
+    37.900000,
+    -122.500000,
+    37.788022,
+    -122.399797,
+    **params
+)
+'''
+
+##response3 = client.search_by_coordinates(37.788022, -122.399797, **params)
+'''
+Params for query: term(string),limit(#),offset(#),sort(0-Best matched, 1-Distance, 2-Highest Rated,category_filter(string),radius_filter(#),deals_filter(bool)
+'''
+def get_search_params(term,limit,sort):
+    params = {}
+    params['term'] = term
+    params['limit'] = limit
+    params['sort'] = sort
+    '''
+    params['category_filter'] = category_filter
+    params['radius_filter'] = radius_filter
+    params['deals_filter'] = deals_filter
+    '''
+    return params
+
+def yelp_lookup(params,location):
+    params = params
+    ret = {}
+    response = client.search(location,**params)
+    for business in response.businesses:
+        name = business.name
+        ret[name] = {}
+        ret[name]['phone'] = business.phone
+        ret[name]['url'] = business.url
+        ret[name]['review_count'] = business.review_count
+    return [ret]
+
+params = get_search_params('pastry',5,0)
+ret = yelp_lookup(params,'1946 76 Street Brooklyn New York 11214')
+print(json.dumps(ret, indent=4, sort_keys=True))
+
+def yelp_search_by_coordinates(params,lat,long):
+    params = params
+    response = client.search_by_coordinates(lat,long, **params)
+    data = response.json()
+
+def yelp_search_by_bounding_box(params,swlat,swlong,nelat,nelong):
+    params = params
+    response = client.search_by_bounding_box(swlat,swlong,nelat,nelong,**params)
+    data = response.json()
 
 #====Eventbrite================================================================
 def getEvents(keywordInput, sortInput, addressInput, radiusInput, priceInput):
