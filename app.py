@@ -1,6 +1,18 @@
 from flask import Flask, redirect, request, render_template, url_for, session
 from utils import dumbbell as functions
+from utils import parser
 import hashlib, sqlite3, random
+import urllib2
+import json
+
+# Automatically geolocate the connecting IP
+f = urllib2.urlopen('http://freegeoip.net/json/')
+json_string = f.read()
+f.close()
+location = json.loads(json_string)
+LAT = str(location["latitude"])
+LNG = str(location["longitude"])
+
 
 app = Flask(__name__)
 app.secret_key = "canx"
@@ -39,6 +51,17 @@ def form():
 def logout():
     session.pop('username')
     return redirect(url_for("home",message = "Logout successful"))
+
+@app.route("/results/")
+def results():
+    #test case
+    radius = 500
+    typeOfPlace = "restaurant"
+    keyword = "pizza"
+    minPriceLevel = 1
+    rsltList = parser.allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, minPriceLevel)
+
+    return render_template("results.html", results = rsltList)
 
 
 if __name__ == '__main__':
