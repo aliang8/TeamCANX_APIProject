@@ -8,6 +8,50 @@ import datetime
 from yelp.client import Client
 from yelp.oauth1_authenticator import Oauth1Authenticator
 import json
+#----------------------------------------
+#Google Maps
+import urllib
+
+key = "AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk"
+def GooglPlac(lat, lng, radius, typeOfPlace,keyword, key):
+    
+    Latitude = str(lat)
+    Longitude = str(lng)
+    User_Location = Latitude + "," + Longitude
+   
+    
+    #We can also do types---aka specify more than one type of place
+    #Additionally, we can have min/max prices for input
+    url = ('https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
+           'location=%s'
+           '&radius=%s'
+           '&type=%s'
+           '&keyword=%s'
+           '&sensor=false&key=%s') % (User_Location, radius, typeOfPlace,keyword, key)
+
+    #Getting Json data
+    urlInfo = urllib.urlopen(url)
+    jsonUntouched = urlInfo.read()
+    jsonData = json.loads(jsonUntouched)
+    return jsonData
+
+#test case
+lat = -33.8670522
+lng = 151.1957362
+radius = 500
+typeOfPlace = "restaurant"
+keyword = "cruise"
+
+print GooglPlac(lat, lng, radius, typeOfPlace,keyword, key)
+    
+    
+
+
+
+
+
+
+
 
 #==========================================YELP API============================================
 with open('config_secret.json') as cred:
@@ -72,7 +116,7 @@ def yelp_lookup(loc,coords,bounds,params):
         ret[name]['reservation_url'] = business.reservation_url
         ret[name]['eat24_url'] = business.eat24_url
     return [ret]
-
+'''
 #Test Queries
 params = get_search_params('food',5,0,'food',1000,False)
 ret = yelp_lookup('1946 76 Street Brooklyn New York 11214',["",""],["","","",""],params)
@@ -80,7 +124,7 @@ ret = yelp_lookup('',[37.77493,-122.419415],["","","",""],params)
 #neat formatted json print
 print(json.dumps(ret, indent=4, sort_keys=True))
 
-
+'''
 
 
 #====Eventbrite================================================================
