@@ -30,20 +30,27 @@ def get_search_params(term,limit,sort,category,radius,deals):
     params['deals_filter'] = deals
     return params
 
-
 '''
+Usage: 3 types of searches: By location (words), by coordinates, by setting bounds
+ret = yelp_lookup(loc,coords,bounds,params)
+loc : string 
+coords : [latitude,longitude] 
+bounds : [SWlatitude,SWlongitude,NElatitude,NElongitude]
+params: params
+
 Outputs from query: A list of dictionaries
 Name of the business is the key
 Properties outputted include: display phone, url, review count, categories,
 rating, snippet_text, location_address, location_coordinates, deals, snippet_image_url,
 menu_provider, reservation_url, eat24_url
 ''' 
+
 def yelp_lookup(loc,coords,bounds,params):
     params = params
     ret = {}
-    if lat == '' and swlat == '':
+    if coords[0] == '' and bounds[0] == '':
         response = client.search(loc,**params)
-    elif loc == '' and swlat == '':
+    elif loc == '' and bounds[0] == '':
         response = client.search_by_coordinates(coords[0],coords[1], **params)
     else:
         response = client.search_by_bounding_box(bounds[0],bounds[1],bounds[2],bounds[3],**params)
@@ -68,12 +75,13 @@ def yelp_lookup(loc,coords,bounds,params):
 
 #Test Queries
 params = get_search_params('food',5,0,'food',1000,False)
-ret = yelp_lookup('1946 76 Street Brooklyn New York 11214','','','','','','',params)
+ret = yelp_lookup('1946 76 Street Brooklyn New York 11214',["",""],["","","",""],params)
+ret = yelp_lookup('',[37.77493,-122.419415],["","","",""],params)
 #neat formatted json print
 print(json.dumps(ret, indent=4, sort_keys=True))
 
 
-#yelp_search_by_coordinates(37.77493,-122.419415,params)
+
 
 #====Eventbrite================================================================
 def getEvents(keywordInput, sortInput, addressInput, radiusInput, priceInput):
