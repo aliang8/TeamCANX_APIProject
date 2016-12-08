@@ -1,7 +1,4 @@
-#Eventbrite
-import os
 import requests
-#import eventbrite
 import datetime
 #----------------------------------------
 #Yelp
@@ -10,8 +7,10 @@ from yelp.oauth1_authenticator import Oauth1Authenticator
 import json
 #---------------------------------------
 #Geolocation
+import urllib
 import urllib2
 
+"""
 # Automatically geolocate the connecting IP
 f = urllib2.urlopen('http://freegeoip.net/json/')
 json_string = f.read()
@@ -30,8 +29,8 @@ def GooglPlac(lat, lng, radius, typeOfPlace,keyword, key):
     Latitude = str(lat)
     Longitude = str(lng)
     User_Location = Latitude + "," + Longitude
-   
-    
+
+
     #We can also do types---aka specify more than one type of place
     #Additionally, we can have min/max prices for input
     #I believe it's possible to have more than one keyword
@@ -80,10 +79,10 @@ def allInOneFunc(lat, lng, radius, typeOfPlace,keyword, minPriceLevel):
     key = "AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk"
     x = GooglPlac(lat, lng, radius, typeOfPlace,keyword, key)
     #x is the dictionary parsed from the json data
-    
+
     y = crtLists(x,minPriceLevel)
     #y is the list of places that fit the user's parameters
-    
+
     return y
 
 
@@ -93,7 +92,7 @@ typeOfPlace = "restaurant"
 keyword = "pizza"
 minPriceLevel = 1
 ##Lat and Lng are created at the top: they are the computer's ip address' location
-print allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, minPriceLevel)
+#print allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, minPriceLevel)
 
 
 
@@ -105,7 +104,7 @@ with open('config_secret.json') as cred:
     client = Client(auth)
 
 '''
-Params for query: term(string), limit(#), offset(#), sort(0-Best matched, 1-Distance, 
+Params for query: term(string), limit(#), offset(#), sort(0-Best matched, 1-Distance,
 2-Highest Rated, category_filter(string), radius_filter(#), deals_filter(bool)
 '''
 
@@ -122,8 +121,8 @@ def get_search_params(term,limit,sort,category,radius,deals):
 '''
 Usage: 3 types of searches: By location (words), by coordinates, by setting bounds
 ret = yelp_lookup(loc,coords,bounds,params)
-loc : string 
-coords : [latitude,longitude] 
+loc : string
+coords : [latitude,longitude]
 bounds : [SWlatitude,SWlongitude,NElatitude,NElongitude]
 params: params
 
@@ -132,7 +131,7 @@ Name of the business is the key
 Properties outputted include: display phone, url, review count, categories,
 rating, snippet_text, location_address, location_coordinates, deals, snippet_image_url,
 menu_provider, reservation_url, eat24_url
-''' 
+'''
 
 def yelp_lookup(loc,coords,bounds,params):
     params = params
@@ -170,30 +169,50 @@ ret = yelp_lookup('',[37.77493,-122.419415],["","","",""],params)
 print(json.dumps(ret, indent=4, sort_keys=True))
 
 '''
+"""
 
 
 #====Eventbrite================================================================
-def getEvents(keywordInput, sortInput, addressInput, radiusInput, priceInput):
+def getEvents(d):
+    startRange = convertToUTC(d["year_start"], d["month_start"], d["day_start"], d["hour_start"], d["minute_start"])
+    endRange = convertToUTC(d["year_end"], d["month_end"], d["day_end"], d["hour_end"], d["minute_end"])
+    '''
+    url = 'https://www.eventbriteapi.com/v3/events/search/'
+    values = {"Authorization": "Bearer BV442UWQUREICGJW7V2A"}
+
+    data = urllib.urlencode(values)
+    response = urllib2.urlopen(url)
+    the_page = response.read()
+    '''
+
     response = requests.get(
         "https://www.eventbriteapi.com/v3/events/search/",
         headers = {
-            "Authorization": "Bearer ZYHRGY7DXAKVKECEDYXY",
-            "q": keywordInput, #Return events matching the given keywords.
-            "sort_by": sortInput, # Options are "date", "distance" and "best"
-            "location.address": addressInput,
-            "location.within": radiusInput, # int followed by "mi" or "km"
-            "price" : priceInput, # only "free" or "paid"
+            "Authorization": "Bearer BV442UWQUREICGJW7V2A",
+            "q": d["keyword"], #Return events matching the given keywords.
+            "sort_by": d["sort"], # Options are "date", "distance" and "best"
+            "location.address": d["address"],
+            "location.within": d["radius"], # int followed by "mi" or "km"
+            "price" : d["price"], # only "free" or "paid"
+            "start_date.keyword" : d["startKey"], # this_week, next_week, this_weekend, next_month, this_month, tomorrow, today
+            "start_date.range_start" : startRange, # local datetime format
+            "start_date.range_end" : endRange,
         },
         verify = True,  # Verify SSL certificate
     )
+
     d = response.json()['events'] # dictionary of all events Eventbrite returns
     for event in d:
+        '''
         if (event["logo"]!= None):
             print event["logo"]["url"] # link to event's logo pic
         print event['name']['text'] # name of event
         print event["description"]["text"] # VERY MESSY description
         print event["url"] # url of event
+        '''
+        #print event["start"]["local"]
         print formatTime(event["start"]["local"]) # start date & time in UTC
+        #print event["end"]["local"]
         print formatTime(event["end"]["local"])  # end date & time in UTC
         print "\n ------------------------------------------\n"
 
@@ -204,9 +223,22 @@ def formatTime(utc):
     year = utc[0:4]
     timeIndex = utc.index('T')
     time = utc[timeIndex+1:-3]
-    return month + "-" + day + "-" + year + " " + time
+    return "%s/%s/%s %s"%(month, day, year, time)
+
+def convertToUTC(year, month, day, hour, minute):
+    return "%s-%s-%sT%s:%s:00"%(year, month, day, hour, minute)
 
 # example call
-#getEvents("food", "best", "brooklyn", "10mi", "free")
+# start: 12/16 9AM
+# end: 12/16 8 PM
+d1 = { "keyword":"food", "sort":"best", "address":"united states", "radius":"10mi", "price":"", "startKey":"", \
+"year_start":"2016", "month_start":"12", "day_start":"16", "hour_start":"00", "minute_start":"00", \
+"year_end":"2016", "month_end":"12", "day_end":"16", "hour_end":"20", "minute_end":"00"}
+d2 = { "keyword":"", "sort":"", "address":"united states", "radius":"", "price":"", "startKey":"", \
+"year_start":"2016", "month_start":"12", "day_start":"16", "hour_start":"00", "minute_start":"00", \
+"year_end":"2016", "month_end":"12", "day_end":"16", "hour_end":"20", "minute_end":"00"}
+getEvents(d2)
+#print convertToUTC("2016", "12", "16", "09", "00")
+#print convertToUTC("2016", "12", "16", "20", "00")
 
 #=============================================================================
