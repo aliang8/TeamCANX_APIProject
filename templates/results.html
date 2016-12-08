@@ -10,5 +10,16 @@
     <li>{{key[0]}} : {{key[1]}}</li>
     {% endfor %}
     {% endfor %}
+
+    <ul>
+      {% for place in results %}
+      <li>
+	{% for detail in place %}
+	{{detail}}
+	{% endfor %}
+      </li>
+      {% endfor %}
+    </ul>
+    
   </body>
 </html>
