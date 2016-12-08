@@ -34,8 +34,10 @@ def GooglPlac(lat, lng, radius, typeOfPlace,keyword, key):
     #We can also do types---aka specify more than one type of place
     #Additionally, we can have min/max prices for input
     #I believe it's possible to have more than one keyword
-    print User_Location
-    print keyword
+
+    
+   # print User_Location
+   # print keyword
     if keyword == "":
         url = ('https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
                'location=%s'
@@ -49,25 +51,32 @@ def GooglPlac(lat, lng, radius, typeOfPlace,keyword, key):
                '&type=%s'
                '&keyword=%s'
                '&key=%s') % (User_Location, radius, typeOfPlace,keyword, key)
-
+  #  print url
     #Getting Json data
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
     jsonData = json.loads(jsonUntouched)
+   # print jsonData
     return jsonData
 
 
 
 
 def crtLists(jsonData, minPriceLevel):
+   # print minPriceLevel
+    #must convert to int because form takes it in as a string
+    minPriceLevel = int(minPriceLevel)
     resList = []
     res = jsonData["results"]
     for i in res:
-      if "price_level" in i:
+       # print i
+        if "price_level" in i:
           #THIS MEANS THAT WE MUST COMPLETELY IGNORE THE GOOGLE API RESULTS
           #THAT DON'T HAVE PRICE LEVELS :(
           if i["price_level"] >= minPriceLevel:
-              resList.append([i["name"], i["geometry"]["location"],i["vicinity"], i["price_level"]])
+              # took out  i["geometry"]["location"]....because the user probably won't care about the latitude/longitude
+              resList.append([i["name"]+",",i["vicinity"], "Price Level: "+str(i["price_level"])])
+   # print resList
     return resList
 
 
