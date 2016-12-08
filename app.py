@@ -52,7 +52,7 @@ def logout():
     session.pop('username')
     return redirect(url_for("home",message = "Logout successful"))
 
-@app.route("/results/")
+@app.route("/results/",methods=['POST'])
 def results():
     radius = request.form['radius']
     place = request.form['place']
