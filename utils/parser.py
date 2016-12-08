@@ -10,7 +10,7 @@ import json
 import urllib
 import urllib2
 
-"""
+
 # Automatically geolocate the connecting IP
 f = urllib2.urlopen('http://freegeoip.net/json/')
 json_string = f.read()
@@ -95,8 +95,6 @@ minPriceLevel = 1
 #print allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, minPriceLevel)
 
 
-
-
 #==========================================YELP API============================================
 with open('config_secret.json') as cred:
     creds = json.load(cred)
@@ -169,10 +167,10 @@ ret = yelp_lookup('',[37.77493,-122.419415],["","","",""],params)
 print(json.dumps(ret, indent=4, sort_keys=True))
 
 '''
-"""
-
 
 #====Eventbrite================================================================
+
+# returns list of (sub)dictionaries of each event's logo, name, description, url, start & end date & time
 def getEvents(d):
     startRange = convertToUTC(d["year_start"], d["month_start"], d["day_start"], d["hour_start"], d["minute_start"])
     endRange = convertToUTC(d["year_end"], d["month_end"], d["day_end"], d["hour_end"], d["minute_end"])
@@ -184,7 +182,7 @@ def getEvents(d):
     response = urllib2.urlopen(url)
     the_page = response.read()
     '''
-
+    # tried urllib...
     response = requests.get(
         "https://www.eventbriteapi.com/v3/events/search/",
         headers = {
@@ -197,24 +195,27 @@ def getEvents(d):
             "start_date.keyword" : d["startKey"], # this_week, next_week, this_weekend, next_month, this_month, tomorrow, today
             "start_date.range_start" : startRange, # local datetime format
             "start_date.range_end" : endRange,
+            "location.latitude": d["lat"],
+            "location.longitude": d["long"],
         },
         verify = True,  # Verify SSL certificate
     )
-
     d = response.json()['events'] # dictionary of all events Eventbrite returns
+    ret = [] # returned list
+    holder = {} # sublist for each entry
+    i = 0
     for event in d:
-        '''
         if (event["logo"]!= None):
-            print event["logo"]["url"] # link to event's logo pic
-        print event['name']['text'] # name of event
-        print event["description"]["text"] # VERY MESSY description
-        print event["url"] # url of event
-        '''
+            holder["logo"] = event["logo"]["url"] # link to event's logo pic
+        holder["name"] = event['name']['text'] # name of event
+        holder["description"] = event["description"]["text"] # VERY MESSY description
+        holder["url"] = event["url"] # url of event
         #print event["start"]["local"]
-        print formatTime(event["start"]["local"]) # start date & time in UTC
+        holder["start"] = formatTime(event["start"]["local"]) # start date & time in UTC
         #print event["end"]["local"]
-        print formatTime(event["end"]["local"])  # end date & time in UTC
-        print "\n ------------------------------------------\n"
+        holder["end"] = formatTime(event["end"]["local"])  # end date & time in UTC
+        ret.append(holder)
+    return ret
 
 # Converts 2016-12-12T08:00:00Z -> month-day-year hour:minute
 def formatTime(utc):
@@ -231,13 +232,17 @@ def convertToUTC(year, month, day, hour, minute):
 # example call
 # start: 12/16 9AM
 # end: 12/16 8 PM
-d1 = { "keyword":"food", "sort":"best", "address":"united states", "radius":"10mi", "price":"", "startKey":"", \
+d1 = { "keyword":"food", "sort":"best", "address":"united states", "radius":"10mi", \
+"lat":LAT, "long":LNG, "price":"", "startKey":"", \
 "year_start":"2016", "month_start":"12", "day_start":"16", "hour_start":"00", "minute_start":"00", \
 "year_end":"2016", "month_end":"12", "day_end":"16", "hour_end":"20", "minute_end":"00"}
-d2 = { "keyword":"", "sort":"", "address":"united states", "radius":"", "price":"", "startKey":"", \
+
+d2 = { "keyword":"", "sort":"", "address":"united states", "radius":"", \
+"lat":LAT, "long":LNG, "price":"", "startKey":"", \
 "year_start":"2016", "month_start":"12", "day_start":"16", "hour_start":"00", "minute_start":"00", \
 "year_end":"2016", "month_end":"12", "day_end":"16", "hour_end":"20", "minute_end":"00"}
-getEvents(d2)
+
+#print getEvents(d2)
 #print convertToUTC("2016", "12", "16", "09", "00")
 #print convertToUTC("2016", "12", "16", "20", "00")
 
