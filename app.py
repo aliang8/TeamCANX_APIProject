@@ -69,7 +69,7 @@ def results():
     location = request.form['location']
     date = request.form['date']
     output = []
-
+    '''
     params = api.get_search_params(search,1,0,place,radius,False)
     ret = api.yelp_lookup(location,["",""],["","","",""],params)
     for business in ret:
@@ -79,7 +79,21 @@ def results():
                 info.append([key.title(),val])
             output.append(info)
 
-    return render_template("results.html", output = output)
+
+   #test case
+   radius = 500
+   typeOfPlace = "restaurant"
+   keyword = "pizza"
+   minPriceLevel = 1
+   '''
+    typeOfPlace = place
+    keyword = search
+    minPriceLevel = price
+
+    rsltList = api.allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, minPriceLevel)
+    return render_template("results.html", results = rsltList)
+
+   # return render_template("results.html", output = output)
 
 if __name__ == '__main__':
     app.debug = True
