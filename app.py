@@ -54,6 +54,14 @@ def logout():
 
 @app.route("/results/", methods=['POST','GET'])
 def results():
+    '''
+    Yelp API results
+    Gets information from user form
+    Output is stored in a list with sublists that represent each business and its information
+    For now, the user is required to enter a radius and location
+    Output format: [[business1],[business2]]
+    business1 = [[key,value],[key,value],...]
+    '''
     radius = request.form['radius']
     place = request.form['place']
     search = request.form['search']
@@ -72,7 +80,6 @@ def results():
             output.append(info)
 
     return render_template("results.html", output = output)
-
 
 if __name__ == '__main__':
     app.debug = True
