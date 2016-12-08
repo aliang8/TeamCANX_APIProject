@@ -1,0 +1,43 @@
+body {
+     background-color: black;
+}
+
+#brand {
+       color: lightpink;
+}
+
+#home-wrap {
+	   width: 40%;	   
+}
+
+.form-field {
+	    border-left-color: transparent;
+	    border-right-color: transparent;
+	    border-top-color: transparent; 
+	    width: 100%;
+	    background-color: transparent;
+	    height: 3em;
+	    border-bottom: 1px solid lightgray;
+}
+
+.btn-trans {
+	   border-color: lightpink;
+	   background-color: transparent;
+	   color: lightpink;
+}
+
+.btn-trans:hover {
+		 color:lightpink;
+}
+
+.btn-opaq {
+	  border-color: lightpink;
+	  background-color: lightpink;
+	  color: white;
+}
+
+.btn-opaq:hover {
+		border-color: pink;
+		color: white;
+		background-color: pink;
+}
