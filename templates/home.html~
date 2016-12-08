@@ -13,11 +13,15 @@
           <h1 id="brand">MyDay</h1>
           {{message}}
           <form action="/authenticate/" method="POST">
-            <input class="form-field" placeholder="Username" type="text" name="user"><br>
-            <input class="form-field" placeholder="Password" type="password" name="pass"><br>
+            <input class="form-field" placeholder="Username" type="text" name="\
+user"><br>
+            <input class="form-field" placeholder="Password" type="password" na\
+me="pass"><br>
             <br>
-            <input type="submit" name="login" value="Login" class="btn btn-default btn-lg btn-block btn-trans">
-            <input type="submit" name="register" value="Register" class="btn btn-danger btn-lg btn-block btn-opaq">
+            <input type="submit" name="login" value="Login" class="btn btn-defa\
+ult btn-lg btn-block btn-trans">
+            <input type="submit" name="register" value="Register" class="btn bt\
+n-danger btn-lg btn-block btn-opaq">
           </form>
         </div>
       </div>
