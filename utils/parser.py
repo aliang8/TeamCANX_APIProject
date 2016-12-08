@@ -251,7 +251,7 @@ d2 = { "keyword":"", "sort":"", "address":"united states", "radius":"", \
 "year_start":"2016", "month_start":"12", "day_start":"16", "hour_start":"00", "minute_start":"00", \
 "year_end":"2016", "month_end":"12", "day_end":"16", "hour_end":"20", "minute_end":"00"}
 
-print getEvents(d2)
+#print getEvents(d2)
 #print convertToUTC("2016", "12", "16", "09", "00")
 #print convertToUTC("2016", "12", "16", "20", "00")
 
