@@ -1,9 +1,0 @@
-<!DOCTYPE html>
-<html>
-  <head> <h3>THIS IS THE RESULTS PAGE</h3>
-  </head>
-
-  <body> 
-    <h2>Radius: {{radius}}</h2>
-  </body>
-</html>
