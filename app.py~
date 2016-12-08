@@ -54,14 +54,14 @@ def logout():
 
 @app.route("/results/")
 def results():
-    radius = request.form['radius']
-    place = request.form['place']
-    search = request.form['search']
-    price = request.form['price']
-    location = request.form['location']
-    date = request.form['date']
-    
-    return render_template("results.html", radius = radius)
+    #test case
+    radius = 500
+    typeOfPlace = "restaurant"
+    keyword = "pizza"
+    minPriceLevel = 1
+    rsltList = parser.allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, minPriceLevel)
+
+    return render_template("results.html", results = rsltList)
 
 
 if __name__ == '__main__':
