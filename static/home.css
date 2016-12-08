@@ -1,59 +1,87 @@
 /*font candidate: http://www.1001freefonts.com/simply_glamorous.font*/
 body {
-     background-color: black;
+    background-color: white;
 }
 
 #brand {
-       color: lightpink;
-	text-align: center;
-    font-size: 3em;
+    font-family: "Simply Glamorous";
+    color: black;
+    text-align: center;
+    font-size: 8em;
+    font-weight: bold;
     animation-name : colorchange;
-    animation-duration : 1s;
+    animation-duration : 5s;
     animation-iteration-count: infinite;
     text-shadow: 2px 2px 10px;
 }
 @keyframes colorchange {
-    0% {color: pink}   
-    70% {color: lightpink}   
+    0% {color: #96CEB4}   
+    25% {color: #FFEEAD}
+    50% {color: #FF6F69}
+    75% {color: #FFCC5C}
+    95% {color: #AAD8B0}
+    100% {color: #96CEB4}
+}
+@font-face {
+    font-family: "Simply Glamorous";
+    src: url(SIMPLYGLAMOROUS.TTF);
 }
 
 #home-wrap {
-	   width: 40%;	   
+    width: 40%;
+    margin-top: 50px;
+}
+
+.home-msg {
+    font-style: italic;
 }
 
 .form-field {
-	    border-left-color: transparent;
-	    border-right-color: transparent;
-	    border-top-color: transparent; 
-	    width: 100%;
-	    background-color: transparent;
-	    height: 3em;
-	    border-bottom: 1px solid lightgray;
+    color: black;
+    font-weight: bold;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-top-color: transparent; 
+    width: 100%;
+    background-color: transparent;
+    height: 3em;
+    border-bottom: 1px solid black;
 }
 
 .btn-trans {
-	   border-color: lightpink;
-	   background-color: transparent;
-	   color: lightpink;
+    border-color: black;
+    background-color: transparent;
+    color: black;
 }
 
 .btn-trans:hover {
-		 color:lightpink;
+    color:black;
 }
 
 .btn-opaq {
-	  border-color: lightpink;
-	  background-color: lightpink;
-	  color: white;
+    border-color: black;
+    background-color: black;
+    color: white;
 }
 
 .btn-opaq:hover {
-		border-color: pink;
-		color: white;
-		background-color: pink;
+    border-color: pink;
+    color: white;
+    background-color: pink;
 }
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    color: lightpink;
-    opacity: .4;
+    color: black;
+    opacity: .5;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    black;
+    opacity:  .5;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    black;
+    opacity:  .5;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color:    black;
 }
