@@ -1,6 +1,6 @@
 from flask import Flask, redirect, request, render_template, url_for, session
 from utils import dumbbell as functions
-from utils import parser
+from utils import parser as api 
 import hashlib, sqlite3, random
 import urllib2
 import json
@@ -52,7 +52,7 @@ def logout():
     session.pop('username')
     return redirect(url_for("home",message = "Logout successful"))
 
-@app.route("/results/",methods=['POST'])
+@app.route("/results/", methods=['POST','GET'])
 def results():
     radius = request.form['radius']
     place = request.form['place']
@@ -60,8 +60,18 @@ def results():
     price = request.form['price']
     location = request.form['location']
     date = request.form['date']
-    
-    return render_template("results.html", radius = radius)
+    output = []
+
+    params = api.get_search_params(search,1,0,place,radius,False)
+    ret = api.yelp_lookup(location,["",""],["","","",""],params)
+    for business in ret:
+        for key, value in business.iteritems():
+            info = []
+            for key, val in value.iteritems():
+                info.append([key.title(),val])
+            output.append(info)
+
+    return render_template("results.html", output = output)
 
 
 if __name__ == '__main__':

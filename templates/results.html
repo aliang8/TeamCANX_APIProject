@@ -4,6 +4,11 @@
   </head>
 
   <body> 
-    <h2>Radius: {{radius}}</h2>
+    <ul>
+    {% for business in output %}
+    {% for key in business %}
+    <li>{{key[0]}} : {{key[1]}}</li>
+    {% endfor %}
+    {% endfor %}
   </body>
 </html>
