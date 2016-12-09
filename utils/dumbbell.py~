@@ -2,7 +2,7 @@ import sqlite3 as sql
 import hashlib
 
 #CONNECT DATABASE
-DATA = "../data/dumbbell.db"
+DATA = "data/dumbbell.db"
 
 #Initialize databases. Only works once.
 def initializeTables():
@@ -27,9 +27,9 @@ def setPrefs(radius, place, search, price, location, date, user):
 def changePrefs(radius, place, search, price, location, date, user):
     db = sql.connect(DATA)
     c = db.cursor()
-    c.execute("SELECT userID FROM accounts WHERE username = ?", (user,))
+    data = c.execute("SELECT userID FROM accounts WHERE username = ?", (user,))
     userID = data.fetchone()[0]
-    c.execute("UPDATE settings SET (?,?,?,?,?,?) WHERE username = ?", (radius,place,search,price,location,date,userID,))
+    c.execute("UPDATE settings SET radius=?, price=?, search=?, price=?, location=?, date=? WHERE userID = ?", (radius,place,search,price,location,date,userID,))
     db.commit()
     db.close()
     
@@ -71,6 +71,3 @@ def changePass(username,oldpass,newpass):
     else:
         return False
 
-initializeTables()
-#setPrefs(1,"s","s",2,"s","s","anthony")
-changePrefs(2,"s","s",3,"s","s","anthony")

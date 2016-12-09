@@ -45,7 +45,8 @@ def authenticate():
 
 @app.route("/form/")
 def form():
-    return render_template("form.html")
+    message = "EDIT YOUR PREFERENCES FOR BETTER RESULTS"
+    return render_template("form.html", message = message)
 
 @app.route("/form/events")
 def form_e():
@@ -75,7 +76,10 @@ def results():
         date = request.form['date']
 
         if 'save' in request.form:
-            return redirect(url_for("form"))
+            message = "SUCCESSFULLY UPDATED PREFERENCES"
+            functions.changePrefs(radius,place,search,price,location,date,session['username'])
+            print "hi"
+            return render_template("form.html", message = message)
         else:
             output = []
             params = api.get_search_params(search,1,0,place,radius,False)
@@ -86,9 +90,15 @@ def results():
                     for key, val in value.iteritems():
                         info.append([key.title(),val])
                     output.append(info)
+<<<<<<< HEAD
 
             return render_template("results.html", output = output)
 
+=======
+                    
+            return render_template("results.html", output = output, message = message)
+    
+>>>>>>> df86ec224fd6c071c81b27573af6064c7bfbd2af
     '''
     #test case
     radius = 500

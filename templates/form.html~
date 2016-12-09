@@ -196,8 +196,8 @@
       <select>
 
     <br><br><br>
-    <input id="save" type="submit" value="SAVE!">
-    <input id="search" type="submit" value="SEARCH!">
+    <input id="save" name="save" type="submit" value="SAVE!">
+    <input id="search" name="search" type="submit" value="SEARCH!">
   </form>
 </body>
 </html>
