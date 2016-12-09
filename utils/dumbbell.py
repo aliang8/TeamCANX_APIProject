@@ -19,7 +19,9 @@ def changePrefs(radius, place, search, price, location, date, user):
     c = db.cursor()
     data = c.execute("SELECT userID FROM accounts WHERE username = ?", (user,))
     userID = data.fetchone()[0]
-    if data:
+    exists = c.execute("SELECT 1 FROM settings WHERE userID = ?", (userID,))
+    exist = exists.fetchall()
+    if len(exist) != 0:
         print "hi"
         c.execute("UPDATE settings SET radius=?, price=?, search=?, price=?, location=?, date=? WHERE userID = ?", (radius,place,search,price,location,date,userID,))
     else:

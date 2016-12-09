@@ -13,27 +13,20 @@ def initializeTables():
     db.commit()
     db.close()
 
-
-#Allows user to set their settings 
-def setPrefs(radius, place, search, price, location, date, user):
-    db = sql.connect(DATA)
-    c = db.cursor()
-    data = c.execute("SELECT userID FROM accounts WHERE username = ?", (user,))
-    userID = data.fetchone()[0] 
-    c.execute("INSERT INTO settings VALUES(?,?,?,?,?,?,?)", (radius,place,search,price,location,date,userID,))
-    db.commit()
-    db.close()
-
+#Allows users to update their preferences
 def changePrefs(radius, place, search, price, location, date, user):
     db = sql.connect(DATA)
     c = db.cursor()
     data = c.execute("SELECT userID FROM accounts WHERE username = ?", (user,))
     userID = data.fetchone()[0]
-    c.execute("UPDATE settings SET radius=?, price=?, search=?, price=?, location=?, date=? WHERE userID = ?", (radius,place,search,price,location,date,userID,))
+    if data:
+        print "hi"
+        c.execute("UPDATE settings SET radius=?, price=?, search=?, price=?, location=?, date=? WHERE userID = ?", (radius,place,search,price,location,date,userID,))
+    else:
+        c.execute("INSERT INTO settings VALUES(?,?,?,?,?,?,?)", (radius,place,search,price,location,date,userID,))
     db.commit()
     db.close()
     
-
 def register(username, password):
     hashpass = hashlib.sha224(password).hexdigest()
     creds = (username,hashpass,)
