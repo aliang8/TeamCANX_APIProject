@@ -1,6 +1,6 @@
 from flask import Flask, redirect, request, render_template, url_for, session
 from utils import dumbbell as functions
-from utils import parser as api 
+from utils import parser as api
 import hashlib, sqlite3, random
 import urllib2
 import json
@@ -95,6 +95,14 @@ def results():
 
    # return render_template("results.html", output = output)
 
+
+@app.route("/results/events", methods=['POST','GET'])
+def results_events():
+    d = {"keyword":"", "sort":"", "address":"", "radius":"", "price":"", "startKey":"", \
+    "lat":"", "long":"", "year_start":"", "month_start":"", "day_start":"", "hour_start":"", \
+    "minute_start":"", "year_end":"", "month_end":"", "day_end":"", "hour_end":"", "minute_end":""}
+    return render_template("results_events.html", events = api.getEvents(d))
+    
 if __name__ == '__main__':
     app.debug = True
     functions.initializeTables()

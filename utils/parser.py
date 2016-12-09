@@ -1,4 +1,4 @@
-
+import requests
 import datetime
 #----------------------------------------
 #Yelp
@@ -211,9 +211,9 @@ def getEvents(d):
     )
     d = response.json()['events'] # dictionary of all events Eventbrite returns
     ret = [] # returned list
-    holder = {} # sublist for each entry
     i = 0
     for event in d:
+        holder = {} # sublist for each entry
         if (event["logo"]!= None):
             holder["logo"] = event["logo"]["url"] # link to event's logo pic
         holder["name"] = event['name']['text'] # name of event
