@@ -74,7 +74,7 @@ def results():
         price = request.form['price']
         location = request.form['location']
         date = request.form['date']
-
+        
         if 'save' in request.form:
             message = "SUCCESSFULLY UPDATED PREFERENCES"
             functions.changePrefs(radius,place,search,price,location,date,session['username'])
@@ -90,22 +90,16 @@ def results():
                     for key, val in value.iteritems():
                         info.append([key.title(),val])
                     output.append(info)
-<<<<<<< HEAD
-
-            return render_template("results.html", output = output)
-
-=======
                     
             return render_template("results.html", output = output, message = message)
     
->>>>>>> df86ec224fd6c071c81b27573af6064c7bfbd2af
     '''
     #test case
     radius = 500
     typeOfPlace = "restaurant"
     keyword = "pizza"
     minPriceLevel = 1
-
+   
     typeOfPlace = place
     keyword = search
     minPriceLevel = price
@@ -113,13 +107,13 @@ def results():
     rsltList = api.allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, minPriceLevel)
     return render_template("results.html", results = rsltList)
     '''
-
+    
 
 @app.route("/results/events", methods=['POST','GET'])
 def results_events():
-    d = getResponses()
-    print d
-    #return render_template("results_events.html", events = api.getEvents(d))
+    d = {}
+    d["keyword"] = request.form['search']
+    return render_template("results_events.html", events = api.getEvents(d))
 
 if __name__ == '__main__':
     app.debug = True
