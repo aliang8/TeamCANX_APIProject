@@ -1,5 +1,7 @@
 import requests
 import datetime
+import os.path
+import sys
 #----------------------------------------
 #Yelp
 from yelp.client import Client
@@ -85,7 +87,14 @@ def crtLists(jsonData, minPriceLevel):
 ###This is the main function
 ###User inputs the latitude?, longitude?, radius, type of place, keyword, and minPricelevel----type of place and keyword must be strings
 def allInOneFunc(lat, lng, radius, typeOfPlace,keyword, minPriceLevel):
-    key = "AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk"
+    
+    f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
+   ## basepath = os.path.dirname("parser.py")
+   # filepath = os.path.abspath(os.path.join(basepath, "..","..","keys.txt"))
+   # f = open("/../../keys.txt","r")
+    key = f.readline()
+    f.close()
+    print key
     x = GooglPlac(lat, lng, radius, typeOfPlace,keyword, key)
     #x is the dictionary parsed from the json data
 
