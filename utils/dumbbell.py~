@@ -2,21 +2,24 @@ import sqlite3 as sql
 import hashlib
 
 #CONNECT DATABASE
-DATA = "data/dumbbell.db"
+DATA = "../data/dumbbell.db"
 
 #Initialize databases. Only works once.
 def initializeTables():
     db = sql.connect(DATA)
     c = db.cursor()
-    c.execute("CREATE TABLE IF NOT EXISTS accounts (username TEXT NOT NULL, password TEXT NOT NULL, radius INTEGER, place TEXT, search TEXT, price INTEGER, location TEXT, date TEXT )")
+    c.execute("CREATE TABLE IF NOT EXISTS accounts (username TEXT NOT NULL, password TEXT NOT NULL, userID INTEGER PRIMARY KEY autoincrement)")
+    c.execute("CREATE TABLE IF NOT EXISTS settings (radius INTEGER, place TEXT, search TEXT, price INTEGER, location, TEXT, date TEXT, userID INTEGER)")
     db.commit()
     db.close()
 
-def inputPrefs(userName, radius, place, search, price, location, date):
+
+#Allows user to set their settings 
+def setPrefs(radius, place, search, price, location, date, user):
     db = sql.connect(DATA)
     c = db.cursor()
-    cmd = "INSERT INTO accounts VALUES(%d,'%s','%s',%d,'%s','%s') WHERE username = '%s'";%(int(radius), place, search, int(price), location, date, userName)
-    c.execute(cmd)
+    userID = c.execute("SELECT userID FROM accounts WHERE user = ?", (user,))
+    c.execute("INSERT INTO settings VALUES(?,?,?,?,?,?,?)", (radius,place,search,price,location,date,userID,))
     db.commit()
     db.close()
 
@@ -56,3 +59,6 @@ def changePass(username,oldpass,newpass):
         return True
     else:
         return False
+
+initializeTables();
+#setPrefs(1,"s","s",2,"s","s","anthony")

@@ -87,7 +87,8 @@ def crtLists(jsonData, minPriceLevel):
 ###User inputs the latitude?, longitude?, radius, type of place, keyword, and minPricelevel----type of place and keyword must be strings
 def allInOneFunc(lat, lng, radius, typeOfPlace,keyword, minPriceLevel):
 
-    f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
+    f = open("/Users/Flamingo/Documents/SoftDev/flask-intro/softdev/keys.txt","r")
+    # f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
    ## basepath = os.path.dirname("parser.py")
    # filepath = os.path.abspath(os.path.join(basepath, "..","..","keys.txt"))
    # f = open("/../../keys.txt","r")
@@ -113,11 +114,12 @@ minPriceLevel = 1
 
 
 #==========================================YELP API============================================
+'''
 with open('utils/config_secret.json') as cred:
     creds = json.load(cred)
     auth = Oauth1Authenticator(**creds)
     client = Client(auth)
-
+'''
 '''
 Params for query: term(string), limit(#), offset(#), sort(0-Best matched, 1-Distance,
 2-Highest Rated, category_filter(string), radius_filter(#), deals_filter(bool)
