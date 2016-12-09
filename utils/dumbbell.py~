@@ -15,7 +15,7 @@ def initializeTables():
 def inputPrefs(userName, radius, place, search, price, location, date):
     db = sql.connect(DATA)
     c = db.cursor()
-    cmd = "INSERT INTO accounts VALUES(%d,'%s','%s',%d,'%s','%s') WHERE username = '%s'" % (int(radius), place, search, int(price), location, date, userName)
+    cmd = "INSERT INTO accounts VALUES(%d,'%s','%s',%d,'%s','%s') WHERE username = '%s'";%(int(radius), place, search, int(price), location, date, userName)
     c.execute(cmd)
     db.commit()
     db.close()
