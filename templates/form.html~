@@ -7,15 +7,14 @@
 </head>
 
 <body>
-  <h2><center>EDIT YOUR PREFERENCES FOR BETTER RESULTS!</center></h2>
-  <form action="/results/" method="POST" id="form" class="topBefore">
+  <h2><center>{{message}}</center></h2>
+  <form action="{{url_for('results')}}" method="POST" id="form" class="topBefore">
 
     <input id="radius" name="radius" type="text" placeholder="RADIUS">
     <input id="place" name="place" type="text" placeholder="PLACE">
     <input id="search" name="search" type="text" placeholder="SEARCH">
     <input id="price" name="price" type="text" placeholder="PRICE">
     <input id="location" name="location" type="text" placeholder="LOCATION">
-    <input id="date" name="date" type="text" placeholder="DATE">
 
     <p> START DATE </p>
     <select name="month_start">
