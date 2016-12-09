@@ -47,6 +47,10 @@ def authenticate():
 def form():
     return render_template("form.html")
 
+@app.route("/form/events")
+def form_e():
+    return render_template("form_events.html")
+
 @app.route("/logout/")
 def logout():
     session.pop('username')
@@ -98,6 +102,7 @@ def results():
 @app.route("/results/events", methods=['POST','GET'])
 def results_events():
     d = {}
+    d["keyword"] = request.form['search']
     return render_template("results_events.html", events = api.getEvents(d))
 
 if __name__ == '__main__':
