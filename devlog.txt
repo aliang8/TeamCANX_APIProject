@@ -18,3 +18,5 @@ Constantine(12:30 AM) Tweaked results function in app.py to output results from 
 Nancy(12:50 PM): Added field in form.html for Eventbrite input.
 Xinhui(1:41PM): home styling part 1
 Nancy(11:34 PM): Successfully implemented Eventbrite with urllib instead of requests. Made a HTML page to show Eventbrite search results.
+Constantine(11:00 PM): Added a couple of lines of code and created a keys.txt file on the computer (not repo) in order to extract/read the file and receive the Google Maps key.
+Constantine(11:48 PM): Edited the database format and created an inputPrefs function in the dumbbell file.
