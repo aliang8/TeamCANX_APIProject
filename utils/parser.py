@@ -1,4 +1,3 @@
-import requests
 import datetime
 import os.path
 import sys
@@ -87,7 +86,7 @@ def crtLists(jsonData, minPriceLevel):
 ###This is the main function
 ###User inputs the latitude?, longitude?, radius, type of place, keyword, and minPricelevel----type of place and keyword must be strings
 def allInOneFunc(lat, lng, radius, typeOfPlace,keyword, minPriceLevel):
-    
+
     f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
    ## basepath = os.path.dirname("parser.py")
    # filepath = os.path.abspath(os.path.join(basepath, "..","..","keys.txt"))
@@ -190,17 +189,29 @@ print(json.dumps(ret, indent=4, sort_keys=True))
 
 # returns list of (sub)dictionaries of each event's logo, name, description, url, start & end date & time
 def getEvents(d):
-    startRange = convertToUTC(d["year_start"], d["month_start"], d["day_start"], d["hour_start"], d["minute_start"])
-    endRange = convertToUTC(d["year_end"], d["month_end"], d["day_end"], d["hour_end"], d["minute_end"])
+    keyword = sort_by = location_address = location_within = price = lat = lng = startRange = endRange = ""
+    if ("year_start" in d) and ("month_start" in d) and ("day_start" in d) and ("hour_start" in d) and ("minute_start" in d):
+        startRange = toUTC_start(d["year_start"], d["month_start"], d["day_start"], d["hour_start"], d["minute_start"])
+    if ("year_end" in d) and ("month_end" in d) and ("day_end" in d) and ("hour_end" in d) and ("minute_end" in d):
+        endRange = toUTC_end(d["year_end"], d["month_end"], d["day_end"], d["hour_end"], d["minute_end"])
+    if "keyword" in d:
+        keyword = "&q=" + d["keyword"]
+    if "sort" in d:
+        sort_by = "&sort_by=" + d["sort"]
+    if "address" in d:
+        location_address = "&location.address=" + d["address"]
+    if "radius" in d:
+        location_within = "&location.within=" + d["radius"]
+    if "price" in d:
+        price = "&price=" + d["price"]
+    if "lat" in d:
+        lat = "&location.latitude=" + d["lat"]
+    if "long" in d:
+        lat = "&location.longitude=" + d["long"]
+    url = ('https://www.eventbriteapi.com/v3/events/search/?token=BV442UWQUREICGJW7V2A' + \
+            keyword + sort_by + location_address + location_within + price + lat + lng + startRange + endRange)
     '''
-    url = 'https://www.eventbriteapi.com/v3/events/search/'
-    values = {"Authorization": "Bearer BV442UWQUREICGJW7V2A"}
-
-    data = urllib.urlencode(values)
-    response = urllib2.urlopen(url)
-    the_page = response.read()
-    '''
-    # tried urllib...
+    # RIP requests code
     response = requests.get(
         "https://www.eventbriteapi.com/v3/events/search/",
         headers = {
@@ -218,7 +229,11 @@ def getEvents(d):
         },
         verify = True,  # Verify SSL certificate
     )
-    d = response.json()['events'] # dictionary of all events Eventbrite returns
+    '''
+    urlInfo = urllib.urlopen(url)
+    jsonUntouched = urlInfo.read()
+    d = json.loads(jsonUntouched)["events"]
+    #d = response.json()['events'] # dictionary of all events Eventbrite returns
     ret = [] # returned list
     i = 0
     for event in d:
@@ -235,6 +250,8 @@ def getEvents(d):
         ret.append(holder)
     return ret
 
+
+
 # Converts 2016-12-12T08:00:00 -> month-day-year hour:minute
 def formatTime(utc):
     month = utc[5:7]
@@ -244,8 +261,11 @@ def formatTime(utc):
     time = utc[timeIndex+1:-3]
     return "%s/%s/%s %s"%(month, day, year, time)
 
-def convertToUTC(year, month, day, hour, minute):
-    return "%s-%s-%sT%s:%s:00"%(year, month, day, hour, minute)
+def toUTC_start(year, month, day, hour, minute):
+    return "&start_date.range_start=" + "%s-%s-%sT%s:%s:00"%(year, month, day, hour, minute)
+
+def toUTC_end(year, month, day, hour, minute):
+    return "&start_date.range_end=" + "%s-%s-%sT%s:%s:00"%(year, month, day, hour, minute)
 
 # example call
 # start: 12/16 9AM
@@ -255,8 +275,8 @@ d1 = { "keyword":"food", "sort":"best", "address":"united states", "radius":"10m
 "year_start":"2016", "month_start":"12", "day_start":"16", "hour_start":"00", "minute_start":"00", \
 "year_end":"2016", "month_end":"12", "day_end":"16", "hour_end":"20", "minute_end":"00"}
 
-d2 = { "keyword":"", "sort":"", "address":"united states", "radius":"", \
-"lat":LAT, "long":LNG, "price":"", "startKey":"", \
+d2 = { "keyword":"", "sort":"", "address":"united states",  \
+"lat":LAT, "long":LNG, "price":"", \
 "year_start":"2016", "month_start":"12", "day_start":"16", "hour_start":"00", "minute_start":"00", \
 "year_end":"2016", "month_end":"12", "day_end":"16", "hour_end":"20", "minute_end":"00"}
 

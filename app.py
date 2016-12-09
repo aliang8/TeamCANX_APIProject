@@ -95,14 +95,11 @@ def results():
 
    # return render_template("results.html", output = output)
 
-
 @app.route("/results/events", methods=['POST','GET'])
 def results_events():
-    d = {"keyword":"", "sort":"", "address":"", "radius":"", "price":"", "startKey":"", \
-    "lat":"", "long":"", "year_start":"", "month_start":"", "day_start":"", "hour_start":"", \
-    "minute_start":"", "year_end":"", "month_end":"", "day_end":"", "hour_end":"", "minute_end":""}
+    d = {}
     return render_template("results_events.html", events = api.getEvents(d))
-    
+
 if __name__ == '__main__':
     app.debug = True
     functions.initializeTables()
