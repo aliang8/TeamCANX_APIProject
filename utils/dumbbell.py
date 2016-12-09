@@ -8,7 +8,15 @@ DATA = "data/dumbbell.db"
 def initializeTables():
     db = sql.connect(DATA)
     c = db.cursor()
-    c.execute("CREATE TABLE IF NOT EXISTS accounts (username TEXT NOT NULL, password TEXT NOT NULL)")
+    c.execute("CREATE TABLE IF NOT EXISTS accounts (username TEXT NOT NULL, password TEXT NOT NULL, radius INTEGER, place TEXT, search TEXT, price INTEGER, location TEXT, date TEXT )")
+    db.commit()
+    db.close()
+
+def inputPrefs(userName, radius, place, search, price, location, date):
+    db = sql.connect(DATA)
+    c = db.cursor()
+    cmd = "INSERT INTO accounts VALUES(%d,'%s','%s',%d,'%s','%s') WHERE username = '%s'";%(int(radius), place, search, int(price), location, date, userName)
+    c.execute(cmd)
     db.commit()
     db.close()
 
