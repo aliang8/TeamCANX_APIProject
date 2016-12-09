@@ -187,6 +187,12 @@ print(json.dumps(ret, indent=4, sort_keys=True))
 
 #====Eventbrite================================================================
 
+'''
+Todo:
+-start_date.keyword
+-using google api to convert address -> lat,lng
+-testing
+'''
 # returns list of (sub)dictionaries of each event's logo, name, description, url, start & end date & time
 def getEvents(d):
     keyword = sort_by = location_address = location_within = price = lat = lng = startRange = endRange = ""

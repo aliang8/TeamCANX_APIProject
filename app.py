@@ -103,6 +103,7 @@ def results():
 def results_events():
     d = {}
     d["keyword"] = request.form['search']
+    print d
     return render_template("results_events.html", events = api.getEvents(d))
 
 if __name__ == '__main__':
