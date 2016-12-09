@@ -195,7 +195,7 @@ Todo:
 '''
 # returns list of (sub)dictionaries of each event's logo, name, description, url, start & end date & time
 def getEvents(d):
-    keyword = sort_by = location_address = location_within = price = lat = lng = startRange = endRange = ""
+    keyword = sort_by = dateKey = location_address = location_within = price = lat = lng = startRange = endRange = ""
     if ("year_start" in d) and ("month_start" in d) and ("day_start" in d) and ("hour_start" in d) and ("minute_start" in d):
         startRange = toUTC_start(d["year_start"], d["month_start"], d["day_start"], d["hour_start"], d["minute_start"])
     if ("year_end" in d) and ("month_end" in d) and ("day_end" in d) and ("hour_end" in d) and ("minute_end" in d):
@@ -204,6 +204,8 @@ def getEvents(d):
         keyword = "&q=" + d["keyword"]
     if "sort" in d:
         sort_by = "&sort_by=" + d["sort"]
+    if "dateKey" in d:
+        dateKey = "&start_date.keyword=" + d["dateKey"]
     if "address" in d:
         location_address = "&location.address=" + d["address"]
     if "radius" in d:
@@ -215,7 +217,7 @@ def getEvents(d):
     if "long" in d:
         lat = "&location.longitude=" + d["long"]
     url = ('https://www.eventbriteapi.com/v3/events/search/?token=BV442UWQUREICGJW7V2A' + \
-            keyword + sort_by + location_address + location_within + price + lat + lng + startRange + endRange)
+            keyword + sort_by + location_address + location_within + startKey + price + lat + lng + startRange + endRange)
     '''
     # RIP requests code
     response = requests.get(
@@ -256,8 +258,6 @@ def getEvents(d):
         ret.append(holder)
     return ret
 
-
-
 # Converts 2016-12-12T08:00:00 -> month-day-year hour:minute
 def formatTime(utc):
     month = utc[5:7]
@@ -272,6 +272,12 @@ def toUTC_start(year, month, day, hour, minute):
 
 def toUTC_end(year, month, day, hour, minute):
     return "&start_date.range_end=" + "%s-%s-%sT%s:%s:00"%(year, month, day, hour, minute)
+
+def getResponses():
+    d = {}
+    if request.method == 'POST':
+        d["radius"]= request.form['radius']
+    return d
 
 # example call
 # start: 12/16 9AM

@@ -73,7 +73,7 @@ def results():
         price = request.form['price']
         location = request.form['location']
         date = request.form['date']
-        
+
         if 'save' in request.form:
             return redirect(url_for("form"))
         else:
@@ -86,16 +86,16 @@ def results():
                     for key, val in value.iteritems():
                         info.append([key.title(),val])
                     output.append(info)
-                    
+
             return render_template("results.html", output = output)
-            
+
     '''
     #test case
     radius = 500
     typeOfPlace = "restaurant"
     keyword = "pizza"
     minPriceLevel = 1
-   
+
     typeOfPlace = place
     keyword = search
     minPriceLevel = price
@@ -103,14 +103,13 @@ def results():
     rsltList = api.allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, minPriceLevel)
     return render_template("results.html", results = rsltList)
     '''
-    
+
 
 @app.route("/results/events", methods=['POST','GET'])
 def results_events():
-    d = {}
-    d["keyword"] = request.form['search']
+    d = getResponses()
     print d
-    return render_template("results_events.html", events = api.getEvents(d))
+    #return render_template("results_events.html", events = api.getEvents(d))
 
 if __name__ == '__main__':
     app.debug = True
