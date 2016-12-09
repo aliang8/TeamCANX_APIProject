@@ -12,6 +12,7 @@ Constantine(12:50 AM) Created the main function that combines all the user input
 Xinhui(): Fix bootstrap structure/dependency link
 Nancy(8:00 PM): Added time and date inputs for Eventbrite. Tried to implement urllib instead of requests but was unsuccessful.
 Anthony(8:30 PM): Fixed formed page. Started a barebones results page to output the data requested from the Yelp API. Still need to figure out what to do with the results.
+Constantine(12:30 AM) Tweaked results function in app.py to output results from the Google Maps API. Edited results.html to print out GM results in a list.
 
 12/8/16
 Nancy(12:50 PM): Added field in form.html for Eventbrite input. 
