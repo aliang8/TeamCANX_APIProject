@@ -8,18 +8,21 @@
 </head>
 
 <body>
-    <header class="myday-header">
+   <!-- <header class="myday-header">
         <h1>MyDay: Personal Event Planner</h1>
         <nav class="myday-navbar">
             <a href="current-tab">Login/Signup</a>
             <a href="calendar.html">Calendar</a>
             <a href="setting.html">Settings</a>
         </nav>
-    </header>
-    <div class="container" id="home-wrap">
-        {{message}}
+   </header>-->
+   
+   <div class="container" id="home-wrap">
+     <h1 id="brand">MyDay</h1>
+     <br>
+        <h3>{{message}}</h3>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#login">
+        <button type="button" class="btn btn-default btn-lg btn-block btn-trans" data-toggle="modal" data-target="#login">
             LOGIN
         </button>
 
@@ -46,8 +49,9 @@
                 </div>
             </div>
         </div>
+	
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#signup">
+        <button type="button" class="btn btn-lg btn-block btn-opaq" data-toggle="modal" data-target="#signup">
             SIGNUP
         </button>
 
@@ -75,7 +79,7 @@
             </div>
         </div>
     </div>
-    <div class="container" id="home-wrap">
+    <!--<div class="container" id="home-wrap">
         <div class="row">
             <div class="col-xs-12">
                 <h1 id="brand">MyDay</h1> {{message}}
@@ -90,7 +94,7 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div>-->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="../static/js/bootstrap.min.js"></script>
