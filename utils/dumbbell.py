@@ -2,14 +2,14 @@ import sqlite3 as sql
 import hashlib
 
 #CONNECT DATABASE
-DATA = "data/dumbbell.db"
+DATA = "../data/dumbbell.db"
 
 #Initialize databases. Only works once.
 def initializeTables():
     db = sql.connect(DATA)
     c = db.cursor()
     c.execute("CREATE TABLE IF NOT EXISTS accounts (username TEXT NOT NULL, password TEXT NOT NULL, userID INTEGER PRIMARY KEY autoincrement)")
-    c.execute("CREATE TABLE IF NOT EXISTS settings (radius INTEGER, place TEXT, search TEXT, price INTEGER, location, TEXT, date TEXT, userID INTEGER)")
+    c.execute("CREATE TABLE IF NOT EXISTS settings (radius INTEGER, place TEXT, search TEXT, price INTEGER, location TEXT, date TEXT, userID INTEGER)")
     db.commit()
     db.close()
 
@@ -18,10 +18,21 @@ def initializeTables():
 def setPrefs(radius, place, search, price, location, date, user):
     db = sql.connect(DATA)
     c = db.cursor()
-    userID = c.execute("SELECT userID FROM accounts WHERE user = ?", (user,))
+    data = c.execute("SELECT userID FROM accounts WHERE username = ?", (user,))
+    userID = data.fetchone()[0] 
     c.execute("INSERT INTO settings VALUES(?,?,?,?,?,?,?)", (radius,place,search,price,location,date,userID,))
     db.commit()
     db.close()
+
+def changePrefs(radius, place, search, price, location, date, user):
+    db = sql.connect(DATA)
+    c = db.cursor()
+    data = c.execute("SELECT userID FROM accounts WHERE username = ?", (user,))
+    userID = data.fetchone()[0]
+    c.execute("UPDATE settings SET radius=?, price=?, search=?, price=?, location=?, date=? WHERE userID = ?", (radius,place,search,price,location,date,userID,))
+    db.commit()
+    db.close()
+    
 
 def register(username, password):
     hashpass = hashlib.sha224(password).hexdigest()
@@ -60,5 +71,3 @@ def changePass(username,oldpass,newpass):
     else:
         return False
 
-initializeTables();
-#setPrefs(1,"s","s",2,"s","s","anthony")

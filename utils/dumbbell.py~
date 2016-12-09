@@ -9,7 +9,7 @@ def initializeTables():
     db = sql.connect(DATA)
     c = db.cursor()
     c.execute("CREATE TABLE IF NOT EXISTS accounts (username TEXT NOT NULL, password TEXT NOT NULL, userID INTEGER PRIMARY KEY autoincrement)")
-    c.execute("CREATE TABLE IF NOT EXISTS settings (radius INTEGER, place TEXT, search TEXT, price INTEGER, location, TEXT, date TEXT, userID INTEGER)")
+    c.execute("CREATE TABLE IF NOT EXISTS settings (radius INTEGER, place TEXT, search TEXT, price INTEGER, location TEXT, date TEXT, userID INTEGER)")
     db.commit()
     db.close()
 
@@ -18,10 +18,21 @@ def initializeTables():
 def setPrefs(radius, place, search, price, location, date, user):
     db = sql.connect(DATA)
     c = db.cursor()
-    userID = c.execute("SELECT userID FROM accounts WHERE user = ?", (user,))
+    data = c.execute("SELECT userID FROM accounts WHERE username = ?", (user,))
+    userID = data.fetchone()[0] 
     c.execute("INSERT INTO settings VALUES(?,?,?,?,?,?,?)", (radius,place,search,price,location,date,userID,))
     db.commit()
     db.close()
+
+def changePrefs(radius, place, search, price, location, date, user):
+    db = sql.connect(DATA)
+    c = db.cursor()
+    c.execute("SELECT userID FROM accounts WHERE username = ?", (user,))
+    userID = data.fetchone()[0]
+    c.execute("UPDATE settings SET (?,?,?,?,?,?) WHERE username = ?", (radius,place,search,price,location,date,userID,))
+    db.commit()
+    db.close()
+    
 
 def register(username, password):
     hashpass = hashlib.sha224(password).hexdigest()
@@ -60,5 +71,6 @@ def changePass(username,oldpass,newpass):
     else:
         return False
 
-initializeTables();
+initializeTables()
 #setPrefs(1,"s","s",2,"s","s","anthony")
+changePrefs(2,"s","s",3,"s","s","anthony")
