@@ -114,10 +114,12 @@ minPriceLevel = 1
 
 
 #==========================================YELP API============================================
+'''
 with open('utils/config_secret.json') as cred:
     creds = json.load(cred)
     auth = Oauth1Authenticator(**creds)
     client = Client(auth)
+'''
 '''
 Params for query: term(string), limit(#), offset(#), sort(0-Best matched, 1-Distance,
 2-Highest Rated, category_filter(string), radius_filter(#), deals_filter(bool)

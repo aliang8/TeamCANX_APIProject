@@ -117,7 +117,7 @@ textarea:hover {
     color: #e2dedb;
 }
 
-#submit {
+#save {
     width: 502px;
     padding: 0;
     margin: -5px 0px 0px 0px;
@@ -130,6 +130,6 @@ textarea:hover {
     border-top: none;
 }
 
-#submit:hover {
+#save:hover {
     color: #e2dedb;
 }
