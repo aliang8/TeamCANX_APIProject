@@ -1,5 +1,27 @@
 /*font candidate: http://www.1001freefonts.com/simply_glamorous.font*/
 
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700|Merriweather+Sans:800);
+@font-face {
+    font-weight: normal;
+    font-style: normal;
+    font-family: 'codropsicons';
+    src: url('../fonts/codropsicons/codropsicons.eot');
+    src: url('../fonts/codropsicons/codropsicons.eot?#iefix') format('embedded-opentype'), url('../fonts/codropsicons/codropsicons.woff') format('woff'), url('../fonts/codropsicons/codropsicons.ttf') format('truetype'), url('../fonts/codropsicons/codropsicons.svg#codropsicons') format('svg');
+}
+
+@font-face {
+    font-family: 'Blokk';
+    src: url('../fonts/blokk/BLOKKRegular.eot');
+    src: url('../fonts/blokk/BLOKKRegular.eot?#iefix') format('embedded-opentype'), url('../fonts/blokk/BLOKKRegular.woff') format('woff'), url('../fonts/blokk/BLOKKRegular.svg#BLOKKRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Simply Glamorous";
+    src: url(SIMPLYGLAMOROUS.TTF);
+}
+
 body {
     position: relative;
     background: #5f545a;
@@ -8,6 +30,22 @@ body {
     line-height: 1.25;
     font-weight: 300;
     font-family: 'Lato', Arial, sans-serif;
+}
+
+.container {
+    background: #67c2d4;
+}
+
+a,
+button {
+    color: #553445;
+    text-decoration: none;
+    outline: none;
+}
+
+a:hover,
+a:focus {
+    color: #e75854;
 }
 
 #brand {
@@ -43,16 +81,6 @@ body {
     }
 }
 
-@font-face {
-    font-family: "Simply Glamorous";
-    src: url(SIMPLYGLAMOROUS.TTF);
-}
-
-#home-wrap {
-    width: 40%;
-    margin-top: 50px;
-}
-
 .home-msg {
     font-style: italic;
 }
@@ -67,49 +95,4 @@ body {
     background-color: transparent;
     height: 3em;
     border-bottom: 1px solid black;
-}
-
-.btn-trans {
-    border-color: black;
-    background-color: transparent;
-    color: black;
-}
-
-.btn-trans:hover {
-    color: black;
-}
-
-.btn-opaq {
-    border-color: black;
-    background-color: black;
-    color: white;
-}
-
-.btn-opaq:hover {
-    border-color: pink;
-    color: white;
-    background-color: pink;
-}
-
-::-webkit-input-placeholder {
-    /* WebKit, Blink, Edge */
-    color: black;
-    opacity: .5;
-}
-
-:-moz-placeholder {
-    /* Mozilla Firefox 4 to 18 */
-    color: black;
-    opacity: .5;
-}
-
-::-moz-placeholder {
-    /* Mozilla Firefox 19+ */
-    color: black;
-    opacity: .5;
-}
-
-:-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: black;
 }

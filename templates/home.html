@@ -5,6 +5,7 @@
     <title>MyDay</title>
     <link rel="stylesheet" href="../static/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/home.css">
+    <link rel="stylesheet" href="../static/component.css">
 </head>
 
 <body>
@@ -17,12 +18,12 @@
         </nav>
    </header>-->
    
-   <div class="container" id="home-wrap">
-     <h1 id="brand">MyDay</h1>
+   <div class="container">
+     <h1 id="myday-brand">MyDay</h1>
      <br>
         <h3>{{message}}</h3>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-default btn-lg btn-block btn-trans" data-toggle="modal" data-target="#login">
+        <button type="button" class="btn" data-toggle="modal" data-target="#login">
             LOGIN
         </button>
 
@@ -51,7 +52,7 @@
         </div>
 	
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-lg btn-block btn-opaq" data-toggle="modal" data-target="#signup">
+        <button type="button" class="btn" data-toggle="modal" data-target="#signup">
             SIGNUP
         </button>
 
@@ -78,8 +79,8 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!--<div class="container" id="home-wrap">
+   </div>
+   <!--<div class="container" id="home-wrap">
         <div class="row">
             <div class="col-xs-12">
                 <h1 id="brand">MyDay</h1> {{message}}
