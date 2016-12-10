@@ -83,7 +83,7 @@ def results():
         limit = request.form.get('limit')
         #print "Limit: " + limit
 
-        '''
+        
         if 'save' in request.form:
             print "hi"
             message = "SUCCESSFULLY UPDATED PREFERENCES"
@@ -99,16 +99,16 @@ def results():
                     for key, val in value.iteritems():
                         info.append([key.title(),val])
                     output.append(info)
-                    
+            print output
             return render_template("results.html", output = output)
-    
+    '''
     
     #test case
     radius = 500
     typeOfPlace = "restaurant"
     keyword = "pizza"
     maxPriceLevel = 1
-    '''
+    
         
     typeOfPlace = search
     keyword = search
@@ -116,7 +116,7 @@ def results():
 
     rsltList = api.allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, maxPriceLevel)
     return render_template("results.html", results = rsltList)
-    
+    '''
     
 
 @app.route("/results/events", methods=['POST','GET'])

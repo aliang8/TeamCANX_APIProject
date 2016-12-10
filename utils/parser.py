@@ -166,20 +166,21 @@ def yelp_lookup(loc,coords,bounds,params):
     for business in response.businesses:
         name = business.name
         ret[name] = {}
+        ret[name]['name'] = name
         ret[name]['display_phone'] = business.display_phone
-        ret[name]['url'] = business.url
+       # ret[name]['url'] = business.url
         ret[name]['review_count'] = business.review_count
-        ret[name]['categories'] = business.categories
+      #  ret[name]['categories'] = business.categories
         ret[name]['rating'] = business.rating
-        ret[name]['snippet_text'] = business.snippet_text
+      #  ret[name]['snippet_text'] = business.snippet_text
         ret[name]['location_address'] = business.location.display_address
-        ret[name]['location_coordinate_latitude'] = business.location.coordinate.latitude
-        ret[name]['location_coordinate_longitude'] = business.location.coordinate.longitude
-        ret[name]['deals'] = business.deals
-        ret[name]['snippet_image_url'] = business.snippet_image_url
-        ret[name]['menu_provider'] = business.menu_provider
-        ret[name]['reservation_url'] = business.reservation_url
-        ret[name]['eat24_url'] = business.eat24_url
+      #  ret[name]['location_coordinate_latitude'] = business.location.coordinate.latitude
+      #  ret[name]['location_coordinate_longitude'] = business.location.coordinate.longitude
+      #  ret[name]['deals'] = business.deals
+      #  ret[name]['snippet_image_url'] = business.snippet_image_url
+      #  ret[name]['menu_provider'] = business.menu_provider
+      #  ret[name]['reservation_url'] = business.reservation_url
+      #  ret[name]['eat24_url'] = business.eat24_url
     return [ret]
 '''
 #Test Queries
