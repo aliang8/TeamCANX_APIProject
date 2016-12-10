@@ -46,3 +46,5 @@ anthonyL -- 2016-12-09 22:31: Added some custom styling to the form to make it m
 anthonyL -- 2016-12-10 3:24: Reformatted the form page. Made it so that not all fields are required. Added a limit parameter so users can specify how many entries they want to view.
 
 athanitisC -- 2016-12-10 17:27: Changed minPriceLevel to maxPriceLevel along with the comparison fucntion. Created a basic bootstrap table for Google Maps results.
+
+athanitisC -- 2016-12-10 18:20: Edited yelp output function to give only some of the possibly output results/data. Created another basic bootstrap table for yelp results.
