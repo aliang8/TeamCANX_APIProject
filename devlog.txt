@@ -44,3 +44,5 @@ anthonyL -- 2016-12-09 22:31: Added some custom styling to the form to make it m
 12/10/16
 	
 anthonyL -- 2016-12-10 3:24: Reformatted the form page. Made it so that not all fields are required. Added a limit parameter so users can specify how many entries they want to view.
+
+athanitisC -- 2016-12-10 17:27: Changed minPriceLevel to maxPriceLevel along with the comparison fucntion. Created a basic bootstrap table for Google Maps results.
