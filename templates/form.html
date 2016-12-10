@@ -12,33 +12,34 @@
     <div class="container demo-1">
         <header>
             <h1>Tell us what you want!</h1>
+            <h2>{{message}}</h2>
         </header>
         <div class="main clearfix">
-            <form id="nl-form" class="nl-form">
+            <form action="/results/" method="POST" id="nl-form" class="nl-form">
                 I want to
-                <select>
+                <select name="search">
                     <option value="1" selected>any activity</option>
-                    <option value="2">Indian</option>
-                    <option value="3">French</option>
-                    <option value="4">Japanese</option>
-                    <option value="2">Italian</option>
-                </select>
-                <br />at
-                <select>
+                    <option value="Indian">Indian</option>
+                    <option value="French">French</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="Italian">Italian</option>
+                </select> at
+                <select name="place">
                     <option value="1" selected>any place</option>
-                    <option value="2">fancy</option>
-                    <option value="3">hip</option>
-                    <option value="4">traditional</option>
-                    <option value="2">romantic</option>
-                </select>
-                . I can spend
-                <br />
-                <input type="text" value="" placeholder="money" data-subline="Example: <em>2</em> or <em>120</em>" /> and I can travel
-                <input type="text" value="" placeholder="radius" data-subline="Example: <em>2</em> or <em>120</em> kilometers" />. I want to go on.
-                <br />
-                <input type="text" value="" placeholder="date" data-subline="Example: <em>2/15/2016 (M/D/Y)</em>" />
+                    <option value="fancy">fancy</option>
+                    <option value="hip">hip</option>
+                    <option value="traditional">traditional</option>
+                    <option value="romantic">romantic</option>
+                </select> on
+                <input type="text" name="date" placeholder="date" data-subline="Example: <em>2/15/2016 (M/D/Y)</em>" />. I can spend
+                <input type="text" name="price" placeholder="price" data-subline="Example: <em>2</em> or <em>120</em>" /> and I can travel
+                <input type="text" name="radius" placeholder="radius" data-subline="Example: <em>2</em> or <em>120</em> kilometers" /> from my location at
+                <input type="text" name="location" placeholder="location" data-subline="Example: <em>345 Chambers Street</em>" /> .
                 <div class="nl-submit-wrap">
-                    <button class="nl-submit" type="submit">Find a restaurant</button>
+                    <button class="nl-submit" id="save" name="name" type="submit">Save!</button>
+                </div>
+                <div class="nl-submit-wrap">
+                    <button class="nl-submit" id="search" name="search" type="submit">Search for event!</button>
                 </div>
                 <div class="nl-overlay"></div>
             </form>

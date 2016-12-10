@@ -89,7 +89,7 @@ def results():
                         info.append([key.title(),val])
                     output.append(info)
                     
-            return render_template("results.html", output = output, message = message)
+            return render_template("results.html", output = output)
     
     '''
     #test case
