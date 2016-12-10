@@ -8,13 +8,14 @@
 
 <body>
   <h2><center>{{message}}</center></h2>
-  <form action="{{url_for('results')}}" method="POST" id="form" class="topBefore">
-
+  <form action="/results/" method="POST" id="form" class="topBefore">
+    
     <input id="radius" name="radius" type="text" placeholder="RADIUS">
     <input id="place" name="place" type="text" placeholder="PLACE">
     <input id="search" name="search" type="text" placeholder="SEARCH">
     <input id="price" name="price" type="text" placeholder="PRICE">
     <input id="location" name="location" type="text" placeholder="LOCATION">
+    <input id="date" name="date" type="text" placeholder="DATE">
 
     <p> START DATE </p>
     <select name="month_start">
@@ -103,7 +104,7 @@
       <option value="15">15</option>
       <option value="30">30</option>
       <option value="45">45</option>
-    <select>
+    </select>
 
       <p> END DATE </p>
       <select name="month_end">
@@ -192,8 +193,8 @@
         <option value="15">15</option>
         <option value="30">30</option>
         <option value="45">45</option>
-      <select>
-
+      </select>
+      
     <br><br><br>
     <input id="save" name="save" type="submit" value="SAVE!">
     <input id="search" name="search" type="submit" value="SEARCH!">

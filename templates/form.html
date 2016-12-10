@@ -2,202 +2,246 @@
 <html>
 
 <head>
-  <title>MyDay Form</title>
-  <link rel="stylesheet" type="text/css" href="../static/form.css">
+    <title>MyDay Form</title>
+    <link rel="stylesheet" type="text/css" href="../static/component.css">
+    <link rel="stylesheet" type="text/css" href="../static/default.css">
+    <script src="../static/js/modernizr.custom.js"></script>
 </head>
 
-<body>
-  <h2><center>{{message}}</center></h2>
-  <form action="/results/" method="POST" id="form" class="topBefore">
-    
-    <input id="radius" name="radius" type="text" placeholder="RADIUS">
-    <input id="place" name="place" type="text" placeholder="PLACE">
-    <input id="search" name="search" type="text" placeholder="SEARCH">
-    <input id="price" name="price" type="text" placeholder="PRICE">
-    <input id="location" name="location" type="text" placeholder="LOCATION">
-    <input id="date" name="date" type="text" placeholder="DATE">
+<body class="nl-blurred">
+    <div class="container demo-1">
+        <header>
+            <h1>Tell us what you want!</h1>
+        </header>
+        <div class="main clearfix">
+            <form id="nl-form" class="nl-form">
+                I want to
+                <select>
+                    <option value="1" selected>any activity</option>
+                    <option value="2">Indian</option>
+                    <option value="3">French</option>
+                    <option value="4">Japanese</option>
+                    <option value="2">Italian</option>
+                </select>
+                <br />at
+                <select>
+                    <option value="1" selected>any place</option>
+                    <option value="2">fancy</option>
+                    <option value="3">hip</option>
+                    <option value="4">traditional</option>
+                    <option value="2">romantic</option>
+                </select>
+                . I can spend
+                <br />
+                <input type="text" value="" placeholder="money" data-subline="Example: <em>2</em> or <em>120</em>" /> and I can travel
+                <input type="text" value="" placeholder="radius" data-subline="Example: <em>2</em> or <em>120</em> kilometers" />. I want to go on.
+                <br />
+                <input type="text" value="" placeholder="date" data-subline="Example: <em>2/15/2016 (M/D/Y)</em>" />
+                <div class="nl-submit-wrap">
+                    <button class="nl-submit" type="submit">Find a restaurant</button>
+                </div>
+                <div class="nl-overlay"></div>
+            </form>
+        </div>
+    </div>
+    <!--
+    <h2><center>{{message}}</center></h2>
+    <form action="/results/" method="POST" id="form" class="topBefore">
 
-    <p> START DATE </p>
-    <select name="month_start">
-      <option value="01">Jan</option>
-      <option value="02">Feb</option>
-      <option value="03">Mar</option>
-      <option value="04">Apr</option>
-      <option value="05">May</option>
-      <option value="06">June</option>
-      <option value="07">July</option>
-      <option value="08">Aug</option>
-      <option value="09">Sept</option>
-      <option value="10">Oct</option>
-      <option value="11">Nov</option>
-      <option value="12">Dec</option>
-    </select>
-    <select name="day_start">
-      <option value="01">1</option>
-      <option value="02">2</option>
-      <option value="03">3</option>
-      <option value="04">4</option>
-      <option value="05">5</option>
-      <option value="06">6</option>
-      <option value="07">7</option>
-      <option value="08">8</option>
-      <option value="09">9</option>
-      <option value="10">10</option>
-      <option value="11">11</option>
-      <option value="12">12</option>
-      <option value="13">13</option>
-      <option value="14">14</option>
-      <option value="15">15</option>
-      <option value="16">16</option>
-      <option value="17">17</option>
-      <option value="18">18</option>
-      <option value="19">19</option>
-      <option value="20">20</option>
-      <option value="21">21</option>
-      <option value="22">22</option>
-      <option value="23">23</option>
-      <option value="24">24</option>
-      <option value="25">25</option>
-      <option value="26">26</option>
-      <option value="27">27</option>
-      <option value="28">28</option>
-      <option value="29">29</option>
-      <option value="30">30</option>
-      <option value="31">31</option>
-    </select>
-    <select name="year_start">
-      <option value="2016">2016</option>
-      <option value="2017">2017</option>
-      <option value="2018">2018</option>
-    </select>
+        <input id="radius" name="radius" type="text" placeholder="RADIUS">
+        <input id="place" name="place" type="text" placeholder="PLACE">
+        <input id="search" name="search" type="text" placeholder="SEARCH">
+        <input id="price" name="price" type="text" placeholder="PRICE">
+        <input id="location" name="location" type="text" placeholder="LOCATION">
+        <input id="date" name="date" type="text" placeholder="DATE">
+        <p> START DATE </p>
+        <select name="month_start">
+            <option value="01">Jan</option>
+            <option value="02">Feb</option>
+            <option value="03">Mar</option>
+            <option value="04">Apr</option>
+            <option value="05">May</option>
+            <option value="06">June</option>
+            <option value="07">July</option>
+            <option value="08">Aug</option>
+            <option value="09">Sept</option>
+            <option value="10">Oct</option>
+            <option value="11">Nov</option>
+            <option value="12">Dec</option>
+        </select>
+        <select name="day_start">
+            <option value="01">1</option>
+            <option value="02">2</option>
+            <option value="03">3</option>
+            <option value="04">4</option>
+            <option value="05">5</option>
+            <option value="06">6</option>
+            <option value="07">7</option>
+            <option value="08">8</option>
+            <option value="09">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option value="31">31</option>
+        </select>
+        <select name="year_start">
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+            <option value="2018">2018</option>
+        </select>
 
-    <p> START TIME (24-HOUR)</p>
-    <select name="hour_start">
-      <option value="00">0</option>
-      <option value="01">1</option>
-      <option value="02">2</option>
-      <option value="03">3</option>
-      <option value="04">4</option>
-      <option value="05">5</option>
-      <option value="06">6</option>
-      <option value="07">7</option>
-      <option value="08">8</option>
-      <option value="09">9</option>
-      <option value="10">10</option>
-      <option value="11">11</option>
-      <option value="12">12</option>
-      <option value="13">13</option>
-      <option value="14">14</option>
-      <option value="15">15</option>
-      <option value="16">16</option>
-      <option value="17">17</option>
-      <option value="18">18</option>
-      <option value="19">19</option>
-      <option value="20">20</option>
-      <option value="21">21</option>
-      <option value="22">22</option>
-      <option value="23">23</option>
-      <option value="24">24</option>
-    </select> :
-    <select name="minute_start">
-      <option value="00">00</option>
-      <option value="15">15</option>
-      <option value="30">30</option>
-      <option value="45">45</option>
-    </select>
+        <p> START TIME (24-HOUR)</p>
+        <select name="hour_start">
+            <option value="00">0</option>
+            <option value="01">1</option>
+            <option value="02">2</option>
+            <option value="03">3</option>
+            <option value="04">4</option>
+            <option value="05">5</option>
+            <option value="06">6</option>
+            <option value="07">7</option>
+            <option value="08">8</option>
+            <option value="09">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+        </select> :
+        <select name="minute_start">
+            <option value="00">00</option>
+            <option value="15">15</option>
+            <option value="30">30</option>
+            <option value="45">45</option>
+        </select>
 
-      <p> END DATE </p>
-      <select name="month_end">
-        <option value="01">Jan</option>
-        <option value="02">Feb</option>
-        <option value="03">Mar</option>
-        <option value="04">Apr</option>
-        <option value="05">May</option>
-        <option value="06">June</option>
-        <option value="07">July</option>
-        <option value="08">Aug</option>
-        <option value="09">Sept</option>
-        <option value="10">Oct</option>
-        <option value="11">Nov</option>
-        <option value="12">Dec</option>
-      </select>
-      <select name="day_end">
-        <option value="01">1</option>
-        <option value="02">2</option>
-        <option value="03">3</option>
-        <option value="04">4</option>
-        <option value="05">5</option>
-        <option value="06">6</option>
-        <option value="07">7</option>
-        <option value="08">8</option>
-        <option value="09">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-        <option value="13">13</option>
-        <option value="14">14</option>
-        <option value="15">15</option>
-        <option value="16">16</option>
-        <option value="17">17</option>
-        <option value="18">18</option>
-        <option value="19">19</option>
-        <option value="20">20</option>
-        <option value="21">21</option>
-        <option value="22">22</option>
-        <option value="23">23</option>
-        <option value="24">24</option>
-        <option value="25">25</option>
-        <option value="26">26</option>
-        <option value="27">27</option>
-        <option value="28">28</option>
-        <option value="29">29</option>
-        <option value="30">30</option>
-        <option value="31">31</option>
-      </select>
-      <select name="year_end">
-        <option value="2016">2016</option>
-        <option value="2017">2017</option>
-        <option value="2018">2018</option>
-      </select>
+        <p> END DATE </p>
+        <select name="month_end">
+            <option value="01">Jan</option>
+            <option value="02">Feb</option>
+            <option value="03">Mar</option>
+            <option value="04">Apr</option>
+            <option value="05">May</option>
+            <option value="06">June</option>
+            <option value="07">July</option>
+            <option value="08">Aug</option>
+            <option value="09">Sept</option>
+            <option value="10">Oct</option>
+            <option value="11">Nov</option>
+            <option value="12">Dec</option>
+        </select>
+        <select name="day_end">
+            <option value="01">1</option>
+            <option value="02">2</option>
+            <option value="03">3</option>
+            <option value="04">4</option>
+            <option value="05">5</option>
+            <option value="06">6</option>
+            <option value="07">7</option>
+            <option value="08">8</option>
+            <option value="09">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option value="31">31</option>
+        </select>
+        <select name="year_end">
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+            <option value="2018">2018</option>
+        </select>
 
-      <p> END TIME (24-HOUR)</p>
-      <select name="hour_end">
-        <option value="00">0</option>
-        <option value="01">1</option>
-        <option value="02">2</option>
-        <option value="03">3</option>
-        <option value="04">4</option>
-        <option value="05">5</option>
-        <option value="06">6</option>
-        <option value="07">7</option>
-        <option value="08">8</option>
-        <option value="09">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-        <option value="13">13</option>
-        <option value="14">14</option>
-        <option value="15">15</option>
-        <option value="16">16</option>
-        <option value="17">17</option>
-        <option value="18">18</option>
-        <option value="19">19</option>
-        <option value="20">20</option>
-        <option value="21">21</option>
-        <option value="22">22</option>
-        <option value="23">23</option>
-        <option value="24">24</option>
-      </select> :
-      <select name="minute_end">
-        <option value="00">00</option>
-        <option value="15">15</option>
-        <option value="30">30</option>
-        <option value="45">45</option>
-      </select>
-      
-    <br><br><br>
+        <p> END TIME (24-HOUR)</p>
+        <select name="hour_end">
+            <option value="00">0</option>
+            <option value="01">1</option>
+            <option value="02">2</option>
+            <option value="03">3</option>
+            <option value="04">4</option>
+            <option value="05">5</option>
+            <option value="06">6</option>
+            <option value="07">7</option>
+            <option value="08">8</option>
+            <option value="09">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+        </select> :
+        <select name="minute_end">
+            <option value="00">00</option>
+            <option value="15">15</option>
+            <option value="30">30</option>
+            <option value="45">45</option>
+        </select>
+    <br>
+    <br>
+    <br>
     <input id="save" name="save" type="submit" value="SAVE!">
     <input id="search" name="search" type="submit" value="SEARCH!">
-  </form>
+    </form>
+    -->
+    <script src="../static/js/nlform.js"></script>
+    <script>
+        var nlform = new NLForm(document.getElementById('nl-form'));
+    </script>
 </body>
+
 </html>
