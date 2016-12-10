@@ -80,14 +80,16 @@ def results():
         #print "Location: " + location
         date = request.form['date']
         #print "Date: " + date
-        if 'search' in request.form:
+        limit = request.form.get('limit')
+        #print "Limit: " + limit
+        if 'save' in request.form:
             print "hi"
             message = "SUCCESSFULLY UPDATED PREFERENCES"
             functions.changePrefs(radius,category,search,price,location,date,session['username'])
             return render_template("form.html", message = message)
-        else:
+        elif 'search' in request.form:
             output = []
-            params = api.get_search_params(search,2,0,category,radius,False)
+            params = api.get_search_params(search,limit,0,category,radius,False)
             ret = api.yelp_lookup(location,["",""],["","","",""],params)
             for business in ret:
                 for key, value in business.iteritems():

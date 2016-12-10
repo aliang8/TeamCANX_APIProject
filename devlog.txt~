@@ -33,7 +33,10 @@ Nancy(11:34 PM): Successfully implemented Eventbrite with urllib instead of requ
 
 Constantine(11:00 PM): Added a couple of lines of code and created a keys.txt file on the computer (not repo) in order to extract/read the file and receive the Google Maps key.
 
-anthonyL -- 2016-12-09 23:21: Changed frontend/home.html page to utilize the bootstrap element modal. Added the functions for saving user settings and changing user settings.  
+anthonyL -- 2016-12-08 23:21: Changed frontend/home.html page to utilize the bootstrap element modal. Added the functions for saving user settings and changing user settings.  
 
 Constantine(11:48 PM): Edited the database format and created an inputPrefs function in the dumbbell file.
 
+12/9/16
+
+anthonyL -- 2016-12-09 22:31: Added some custom styling to the form to make it more user friendly and interactive. Will be fixing the design and adding finishing touches soon. 

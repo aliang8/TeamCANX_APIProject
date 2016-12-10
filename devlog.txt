@@ -40,3 +40,7 @@ Constantine(11:48 PM): Edited the database format and created an inputPrefs func
 12/9/16
 
 anthonyL -- 2016-12-09 22:31: Added some custom styling to the form to make it more user friendly and interactive. Will be fixing the design and adding finishing touches soon. 
+
+12/10/16
+	
+anthonyL -- 2016-12-10 3:24: Reformatted the form page. Made it so that not all fields are required. Added a limit parameter so users can specify how many entries they want to view.
