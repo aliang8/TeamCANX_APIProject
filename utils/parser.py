@@ -76,7 +76,7 @@ def crtLists(jsonData, maxPriceLevel):
           #THAT DON'T HAVE PRICE LEVELS :(
           if i["price_level"] <= maxPriceLevel:
               # took out  i["geometry"]["location"]....because the user probably won't care about the latitude/longitude
-              resList.append([i["name"]+",",i["vicinity"], "Price Level: "+str(i["price_level"])])
+              resList.append([i["name"]+",",i["vicinity"],str(i["price_level"])])
    # print resList
     return resList
 
