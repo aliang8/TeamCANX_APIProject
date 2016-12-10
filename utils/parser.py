@@ -63,10 +63,10 @@ def GooglPlac(lat, lng, radius, typeOfPlace,keyword, key):
 
 
 
-def crtLists(jsonData, minPriceLevel):
-   # print minPriceLevel
+def crtLists(jsonData, maxPriceLevel):
+   # print maxPriceLevel
     #must convert to int because form takes it in as a string
-    minPriceLevel = int(minPriceLevel)
+    maxPriceLevel = int(maxPriceLevel)
     resList = []
     res = jsonData["results"]
     for i in res:
@@ -74,7 +74,7 @@ def crtLists(jsonData, minPriceLevel):
         if "price_level" in i:
           #THIS MEANS THAT WE MUST COMPLETELY IGNORE THE GOOGLE API RESULTS
           #THAT DON'T HAVE PRICE LEVELS :(
-          if i["price_level"] >= minPriceLevel:
+          if i["price_level"] <= maxPriceLevel:
               # took out  i["geometry"]["location"]....because the user probably won't care about the latitude/longitude
               resList.append([i["name"]+",",i["vicinity"], "Price Level: "+str(i["price_level"])])
    # print resList
@@ -85,10 +85,10 @@ def crtLists(jsonData, minPriceLevel):
 
 ###This is the main function
 ###User inputs the latitude?, longitude?, radius, type of place, keyword, and minPricelevel----type of place and keyword must be strings
-def allInOneFunc(lat, lng, radius, typeOfPlace,keyword, minPriceLevel):
+def allInOneFunc(lat, lng, radius, typeOfPlace,keyword, maxPriceLevel):
 
-    f = open("/Users/Flamingo/Documents/SoftDev/flask-intro/softdev/keys.txt","r")
-    # f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
+   # f = open("/Users/Flamingo/Documents/SoftDev/flask-intro/softdev/keys.txt","r")
+    f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
    ## basepath = os.path.dirname("parser.py")
    # filepath = os.path.abspath(os.path.join(basepath, "..","..","keys.txt"))
    # f = open("/../../keys.txt","r")
@@ -98,7 +98,7 @@ def allInOneFunc(lat, lng, radius, typeOfPlace,keyword, minPriceLevel):
     x = GooglPlac(lat, lng, radius, typeOfPlace,keyword, key)
     #x is the dictionary parsed from the json data
 
-    y = crtLists(x,minPriceLevel)
+    y = crtLists(x,maxPriceLevel)
     #y is the list of places that fit the user's parameters
 
     return y
@@ -108,9 +108,9 @@ def allInOneFunc(lat, lng, radius, typeOfPlace,keyword, minPriceLevel):
 radius = 500
 typeOfPlace = "restaurant"
 keyword = "pizza"
-minPriceLevel = 1
+maxPriceLevel = 1
 ##Lat and Lng are created at the top: they are the computer's ip address' location
-#print allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, minPriceLevel)
+#print allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, maxPriceLevel)
 
 
 #==========================================YELP API============================================
