@@ -13,30 +13,26 @@
         <header>
             <h1>Tell us what you want!</h1>
             <h2>{{message}}</h2>
+            <h3> ** Important **</h3>
+            <h3> Please enter in a location! </h3>
         </header>
         <div class="main clearfix">
             <form action="/results/" method="POST" id="nl-form" class="nl-form">
-                I want to
-                <select name="search">
-                    <option value="1" selected>any activity</option>
-                    <option value="Indian">Indian</option>
-                    <option value="French">French</option>
-                    <option value="Japanese">Japanese</option>
-                    <option value="Italian">Italian</option>
-                </select> at
-                <select name="place">
-                    <option value="1" selected>any place</option>
-                    <option value="fancy">fancy</option>
-                    <option value="hip">hip</option>
-                    <option value="traditional">traditional</option>
-                    <option value="romantic">romantic</option>
-                </select> on
-                <input type="text" name="date" placeholder="date" data-subline="Example: <em>2/15/2016 (M/D/Y)</em>" />. I can spend
-                <input type="text" name="price" placeholder="price" data-subline="Example: <em>2</em> or <em>120</em>" /> and I can travel
-                <input type="text" name="radius" placeholder="radius" data-subline="Example: <em>2</em> or <em>120</em> kilometers" /> from my location at
-                <input type="text" name="location" placeholder="location" data-subline="Example: <em>345 Chambers Street</em>" /> .
+                Search:
+                <input type="text" name="search" placeholder="any activity" data-subline="Example: <em>food, restaurants, Starbucks</em>">
+                <br> Category:
+                <input type="text" name="category" placeholder="category" data-subline="Example: <em>fleamarkets, hats, pizza</em>">
+                <br> Date:
+                <input type="text" name="date" placeholder="date" data-subline="Example: <em>2/15/2016 (M/D/Y)</em>" />
+                <br> Money:
+                <input type="text" name="price" placeholder="price" data-subline="Example: <em>2</em> or <em>120</em>">
+                <br> Distance:
+                <input type="text" name="radius" placeholder="radius" data-subline="Example: <em>2</em> or <em>120</em> kilometers">
+                <br> Starting location:
+                <input type="text" name="location" placeholder="location" data-subline="Example: <em>345 Chambers Street</em>" required/>
+                <br>
                 <div class="nl-submit-wrap">
-                    <button class="nl-submit" id="save" name="name" type="submit">Save!</button>
+                    <button class="nl-submit" id="save" name="save" type="submit">Save!</button>
                 </div>
                 <div class="nl-submit-wrap">
                     <button class="nl-submit" id="search" name="search" type="submit">Search for event!</button>

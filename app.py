@@ -69,26 +69,25 @@ def results():
     '''
     if request.method == 'POST':
         radius = request.form['radius']
-        print radius
-        #place = request.form['place']
-        place = request.form['place']
-        print place
-        #search = request.form['search']
-        search = request.form.get('search')
-        print search
+        #print "Radius: " + radius
+        category = request.form['category']
+        #print "Place: " + category
+        search = request.form['search']
+        #print "Search: " + search
         price = request.form['price']
-        print price
+        #print "Price: " + price
         location = request.form['location']
-        print location
+        #print "Location: " + location
         date = request.form['date']
-        print date
-        if 'save' in request.form:
+        #print "Date: " + date
+        if 'search' in request.form:
+            print "hi"
             message = "SUCCESSFULLY UPDATED PREFERENCES"
-            functions.changePrefs(radius,place,search,price,location,date,session['username'])
+            functions.changePrefs(radius,category,search,price,location,date,session['username'])
             return render_template("form.html", message = message)
         else:
             output = []
-            params = api.get_search_params(search,1,0,place,radius,False)
+            params = api.get_search_params(search,2,0,category,radius,False)
             ret = api.yelp_lookup(location,["",""],["","","",""],params)
             for business in ret:
                 for key, value in business.iteritems():

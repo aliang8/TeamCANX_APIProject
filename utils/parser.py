@@ -125,12 +125,18 @@ Params for query: term(string), limit(#), offset(#), sort(0-Best matched, 1-Dist
 
 def get_search_params(term,limit,sort,category,radius,deals):
     params = {}
-    params['term'] = term
-    params['limit'] = limit
-    params['sort'] = sort
-    params['category_filter'] = category
-    params['radius_filter'] = radius
-    params['deals_filter'] = deals
+    if term:
+        params['term'] = term
+    if limit:
+        params['limit'] = limit
+    if sort:
+        params['sort'] = sort
+    if category:
+        params['category_filter'] = category
+    if radius:
+       params['radius_filter'] = radius
+    if deals:
+       params['deals_filter'] = deals
     return params
 
 '''

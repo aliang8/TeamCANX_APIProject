@@ -69,11 +69,19 @@ def results():
     '''
     if request.method == 'POST':
         radius = request.form['radius']
+        print radius
+        #place = request.form['place']
         place = request.form['place']
-        search = request.form['search']
+        print place
+        #search = request.form['search']
+        search = request.form.get('search')
+        print search
         price = request.form['price']
+        print price
         location = request.form['location']
+        print location
         date = request.form['date']
+        print date
         if 'save' in request.form:
             message = "SUCCESSFULLY UPDATED PREFERENCES"
             functions.changePrefs(radius,place,search,price,location,date,session['username'])

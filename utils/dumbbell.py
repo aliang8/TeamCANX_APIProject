@@ -9,12 +9,12 @@ def initializeTables():
     db = sql.connect(DATA)
     c = db.cursor()
     c.execute("CREATE TABLE IF NOT EXISTS accounts (username TEXT NOT NULL, password TEXT NOT NULL, userID INTEGER PRIMARY KEY autoincrement)")
-    c.execute("CREATE TABLE IF NOT EXISTS settings (radius INTEGER, place TEXT, search TEXT, price INTEGER, location TEXT, date TEXT, userID INTEGER)")
+    c.execute("CREATE TABLE IF NOT EXISTS settings (radius INTEGER, category TEXT, search TEXT, price INTEGER, location TEXT, date TEXT, userID INTEGER)")
     db.commit()
     db.close()
 
 #Allows users to update their preferences
-def changePrefs(radius, place, search, price, location, date, user):
+def changePrefs(radius, category, search, price, location, date, user):
     db = sql.connect(DATA)
     c = db.cursor()
     data = c.execute("SELECT userID FROM accounts WHERE username = ?", (user,))
@@ -23,9 +23,9 @@ def changePrefs(radius, place, search, price, location, date, user):
     exist = exists.fetchall()
     if len(exist) != 0:
         print "hi"
-        c.execute("UPDATE settings SET radius=?, price=?, search=?, price=?, location=?, date=? WHERE userID = ?", (radius,place,search,price,location,date,userID,))
+        c.execute("UPDATE settings SET radius=?, category=?, search=?, price=?, location=?, date=? WHERE userID = ?", (radius,category,search,price,location,date,userID,))
     else:
-        c.execute("INSERT INTO settings VALUES(?,?,?,?,?,?,?)", (radius,place,search,price,location,date,userID,))
+        c.execute("INSERT INTO settings VALUES(?,?,?,?,?,?,?)", (radius,category,search,price,location,date,userID,))
     db.commit()
     db.close()
     
