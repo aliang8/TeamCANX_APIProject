@@ -68,18 +68,15 @@ def results():
     business1 = [[key,value],[key,value],...]
     '''
     if request.method == 'POST':
-        print "hi"
         radius = request.form['radius']
         place = request.form['place']
         search = request.form['search']
         price = request.form['price']
         location = request.form['location']
         date = request.form['date']
-        
         if 'save' in request.form:
             message = "SUCCESSFULLY UPDATED PREFERENCES"
             functions.changePrefs(radius,place,search,price,location,date,session['username'])
-            print "hi"
             return render_template("form.html", message = message)
         else:
             output = []

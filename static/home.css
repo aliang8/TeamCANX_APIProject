@@ -1,6 +1,13 @@
 /*font candidate: http://www.1001freefonts.com/simply_glamorous.font*/
+
 body {
-    background-color: white;
+    position: relative;
+    background: #5f545a;
+    color: #faf1e0;
+    font-size: 100%;
+    line-height: 1.25;
+    font-weight: 300;
+    font-family: 'Lato', Arial, sans-serif;
 }
 
 #brand {
@@ -9,19 +16,33 @@ body {
     text-align: center;
     font-size: 8em;
     font-weight: bold;
-    animation-name : colorchange;
-    animation-duration : 5s;
+    animation-name: colorchange;
+    animation-duration: 5s;
     animation-iteration-count: infinite;
     text-shadow: 2px 2px 10px;
 }
+
 @keyframes colorchange {
-    0% {color: #96CEB4}   
-    25% {color: #FFEEAD}
-    50% {color: #FF6F69}
-    75% {color: #FFCC5C}
-    95% {color: #AAD8B0}
-    100% {color: #96CEB4}
+    0% {
+        color: #96CEB4
+    }
+    25% {
+        color: #FFEEAD
+    }
+    50% {
+        color: #FF6F69
+    }
+    75% {
+        color: #FFCC5C
+    }
+    95% {
+        color: #AAD8B0
+    }
+    100% {
+        color: #96CEB4
+    }
 }
+
 @font-face {
     font-family: "Simply Glamorous";
     src: url(SIMPLYGLAMOROUS.TTF);
@@ -41,7 +62,7 @@ body {
     font-weight: bold;
     border-left-color: transparent;
     border-right-color: transparent;
-    border-top-color: transparent; 
+    border-top-color: transparent;
     width: 100%;
     background-color: transparent;
     height: 3em;
@@ -55,7 +76,7 @@ body {
 }
 
 .btn-trans:hover {
-    color:black;
+    color: black;
 }
 
 .btn-opaq {
@@ -70,18 +91,25 @@ body {
     background-color: pink;
 }
 
-::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
     color: black;
     opacity: .5;
 }
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color:    black;
-    opacity:  .5;
+
+:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: black;
+    opacity: .5;
 }
-::-moz-placeholder { /* Mozilla Firefox 19+ */
-    color:    black;
-    opacity:  .5;
+
+::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: black;
+    opacity: .5;
 }
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color:    black;
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: black;
 }

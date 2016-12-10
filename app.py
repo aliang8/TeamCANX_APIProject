@@ -74,11 +74,9 @@ def results():
         price = request.form['price']
         location = request.form['location']
         date = request.form['date']
-        
         if 'save' in request.form:
             message = "SUCCESSFULLY UPDATED PREFERENCES"
             functions.changePrefs(radius,place,search,price,location,date,session['username'])
-            print "hi"
             return render_template("form.html", message = message)
         else:
             output = []
@@ -91,7 +89,7 @@ def results():
                         info.append([key.title(),val])
                     output.append(info)
                     
-            return render_template("results.html", output = output, message = message)
+            return render_template("results.html", output = output)
     
     '''
     #test case
