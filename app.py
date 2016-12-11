@@ -98,6 +98,7 @@ def results():
                     for key, val in value.iteritems():
                         info.append([key.title(),val])
                     data.append(info)
+        print data
         return render_template("results.html", data = data)
     '''
 

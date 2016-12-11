@@ -1,3 +1,4 @@
+import collections
 import datetime
 import os.path
 import sys
@@ -63,10 +64,10 @@ def GooglPlac(lat, lng, radius, typeOfPlace,keyword, key):
 
 
 
-def crtLists(jsonData, minPriceLevel):
-   # print minPriceLevel
+def crtLists(jsonData, maxPriceLevel):
+   # print maxPriceLevel
     #must convert to int because form takes it in as a string
-    minPriceLevel = int(minPriceLevel)
+    maxPriceLevel = int(maxPriceLevel)
     resList = []
     res = jsonData["results"]
     for i in res:
@@ -74,9 +75,9 @@ def crtLists(jsonData, minPriceLevel):
         if "price_level" in i:
           #THIS MEANS THAT WE MUST COMPLETELY IGNORE THE GOOGLE API RESULTS
           #THAT DON'T HAVE PRICE LEVELS :(
-          if i["price_level"] >= minPriceLevel:
+          if i["price_level"] <= maxPriceLevel:
               # took out  i["geometry"]["location"]....because the user probably won't care about the latitude/longitude
-              resList.append([i["name"]+",",i["vicinity"], "Price Level: "+str(i["price_level"])])
+              resList.append([i["name"]+",",i["vicinity"],str(i["price_level"])])
    # print resList
     return resList
 
@@ -85,10 +86,10 @@ def crtLists(jsonData, minPriceLevel):
 
 ###This is the main function
 ###User inputs the latitude?, longitude?, radius, type of place, keyword, and minPricelevel----type of place and keyword must be strings
-def allInOneFunc(lat, lng, radius, typeOfPlace,keyword, minPriceLevel):
+def allInOneFunc(lat, lng, radius, typeOfPlace,keyword, maxPriceLevel):
 
-    f = open("/Users/Flamingo/Documents/SoftDev/flask-intro/softdev/keys.txt","r")
-    # f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
+   # f = open("/Users/Flamingo/Documents/SoftDev/flask-intro/softdev/keys.txt","r")
+    f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
    ## basepath = os.path.dirname("parser.py")
    # filepath = os.path.abspath(os.path.join(basepath, "..","..","keys.txt"))
    # f = open("/../../keys.txt","r")
@@ -98,7 +99,7 @@ def allInOneFunc(lat, lng, radius, typeOfPlace,keyword, minPriceLevel):
     x = GooglPlac(lat, lng, radius, typeOfPlace,keyword, key)
     #x is the dictionary parsed from the json data
 
-    y = crtLists(x,minPriceLevel)
+    y = crtLists(x,maxPriceLevel)
     #y is the list of places that fit the user's parameters
 
     return y
@@ -108,16 +109,18 @@ def allInOneFunc(lat, lng, radius, typeOfPlace,keyword, minPriceLevel):
 radius = 500
 typeOfPlace = "restaurant"
 keyword = "pizza"
-minPriceLevel = 1
+maxPriceLevel = 1
 ##Lat and Lng are created at the top: they are the computer's ip address' location
-#print allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, minPriceLevel)
+#print allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, maxPriceLevel)
 
 
 #==========================================YELP API============================================
+
 with open('utils/config_secret.json') as cred:
     creds = json.load(cred)
     auth = Oauth1Authenticator(**creds)
     client = Client(auth)
+
 '''
 Params for query: term(string), limit(#), offset(#), sort(0-Best matched, 1-Distance,
 2-Highest Rated, category_filter(string), radius_filter(#), deals_filter(bool)
@@ -125,12 +128,18 @@ Params for query: term(string), limit(#), offset(#), sort(0-Best matched, 1-Dist
 
 def get_search_params(term,limit,sort,category,radius,deals):
     params = {}
-    params['term'] = term
-    params['limit'] = limit
-    params['sort'] = sort
-    params['category_filter'] = category
-    params['radius_filter'] = radius
-    params['deals_filter'] = deals
+    if term:
+        params['term'] = term
+    if limit:
+        params['limit'] = limit
+    if sort:
+        params['sort'] = sort
+    if category:
+        params['category_filter'] = category
+    if radius:
+       params['radius_filter'] = radius
+    if deals:
+       params['deals_filter'] = deals
     return params
 
 '''
@@ -150,7 +159,7 @@ menu_provider, reservation_url, eat24_url
 
 def yelp_lookup(loc,coords,bounds,params):
     params = params
-    ret = {}
+    ret = collections.OrderedDict()
     if coords[0] == '' and bounds[0] == '':
         response = client.search(loc,**params)
     elif loc == '' and bounds[0] == '':
@@ -159,16 +168,17 @@ def yelp_lookup(loc,coords,bounds,params):
         response = client.search_by_bounding_box(bounds[0],bounds[1],bounds[2],bounds[3],**params)
     for business in response.businesses:
         name = business.name
-        ret[name] = {}
-        ret[name]['display_phone'] = business.display_phone
-        ret[name]['url'] = business.url
-        ret[name]['review_count'] = business.review_count
-        ret[name]['categories'] = business.categories
-        ret[name]['rating'] = business.rating
+        ret[name] = collections.OrderedDict()
+        ret[name]['name'] = name
         ret[name]['snippet_text'] = business.snippet_text
-        ret[name]['location_address'] = business.location.display_address
-        ret[name]['location_coordinate_latitude'] = business.location.coordinate.latitude
-        ret[name]['location_coordinate_longitude'] = business.location.coordinate.longitude
+        ret[name]['rating'] = business.rating
+        ret[name]['display_phone'] = business.display_phone
+        ret[name]['location_address'] = ' '.join(business.location.display_address)
+        ret[name]['url'] = business.url
+        #ret[name]['review_count'] = business.review_count
+        #ret[name]['categories'] = business.categories
+        #ret[name]['location_coordinate_latitude'] = business.location.coordinate.latitude
+        #ret[name]['location_coordinate_longitude'] = business.location.coordinate.longitude
         ret[name]['deals'] = business.deals
         ret[name]['snippet_image_url'] = business.snippet_image_url
         ret[name]['menu_provider'] = business.menu_provider
@@ -195,29 +205,17 @@ Todo:
 '''
 # returns list of (sub)dictionaries of each event's logo, name, description, url, start & end date & time
 def getEvents(d):
-    keyword = sort_by = dateKey = location_address = location_within = price = lat = lng = startRange = endRange = ""
-    if ("year_start" in d) and ("month_start" in d) and ("day_start" in d) and ("hour_start" in d) and ("minute_start" in d):
-        startRange = toUTC_start(d["year_start"], d["month_start"], d["day_start"], d["hour_start"], d["minute_start"])
-    if ("year_end" in d) and ("month_end" in d) and ("day_end" in d) and ("hour_end" in d) and ("minute_end" in d):
-        endRange = toUTC_end(d["year_end"], d["month_end"], d["day_end"], d["hour_end"], d["minute_end"])
-    if "keyword" in d:
-        keyword = "&q=" + d["keyword"]
-    if "sort" in d:
-        sort_by = "&sort_by=" + d["sort"]
-    if "dateKey" in d:
-        dateKey = "&start_date.keyword=" + d["dateKey"]
-    if "address" in d:
-        location_address = "&location.address=" + d["address"]
-    if "radius" in d:
-        location_within = "&location.within=" + d["radius"]
-    if "price" in d:
-        price = "&price=" + d["price"]
-    if "lat" in d:
-        lat = "&location.latitude=" + d["lat"]
-    if "long" in d:
-        lat = "&location.longitude=" + d["long"]
-    url = ('https://www.eventbriteapi.com/v3/events/search/?token=BV442UWQUREICGJW7V2A' + \
-            keyword + sort_by + location_address + location_within + startKey + price + lat + lng + startRange + endRange)
+    utcList = ["year_start", "month_start", "day_start", "hour_start", "minute_start", \
+    "year_end", "month_end", "day_end", "hour_end", "minute_end"]
+    inputs = ""
+    for key in d.keys():
+        if (d[key]) and (key not in utcList): # if not empty & isn't time input
+            inputs += "&%s=%s"%(key, d[key])
+    #if d["year_start"] and d["month_start"] and d["day_start"] and d["hour_start"] and d["minute_start"]:
+    #    startRange = toUTC_start(d["year_start"], d["month_start"], d["day_start"], d["hour_start"], d["minute_start"])
+    #if d["year_end"] and d["month_end"] and d["day_end"] and d["hour_end"] and d["minute_end"]:
+    #    endRange = toUTC_end(d["year_end"], d["month_end"], d["day_end"], d["hour_end"], d["minute_end"])
+    url = ("https://www.eventbriteapi.com/v3/events/search/?token=BV442UWQUREICGJW7V2A" + inputs)
     '''
     # RIP requests code
     response = requests.get(
@@ -240,13 +238,12 @@ def getEvents(d):
     '''
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
-    d = json.loads(jsonUntouched)["events"]
-    #d = response.json()['events'] # dictionary of all events Eventbrite returns
+    eventsDict = json.loads(jsonUntouched)["events"]
     ret = [] # returned list
-    i = 0
-    for event in d:
+    ret.append(url)
+    for event in eventsDict:
         holder = {} # sublist for each entry
-        if (event["logo"]!= None):
+        if (event["logo"]):
             holder["logo"] = event["logo"]["url"] # link to event's logo pic
         holder["name"] = event['name']['text'] # name of event
         holder["description"] = event["description"]["text"] # VERY MESSY description
@@ -273,26 +270,12 @@ def toUTC_start(year, month, day, hour, minute):
 def toUTC_end(year, month, day, hour, minute):
     return "&start_date.range_end=" + "%s-%s-%sT%s:%s:00"%(year, month, day, hour, minute)
 
-def getResponses():
-    d = {}
-    if request.method == 'POST':
-        d["radius"]= request.form['radius']
-    return d
-
 # example call
 # start: 12/16 9AM
 # end: 12/16 8 PM
-d1 = { "keyword":"food", "sort":"best", "address":"united states", "radius":"10mi", \
-"lat":LAT, "long":LNG, "price":"", "startKey":"", \
-"year_start":"2016", "month_start":"12", "day_start":"16", "hour_start":"00", "minute_start":"00", \
-"year_end":"2016", "month_end":"12", "day_end":"16", "hour_end":"20", "minute_end":"00"}
 
-d2 = { "keyword":"", "sort":"", "address":"united states",  \
-"lat":LAT, "long":LNG, "price":"", \
-"year_start":"2016", "month_start":"12", "day_start":"16", "hour_start":"00", "minute_start":"00", \
-"year_end":"2016", "month_end":"12", "day_end":"16", "hour_end":"20", "minute_end":"00"}
-
-#print getEvents(d2)
+#d1 = {"q":"food"}
+#print getEvents(d1)
 #print convertToUTC("2016", "12", "16", "09", "00")
 #print convertToUTC("2016", "12", "16", "20", "00")
 

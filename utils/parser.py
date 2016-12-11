@@ -170,6 +170,7 @@ def yelp_lookup(loc,coords,bounds,params):
         name = business.name
         ret[name] = collections.OrderedDict()
         ret[name]['name'] = name
+        ret[name]['snippet_image_url'] = business.snippet_image_url
         ret[name]['snippet_text'] = business.snippet_text
         ret[name]['rating'] = business.rating
         ret[name]['display_phone'] = business.display_phone
@@ -180,11 +181,9 @@ def yelp_lookup(loc,coords,bounds,params):
         #ret[name]['location_coordinate_latitude'] = business.location.coordinate.latitude
         #ret[name]['location_coordinate_longitude'] = business.location.coordinate.longitude
         ret[name]['deals'] = business.deals
-        ret[name]['snippet_image_url'] = business.snippet_image_url
         ret[name]['menu_provider'] = business.menu_provider
         ret[name]['reservation_url'] = business.reservation_url
         ret[name]['eat24_url'] = business.eat24_url
-    print ret
     return [ret]
 '''
 #Test Queries
