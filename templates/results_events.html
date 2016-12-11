@@ -4,15 +4,13 @@
   <head> </head>
   <body>
     <h3> Eventbrite Stuff </h3>
+    {{ URL }}
     {% for d in events %}
       <h4> {{d["name"]}} </h4>
       <p> Start: {{d["start"]}} </p>
       <p> End: {{d["end"]}} </p>
       <p> Description: {{d["description"]}} </p>
       <p> <a href="{{d['url']}}"> URL </a> </p>
-
-
-
     {% endfor %}
 
   </body>

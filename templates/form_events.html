@@ -3,22 +3,59 @@
 
 <head>
   <title>MyDay Form</title>
-  <link rel="stylesheet" type="text/css" href="../static/form.css">
 </head>
 
 <body>
-  <h2><center>EDIT YOUR PREFERENCES FOR BETTER RESULTS!</center></h2>
+  <h2><center> eventbrite test</center></h2>
   <form action="/results/events" method="POST" id="form" class="topBefore">
 
-    <input id="radius" name="radius" type="text" placeholder="RADIUS">
-    <input id="place" name="place" type="text" placeholder="PLACE">
-    <input id="search" name="search" type="text" placeholder="SEARCH">
-    <input id="price" name="price" type="text" placeholder="PRICE">
-    <input id="location" name="location" type="text" placeholder="LOCATION">
-    <input id="date" name="date" type="text" placeholder="DATE">
+    <p> SEARCH:
+      <input id="keyword" name="keyword" type="text" placeholder="KEYWORD">
+    </p>
+
+    <p> ADDRESS:
+      <input id="address" name="address" type="text" placeholder="ADDRESS">
+    <p>
+
+    <p> LOCATION WITHIN:
+      <select name="radius">
+        <option value="">--</option>
+        <option value="5mi">5</option>
+        <option value="10mi">10</option>
+        <option value="25mi">25</option>
+        <option value="50mi">50</option>
+        <option value="75mi">75</option>
+      </select> miles
+
+    <p>
+      SORT BY:
+      <input type="radio" name="sort_by" value="date"> date
+      <input type="radio" name="sort_by" value="distance">distance
+      <input type="radio" name="sort_by" value="best">best
+      <input type="radio" name="sort_by" value="" checked>none
+    </p>
+
+    <p>
+      PRICE:
+      <input type="radio" name="price" value="free"> free
+      <input type="radio" name="price" value="paid"> paid
+      <input type="radio" name="price" value="" checked>none
+    </p>
+
+    <p> GENERAL START DATE:
+      <input type="radio" name="startKey" value="today"> today
+      <input type="radio" name="startKey" value="tomorrow"> tomorrow
+      <input type="radio" name="startKey" value="this_week"> this week
+      <input type="radio" name="startKey" value="this_weekend"> this weekend
+      <input type="radio" name="startKey" value="this_month"> this month
+      <input type="radio" name="startKey" value="next_week"> next week
+      <input type="radio" name="startKey" value="next_month"> next month
+      <input type="radio" name="startKey" value="" checked>none
+    </p>
 
     <p> START DATE </p>
     <select name="month_start">
+      <option value="">--</option>
       <option value="01">Jan</option>
       <option value="02">Feb</option>
       <option value="03">Mar</option>
@@ -33,6 +70,7 @@
       <option value="12">Dec</option>
     </select>
     <select name="day_start">
+      <option value="">--</option>
       <option value="01">1</option>
       <option value="02">2</option>
       <option value="03">3</option>
@@ -66,6 +104,7 @@
       <option value="31">31</option>
     </select>
     <select name="year_start">
+      <option value="">----</option>
       <option value="2016">2016</option>
       <option value="2017">2017</option>
       <option value="2018">2018</option>
@@ -73,6 +112,7 @@
 
     <p> START TIME (24-HOUR)</p>
     <select name="hour_start">
+      <option value="">--</option>
       <option value="00">0</option>
       <option value="01">1</option>
       <option value="02">2</option>
@@ -100,6 +140,7 @@
       <option value="24">24</option>
     </select> :
     <select name="minute_start">
+      <option value="">--</option>
       <option value="00">00</option>
       <option value="15">15</option>
       <option value="30">30</option>
@@ -108,6 +149,7 @@
 
       <p> END DATE </p>
       <select name="month_end">
+        <option value="">--</option>
         <option value="01">Jan</option>
         <option value="02">Feb</option>
         <option value="03">Mar</option>
@@ -122,6 +164,7 @@
         <option value="12">Dec</option>
       </select>
       <select name="day_end">
+        <option value="">--</option>
         <option value="01">1</option>
         <option value="02">2</option>
         <option value="03">3</option>
@@ -155,6 +198,7 @@
         <option value="31">31</option>
       </select>
       <select name="year_end">
+        <option value="">----</option>
         <option value="2016">2016</option>
         <option value="2017">2017</option>
         <option value="2018">2018</option>
@@ -162,6 +206,7 @@
 
       <p> END TIME (24-HOUR)</p>
       <select name="hour_end">
+        <option value="">--</option>
         <option value="00">0</option>
         <option value="01">1</option>
         <option value="02">2</option>
@@ -189,6 +234,7 @@
         <option value="24">24</option>
       </select> :
       <select name="minute_end">
+        <option value="">--</option>
         <option value="00">00</option>
         <option value="15">15</option>
         <option value="30">30</option>

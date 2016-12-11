@@ -83,7 +83,7 @@ def results():
         limit = request.form.get('limit')
         #print "Limit: " + limit
 
-        
+
         if 'save' in request.form:
             print "hi"
             message = "SUCCESSFULLY UPDATED PREFERENCES"
@@ -102,14 +102,14 @@ def results():
             print output
             return render_template("results.html", output = output)
     '''
-    
+
     #test case
     radius = 500
     typeOfPlace = "restaurant"
     keyword = "pizza"
     maxPriceLevel = 1
-    
-        
+
+
     typeOfPlace = search
     keyword = search
     maxPriceLevel = price
@@ -117,13 +117,31 @@ def results():
     rsltList = api.allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, maxPriceLevel)
     return render_template("results.html", results = rsltList)
     '''
-    
+
 
 @app.route("/results/events", methods=['POST','GET'])
 def results_events():
-    d = {}
-    d["keyword"] = request.form['search']
-    return render_template("results_events.html", events = api.getEvents(d))
+    if request.method == 'POST':
+        d = {}
+        d["q"] = request.form['keyword']
+        d["location.address"] = request.form['address']
+        d["location.within"] = request.form['radius']
+        d["sort_by"] = request.form['sort_by']
+        d["price"] = request.form['price']
+        d["start_date.keyword"] = request.form['startKey']
+        # DATE & TIME
+        d["year_start"] = request.form['year_start']
+        d["month_start"] = request.form['month_start']
+        d["day_start"] = request.form['day_start']
+        d["hour_start"] = request.form['hour_start']
+        d["minute_start"] = request.form['minute_start']
+        d["year_end"] = request.form['year_end']
+        d["month_end"] = request.form['month_end']
+        d["day_end"] = request.form['day_end']
+        d["hour_end"] = request.form['hour_end']
+        d["minute_end"] = request.form['minute_end']
+        #print d
+        return render_template("results_events.html", events = api.getEvents(d), URL = api.getEvents(d)[0])
 
 if __name__ == '__main__':
     app.debug = True

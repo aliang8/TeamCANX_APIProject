@@ -114,10 +114,12 @@ maxPriceLevel = 1
 
 
 #==========================================YELP API============================================
+
 with open('utils/config_secret.json') as cred:
     creds = json.load(cred)
     auth = Oauth1Authenticator(**creds)
     client = Client(auth)
+
 '''
 Params for query: term(string), limit(#), offset(#), sort(0-Best matched, 1-Distance,
 2-Highest Rated, category_filter(string), radius_filter(#), deals_filter(bool)
@@ -202,29 +204,17 @@ Todo:
 '''
 # returns list of (sub)dictionaries of each event's logo, name, description, url, start & end date & time
 def getEvents(d):
-    keyword = sort_by = dateKey = location_address = location_within = price = lat = lng = startRange = endRange = ""
-    if ("year_start" in d) and ("month_start" in d) and ("day_start" in d) and ("hour_start" in d) and ("minute_start" in d):
-        startRange = toUTC_start(d["year_start"], d["month_start"], d["day_start"], d["hour_start"], d["minute_start"])
-    if ("year_end" in d) and ("month_end" in d) and ("day_end" in d) and ("hour_end" in d) and ("minute_end" in d):
-        endRange = toUTC_end(d["year_end"], d["month_end"], d["day_end"], d["hour_end"], d["minute_end"])
-    if "keyword" in d:
-        keyword = "&q=" + d["keyword"]
-    if "sort" in d:
-        sort_by = "&sort_by=" + d["sort"]
-    if "dateKey" in d:
-        dateKey = "&start_date.keyword=" + d["dateKey"]
-    if "address" in d:
-        location_address = "&location.address=" + d["address"]
-    if "radius" in d:
-        location_within = "&location.within=" + d["radius"]
-    if "price" in d:
-        price = "&price=" + d["price"]
-    if "lat" in d:
-        lat = "&location.latitude=" + d["lat"]
-    if "long" in d:
-        lat = "&location.longitude=" + d["long"]
-    url = ('https://www.eventbriteapi.com/v3/events/search/?token=BV442UWQUREICGJW7V2A' + \
-            keyword + sort_by + location_address + location_within + startKey + price + lat + lng + startRange + endRange)
+    utcList = ["year_start", "month_start", "day_start", "hour_start", "minute_start", \
+    "year_end", "month_end", "day_end", "hour_end", "minute_end"]
+    inputs = ""
+    for key in d.keys():
+        if (d[key]) and (key not in utcList): # if not empty & isn't time input
+            inputs += "&%s=%s"%(key, d[key])
+    #if d["year_start"] and d["month_start"] and d["day_start"] and d["hour_start"] and d["minute_start"]:
+    #    startRange = toUTC_start(d["year_start"], d["month_start"], d["day_start"], d["hour_start"], d["minute_start"])
+    #if d["year_end"] and d["month_end"] and d["day_end"] and d["hour_end"] and d["minute_end"]:
+    #    endRange = toUTC_end(d["year_end"], d["month_end"], d["day_end"], d["hour_end"], d["minute_end"])
+    url = ("https://www.eventbriteapi.com/v3/events/search/?token=BV442UWQUREICGJW7V2A" + inputs)
     '''
     # RIP requests code
     response = requests.get(
@@ -247,13 +237,12 @@ def getEvents(d):
     '''
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
-    d = json.loads(jsonUntouched)["events"]
-    #d = response.json()['events'] # dictionary of all events Eventbrite returns
+    eventsDict = json.loads(jsonUntouched)["events"]
     ret = [] # returned list
-    i = 0
-    for event in d:
+    ret.append(url)
+    for event in eventsDict:
         holder = {} # sublist for each entry
-        if (event["logo"]!= None):
+        if (event["logo"]):
             holder["logo"] = event["logo"]["url"] # link to event's logo pic
         holder["name"] = event['name']['text'] # name of event
         holder["description"] = event["description"]["text"] # VERY MESSY description
@@ -280,26 +269,12 @@ def toUTC_start(year, month, day, hour, minute):
 def toUTC_end(year, month, day, hour, minute):
     return "&start_date.range_end=" + "%s-%s-%sT%s:%s:00"%(year, month, day, hour, minute)
 
-def getResponses():
-    d = {}
-    if request.method == 'POST':
-        d["radius"]= request.form['radius']
-    return d
-
 # example call
 # start: 12/16 9AM
 # end: 12/16 8 PM
-d1 = { "keyword":"food", "sort":"best", "address":"united states", "radius":"10mi", \
-"lat":LAT, "long":LNG, "price":"", "startKey":"", \
-"year_start":"2016", "month_start":"12", "day_start":"16", "hour_start":"00", "minute_start":"00", \
-"year_end":"2016", "month_end":"12", "day_end":"16", "hour_end":"20", "minute_end":"00"}
 
-d2 = { "keyword":"", "sort":"", "address":"united states",  \
-"lat":LAT, "long":LNG, "price":"", \
-"year_start":"2016", "month_start":"12", "day_start":"16", "hour_start":"00", "minute_start":"00", \
-"year_end":"2016", "month_end":"12", "day_end":"16", "hour_end":"20", "minute_end":"00"}
-
-#print getEvents(d2)
+#d1 = {"q":"food"}
+#print getEvents(d1)
 #print convertToUTC("2016", "12", "16", "09", "00")
 #print convertToUTC("2016", "12", "16", "20", "00")
 
