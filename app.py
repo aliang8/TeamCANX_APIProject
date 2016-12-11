@@ -85,12 +85,11 @@ def results():
 
 
         if 'save' in request.form:
-            print "hi"
             message = "SUCCESSFULLY UPDATED PREFERENCES"
             functions.changePrefs(radius,category,search,price,location,date,session['username'])
             return render_template("form.html", message = message)
         elif 'search' in request.form:
-            output = []
+            data = []
             params = api.get_search_params(search,limit,0,category,radius,False)
             ret = api.yelp_lookup(location,["",""],["","","",""],params)
             for business in ret:
@@ -98,9 +97,8 @@ def results():
                     info = []
                     for key, val in value.iteritems():
                         info.append([key.title(),val])
-                    output.append(info)
-            print output
-            return render_template("results.html", output = output)
+                    data.append(info)
+        return render_template("results.html", data = data)
     '''
 
     #test case
@@ -140,7 +138,7 @@ def results_events():
         d["day_end"] = request.form['day_end']
         d["hour_end"] = request.form['hour_end']
         d["minute_end"] = request.form['minute_end']
-        print d
+        #print d
         return render_template("results_events.html", events = api.getEvents(d), URL = api.getEvents(d)[0])
 
 if __name__ == '__main__':
