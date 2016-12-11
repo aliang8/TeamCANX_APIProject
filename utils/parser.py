@@ -244,6 +244,8 @@ def getEvents(d):
         holder = {} # sublist for each entry
         if (event["logo"]):
             holder["logo"] = event["logo"]["url"] # link to event's logo pic
+        else:
+            holder["logo"] =  "http://www.ereplacementparts.com/images/photo_not_available.png"
         holder["name"] = event['name']['text'] # name of event
         holder["description"] = event["description"]["text"] # VERY MESSY description
         holder["url"] = event["url"] # url of event

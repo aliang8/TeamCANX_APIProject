@@ -6,6 +6,7 @@
     <h3> Eventbrite Stuff </h3>
     {{ URL }}
     {% for d in events %}
+      <img src={{d["logo"]}} alt="N/A">
       <h4> {{d["name"]}} </h4>
       <p> Start: {{d["start"]}} </p>
       <p> End: {{d["end"]}} </p>

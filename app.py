@@ -140,7 +140,7 @@ def results_events():
         d["day_end"] = request.form['day_end']
         d["hour_end"] = request.form['hour_end']
         d["minute_end"] = request.form['minute_end']
-        #print d
+        print d
         return render_template("results_events.html", events = api.getEvents(d), URL = api.getEvents(d)[0])
 
 if __name__ == '__main__':

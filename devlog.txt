@@ -52,6 +52,4 @@ athanitisC -- 2016-12-10 17:27: Changed minPriceLevel to maxPriceLevel along wit
 
 athanitisC -- 2016-12-10 18:20: Edited yelp output function to give only some of the possibly output results/data. Created another basic bootstrap table for yelp results.
 
-12/10/16
-
-nancyC -- 2016-12-10 22:00: Linked Eventbrite get request with HTML form. Displays results in results_events.html. Backend have some bugs relating to date/time input that need to be fixed.
+nancyC -- 2016-12-10 22:00: Linked Eventbrite get request with HTML form. Displays results in results_events.html. Backend has some bugs relating to date/time input that need to be fixed. Included photo in results page for Eventbrite.
