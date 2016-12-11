@@ -17,23 +17,21 @@
       <h2>Results From Yelp</h2>
       <table class="table table-striped">
 	<thead>
-	  <th>Address</th>
-	  <th>Rating</th>
-	  <th>Review Count</th>
-	 <!-- <th>URL</th>-->
-	  <th>Name</th>
-	  <th>Phone Number</th>
+	  
 	</thead>
 	
 	<tbody>
-	  {% for business in output %}
+	  {% for business in data %}
+	  {% for key in business %}
 	  <tr>
-	    {% for key in business %}
+	    <td>
+	      {{key[0]}}
+	    </td>
 	    <td>
 	      {{key[1]}}
 	    </td>
-	    {% endfor %}
 	  </tr>
+	  {% endfor %}
 	  {% endfor %}
 	</tbody>
       </table>
