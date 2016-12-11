@@ -1,3 +1,4 @@
+import collections
 import datetime
 import os.path
 import sys
@@ -158,7 +159,7 @@ menu_provider, reservation_url, eat24_url
 
 def yelp_lookup(loc,coords,bounds,params):
     params = params
-    ret = {}
+    ret = collections.OrderedDict()
     if coords[0] == '' and bounds[0] == '':
         response = client.search(loc,**params)
     elif loc == '' and bounds[0] == '':
@@ -167,22 +168,23 @@ def yelp_lookup(loc,coords,bounds,params):
         response = client.search_by_bounding_box(bounds[0],bounds[1],bounds[2],bounds[3],**params)
     for business in response.businesses:
         name = business.name
-        ret[name] = {}
+        ret[name] = collections.OrderedDict()
         ret[name]['name'] = name
-        ret[name]['display_phone'] = business.display_phone
-       # ret[name]['url'] = business.url
-        ret[name]['review_count'] = business.review_count
-      #  ret[name]['categories'] = business.categories
+        ret[name]['snippet_text'] = business.snippet_text
         ret[name]['rating'] = business.rating
-      #  ret[name]['snippet_text'] = business.snippet_text
-        ret[name]['location_address'] = business.location.display_address
-      #  ret[name]['location_coordinate_latitude'] = business.location.coordinate.latitude
-      #  ret[name]['location_coordinate_longitude'] = business.location.coordinate.longitude
-      #  ret[name]['deals'] = business.deals
-      #  ret[name]['snippet_image_url'] = business.snippet_image_url
-      #  ret[name]['menu_provider'] = business.menu_provider
-      #  ret[name]['reservation_url'] = business.reservation_url
-      #  ret[name]['eat24_url'] = business.eat24_url
+        ret[name]['display_phone'] = business.display_phone
+        ret[name]['location_address'] = ' '.join(business.location.display_address)
+        ret[name]['url'] = business.url
+        #ret[name]['review_count'] = business.review_count
+        #ret[name]['categories'] = business.categories
+        #ret[name]['location_coordinate_latitude'] = business.location.coordinate.latitude
+        #ret[name]['location_coordinate_longitude'] = business.location.coordinate.longitude
+        ret[name]['deals'] = business.deals
+        ret[name]['snippet_image_url'] = business.snippet_image_url
+        ret[name]['menu_provider'] = business.menu_provider
+        ret[name]['reservation_url'] = business.reservation_url
+        ret[name]['eat24_url'] = business.eat24_url
+    print ret
     return [ret]
 '''
 #Test Queries
@@ -244,8 +246,6 @@ def getEvents(d):
         holder = {} # sublist for each entry
         if (event["logo"]):
             holder["logo"] = event["logo"]["url"] # link to event's logo pic
-        else:
-            holder["logo"] =  "http://www.ereplacementparts.com/images/photo_not_available.png"
         holder["name"] = event['name']['text'] # name of event
         holder["description"] = event["description"]["text"] # VERY MESSY description
         holder["url"] = event["url"] # url of event
