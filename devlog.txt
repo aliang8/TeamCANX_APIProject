@@ -1,5 +1,7 @@
 12/6/16
 
+xinhuixu -- 2016-12-06 14:50: initialized database link
+
 nancyC -- 2016-12-06 15:36: Figured out how to receive data from EventBrite API and store into a dictionary. Implemented in parse.py.
 
 nancyC -- 2016-12-06 16:48: Added inputs for keywords, sorting, address, radius, and price as search criteria for events.
@@ -17,7 +19,7 @@ Constantine(12:50 AM) Created the main function that combines all the user input
 
 12/7/16
 
-Xinhui(): Fix bootstrap structure/dependency link
+xinhuixu -- 2016-12-07 14:50: Fix bootstrap dependency link, reorganize front-end structure
 
 nancyC -- 2016-12-07 20:00:  Added time and date inputs for Eventbrite. Tried to implement urllib instead of requests but was unsuccessful.
 
@@ -30,7 +32,7 @@ Constantine(12:30 AM) Tweaked results function in app.py to output results from 
 
 nancyC -- 2016-12-08 12:50: Added field in form.html for Eventbrite input.
 
-Xinhui(1:41PM): home styling part 1
+xinhuixu -- 2016-12-08 13:40: Home styling
 
 nancyC -- 2016-12-08 10:30: Successfully implemented Eventbrite with urllib instead of requests. Made a HTML page to show Eventbrite search results.
 
@@ -41,6 +43,8 @@ anthonyL -- 2016-12-08 23:21: Changed frontend/home.html page to utilize the boo
 Constantine(11:48 PM): Edited the database format and created an inputPrefs function in the dumbbell file.
 
 12/9/16
+
+xinhuixu -- 2016-12-09 21:30: Cleaning up home template
 
 anthonyL -- 2016-12-09 22:31: Added some custom styling to the form to make it more user friendly and interactive. Will be fixing the design and adding finishing touches soon.
 
@@ -53,3 +57,5 @@ athanitisC -- 2016-12-10 17:27: Changed minPriceLevel to maxPriceLevel along wit
 athanitisC -- 2016-12-10 18:20: Edited yelp output function to give only some of the possibly output results/data. Created another basic bootstrap table for yelp results.
 
 nancyC -- 2016-12-10 22:00: Linked Eventbrite get request with HTML form. Displays results in results_events.html. Backend has some bugs relating to date/time input that need to be fixed. Included photo in results page for Eventbrite.
+
+xinhuixu -- 2016-12-10 22:41 home ravamped
