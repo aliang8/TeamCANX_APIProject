@@ -128,9 +128,6 @@ def results():
         maxPriceLevel = 1
 
         '''
-
-<<<<<<< HEAD
-=======
     '''
 
     #test case
@@ -174,7 +171,6 @@ def results_events():
         d["minute_end"] = request.form['minute_end']
         #print d
         return render_template("results_events.html", events = api.getEvents(d), URL = api.getEvents(d)[0])
->>>>>>> 10ef56a6a90be5e36470344e9836b9afedbb9322
 
 if __name__ == '__main__':
     app.debug = True

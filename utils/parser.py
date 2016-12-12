@@ -218,7 +218,6 @@ print(json.dumps(ret, indent=4, sort_keys=True))
 
 '''
 Todo:
--start_date.keyword
 -using google api to convert address -> lat,lng
 -testing
 '''
