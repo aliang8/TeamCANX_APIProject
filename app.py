@@ -116,7 +116,9 @@ def results():
     rsltList = api.allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, maxPriceLevel)
     return render_template("results.html",data = data, results = rsltList)
 
-
+@app.route("/events-list")
+def events_list():
+    return render_template("events-list.html");
 
 @app.route("/results/events", methods=['POST','GET'])
 def results_events():
