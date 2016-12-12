@@ -99,7 +99,7 @@ def results():
                     for key, val in value.iteritems():
                         info.append([key.title(),val])
                     data.append(info)
-        return render_template("results.html", data = data)
+
     '''
 
     #test case
@@ -108,14 +108,14 @@ def results():
     keyword = "pizza"
     maxPriceLevel = 1
 
-
+    '''
     typeOfPlace = search
     keyword = search
     maxPriceLevel = price
 
     rsltList = api.allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, maxPriceLevel)
-    return render_template("results.html", results = rsltList)
-    '''
+    return render_template("results.html",data = data, results = rsltList)
+
 
 
 @app.route("/results/events", methods=['POST','GET'])
