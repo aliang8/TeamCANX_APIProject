@@ -26,17 +26,13 @@
                 <br> Money:
                 <input type="text" name="price" placeholder="price" data-subline="Example: <em>2</em> or <em>120</em>">
                 <br> Distance:
-                {% if prefs[0] == '' %}
+                
 		<input type="text" name="radius" placeholder="radius" data-subline="Example: <em>2</em> or <em>120</em> kilometers">
-                {% else %}
-		<input type="text" name="radius" placeholder="{{prefs[0]}}" data-subline="Example: <em>2</em> or <em>120</em> kilometers">
-		{% endif %}
+                
 		<br> Starting location:
-		{% if prefs[4] == '' %}
-                <input type="text" name="location" placeholder="location" data-subline="Example: <em>345 Chambers Street</em>" required/>
-                {% else %}
-		<input type="text" name="location" placeholder="{{prefs[4]}}" data-subline="Example: <em>345 Chambers Street</em>" required/>
-		{% endif %}
+		
+                <input value="brooklyn" type="text" name="location" placeholder="location" data-subline="Example: <em>345 Chambers Street</em>" required>
+		
 		<br> Category:
                 <input type="text" name="category" placeholder="category" data-subline="Example: <em>fleamarkets, hats, pizza</em>">
                 <br> Number of results:

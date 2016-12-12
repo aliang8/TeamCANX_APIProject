@@ -47,7 +47,6 @@ def authenticate():
 def form():
     message = "EDIT YOUR PREFERENCES FOR BETTER RESULTS"
     prefs = functions.getUserPrefs(session['username'])
-    print prefs
     return render_template("form.html", message = message, prefs = prefs)
 
 @app.route("/form/events")
