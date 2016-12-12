@@ -22,13 +22,22 @@ def changePrefs(radius, category, search, price, location, date, user):
     exists = c.execute("SELECT 1 FROM settings WHERE userID = ?", (userID,))
     exist = exists.fetchall()
     if len(exist) != 0:
-        print "hi"
         c.execute("UPDATE settings SET radius=?, category=?, search=?, price=?, location=?, date=? WHERE userID = ?", (radius,category,search,price,location,date,userID,))
     else:
         c.execute("INSERT INTO settings VALUES(?,?,?,?,?,?,?)", (radius,category,search,price,location,date,userID,))
     db.commit()
     db.close()
     
+#Gets the user's preferences 
+def getUserPrefs(user):
+    db = sql.connect(DATA)
+    c = db.cursor()
+    data = c.execute("SELECT userID FROM accounts WHERE username = ?", (user,))
+    userID = data.fetchone()[0]
+    data = c.execute("SELECT * FROM settings WHERE userID = ?", (userID,))
+    prefs = data.fetchall()
+    return prefs[0]
+
 def register(username, password):
     hashpass = hashlib.sha224(password).hexdigest()
     creds = (username,hashpass,)
@@ -41,7 +50,7 @@ def register(username, password):
         return True
     else:
         return False
-
+    
 def login(username,password):
     hashpass = hashlib.sha224(password).hexdigest()
     db = sql.connect(DATA)

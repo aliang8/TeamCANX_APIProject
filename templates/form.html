@@ -19,14 +19,19 @@
         <div class="main clearfix">
             <form action="/results/" method="POST" id="nl-form" class="nl-form">
                 Search:
+		
                 <input type="text" name="search" placeholder="any activity" data-subline="Example: <em>food, restaurants, Starbucks</em>">
                 <br> Date:
                 <input type="text" name="date" placeholder="date" data-subline="Example: <em>2/15/2016 (M/D/Y)</em>" />
                 <br> Money:
                 <input type="text" name="price" placeholder="price" data-subline="Example: <em>2</em> or <em>120</em>">
                 <br> Distance:
-                <input type="text" name="radius" placeholder="radius" data-subline="Example: <em>2</em> or <em>120</em> kilometers">
-                <br> Starting location:
+                {% if prefs[0] == '' %}
+		<input type="text" name="radius" placeholder="radius" data-subline="Example: <em>2</em> or <em>120</em> kilometers">
+                {% else %}
+		<input type="text" name="radius" placeholder="{{prefs[0]}}" data-subline="Example: <em>2</em> or <em>120</em> kilometers">
+		{% endif %}
+		<br> Starting location:
                 <input type="text" name="location" placeholder="location" data-subline="Example: <em>345 Chambers Street</em>" required/>
                 <br> Category:
                 <input type="text" name="category" placeholder="category" data-subline="Example: <em>fleamarkets, hats, pizza</em>">

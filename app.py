@@ -46,7 +46,8 @@ def authenticate():
 @app.route("/form/")
 def form():
     message = "EDIT YOUR PREFERENCES FOR BETTER RESULTS"
-    return render_template("form.html", message = message)
+    ##prefs = functions.getUserPrefs(session['username'])
+    return render_template("form.html", message = message, prefs = prefs)
 
 @app.route("/form/events")
 def form_e():
@@ -98,7 +99,6 @@ def results():
                     for key, val in value.iteritems():
                         info.append([key.title(),val])
                     data.append(info)
-        print data
         return render_template("results.html", data = data)
     '''
 

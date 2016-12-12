@@ -1,15 +1,16 @@
 .myday-table {
     border-collapse: collapse;
-    border-spacing: 0;
+    border-spacing: 20;
     empty-cells: show;
     border: 1px solid #cbcbcb;
+    margin: 0px;
 }
 
 .myday-table td {
     border-left: 1px solid red;
     border-width: 0 0 0 1px;
     font-size: inherit;
-    margin: 0;
+    margin: 0px;
     overflow: visible;
     padding: 0.5em 1em;
 }
@@ -21,7 +22,6 @@
 .myday-table td {
     background-color: transparent;
 }
-
 .myday-table-odd td {
     background-color: #f2f2f2;
 }
