@@ -32,8 +32,12 @@
 		<input type="text" name="radius" placeholder="{{prefs[0]}}" data-subline="Example: <em>2</em> or <em>120</em> kilometers">
 		{% endif %}
 		<br> Starting location:
+		{% if prefs[4] == '' %}
                 <input type="text" name="location" placeholder="location" data-subline="Example: <em>345 Chambers Street</em>" required/>
-                <br> Category:
+                {% else %}
+		<input type="text" name="location" placeholder="{{prefs[4]}}" data-subline="Example: <em>345 Chambers Street</em>" required/>
+		{% endif %}
+		<br> Category:
                 <input type="text" name="category" placeholder="category" data-subline="Example: <em>fleamarkets, hats, pizza</em>">
                 <br> Number of results:
                 <select name="limit" id="limit">
