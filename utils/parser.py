@@ -66,7 +66,7 @@ def GooglPlacDet(ID,key):
            'placeid=%s'
            '&key=%s') %(ID, key)
     print url
-    
+
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
     jsonData = json.loads(jsonUntouched)
@@ -88,7 +88,7 @@ def crtLists(jsonData, maxPriceLevel,key):
           #THAT DON'T HAVE PRICE LEVELS :(
           if i["price_level"] <= maxPriceLevel:
               # took out  i["geometry"]["location"]....because the user probably won't care about the latitude/longitude
-             
+
               print i["id"]
               details = GooglPlacDet(i["place_id"],key)
               details= details["result"]
@@ -223,11 +223,9 @@ Todo:
 '''
 # returns list of (sub)dictionaries of each event's logo, name, description, url, start & end date & time
 def getEvents(d):
-    utcList = ["year_start", "month_start", "day_start", "hour_start", "minute_start", \
-    "year_end", "month_end", "day_end", "hour_end", "minute_end"]
     inputs = ""
     for key in d.keys():
-        if (d[key]) and (key not in utcList): # if not empty & isn't time input
+        if (d[key]): # if not empty & isn't time input
             inputs += "&%s=%s"%(key, d[key])
     #if d["year_start"] and d["month_start"] and d["day_start"] and d["hour_start"] and d["minute_start"]:
     #    startRange = toUTC_start(d["year_start"], d["month_start"], d["day_start"], d["hour_start"], d["minute_start"])

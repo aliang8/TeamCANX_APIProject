@@ -69,78 +69,66 @@ def results():
     business1 = [[key,value],[key,value],...]
     '''
     if request.method == 'POST':
-        radius = request.form['radius']
-        #print "Radius: " + radius
-        category = request.form['category']
-        #print "Place: " + category
-        search = request.form['search']
-        #print "Search: " + search
-        price = request.form['price']
-        #print "Price: " + price
-        location = request.form['location']
-        #print "Location: " + location
-        date = request.form['date']
-        #print "Date: " + date
-        limit = request.form.get('limit')
-        #print "Limit: " + limit
+        if 'places' in request.form:
+            radius = request.form['radius']
+            #print "Radius: " + radius
+            category = request.form['category']
+            #print "Place: " + category
+            search = request.form['search']
+            #print "Search: " + search
+            price = request.form['price']
+            #print "Price: " + price
+            location = request.form['location']
+            #print "Location: " + location
+            date = request.form['date']
+            #print "Date: " + date
+            limit = request.form.get('limit')
+            #print "Limit: " + limit
 
 
-        if 'save' in request.form:
-            message = "SUCCESSFULLY UPDATED PREFERENCES"
-            functions.changePrefs(radius,category,search,price,location,date,session['username'])
-            return render_template("form.html", message = message)
-        elif 'search' in request.form:
-            data = []
-            params = api.get_search_params(search,limit,0,category,radius,False)
-            ret = api.yelp_lookup(location,["",""],["","","",""],params)
-            for business in ret:
-                for key, value in business.iteritems():
-                    info = []
-                    for key, val in value.iteritems():
-                        info.append([key.title(),val])
-                    data.append(info)
+            if 'save' in request.form:
+                message = "SUCCESSFULLY UPDATED PREFERENCES"
+                functions.changePrefs(radius,category,search,price,location,date,session['username'])
+                return render_template("form.html", message = message)
+            elif 'search' in request.form:
+                data = []
+                params = api.get_search_params(search,limit,0,category,radius,False)
+                ret = api.yelp_lookup(location,["",""],["","","",""],params)
+                for business in ret:
+                    for key, value in business.iteritems():
+                        info = []
+                        for key, val in value.iteritems():
+                            info.append([key.title(),val])
+                        data.append(info)
+            typeOfPlace = search
+            keyword = search
+            maxPriceLevel = price
 
-    '''
+            rsltList = api.allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, maxPriceLevel)
+            return render_template("results.html",data = data, results = rsltList)
+        elif "events" in request.form:
+            d = {}
+            d["q"] = request.form["search"]
+            d["location.address"] = request.form['location']
+            d["location.within"] = request.form['radius']
+            d["sort_by"] = request.form['sort_by']
+            d["start_date.keyword"] = request.form["startKey"]
+            #d["price"] = request.form['price']
+            #d["start_date.keyword"] = request.form['startKey']
+            #print d
+            return render_template("results_events.html", events = api.getEvents(d), URL = api.getEvents(d)[0])
+        #else:
+        # save button
+            '''
 
-    #test case
-    radius = 500
-    typeOfPlace = "restaurant"
-    keyword = "pizza"
-    maxPriceLevel = 1
+        #test case
+        radius = 500
+        typeOfPlace = "restaurant"
+        keyword = "pizza"
+        maxPriceLevel = 1
 
-    '''
-    typeOfPlace = search
-    keyword = search
-    maxPriceLevel = price
+        '''
 
-    rsltList = api.allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, maxPriceLevel)
-    return render_template("results.html",data = data, results = rsltList)
-
-
-
-@app.route("/results/events", methods=['POST','GET'])
-def results_events():
-    if request.method == 'POST':
-        d = {}
-        d["q"] = request.form['keyword']
-        d["location.address"] = request.form['address']
-        d["location.within"] = request.form['radius']
-        d["sort_by"] = request.form['sort_by']
-        d["price"] = request.form['price']
-        d["start_date.keyword"] = request.form['startKey']
-        # DATE & TIME
-        d["year_start"] = request.form['year_start']
-        d["month_start"] = request.form['month_start']
-        d["day_start"] = request.form['day_start']
-        d["hour_start"] = request.form['hour_start']
-        d["minute_start"] = request.form['minute_start']
-        d["year_end"] = request.form['year_end']
-        d["month_end"] = request.form['month_end']
-        d["day_end"] = request.form['day_end']
-        d["hour_end"] = request.form['hour_end']
-        d["minute_end"] = request.form['minute_end']
-        #print d
-        return render_template("results_events.html", events = api.getEvents(d), URL = api.getEvents(d)[0])
 
 if __name__ == '__main__':
     app.debug = True
