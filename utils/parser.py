@@ -79,6 +79,7 @@ def crtLists(jsonData, maxPriceLevel,key):
    # print maxPriceLevel
     #must convert to int because form takes it in as a string
     maxPriceLevel = int(maxPriceLevel)
+    print maxPriceLevel
     resList = []
     res = jsonData["results"]
     for i in res:
@@ -106,8 +107,8 @@ def crtLists(jsonData, maxPriceLevel,key):
 ###User inputs the latitude?, longitude?, radius, type of place, keyword, and minPricelevel----type of place and keyword must be strings
 def allInOneFunc(lat, lng, radius, typeOfPlace,keyword, maxPriceLevel):
 
-   # f = open("/Users/Flamingo/Documents/SoftDev/flask-intro/softdev/keys.txt","r")
-    f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
+    f = open("/Users/Flamingo/Documents/SoftDev/flask-intro/softdev/keys.txt","r")
+    #f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
    ## basepath = os.path.dirname("parser.py")
    # filepath = os.path.abspath(os.path.join(basepath, "..","..","keys.txt"))
    # f = open("/../../keys.txt","r")
