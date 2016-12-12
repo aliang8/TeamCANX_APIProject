@@ -8,13 +8,13 @@ nancyC -- 2016-12-06 16:48: Added inputs for keywords, sorting, address, radius,
 
 anthonyL -- 2016-12-06 21:30: Figured out how to send requests to Yelp API and parse the received data into a dictionary for later use.
 
-anthonyL -- 2016-12-07 22:30: Modularized the function, allows for different modes of search, tested the function for bugs
+anthonyL -- 2016-12-06 22:30: Modularized the function, allows for different modes of search, tested the function for bugs
 
-Constantine(11:45 PM) Created GooglPlac() function, which uses the Google Maps Places API and the given inputs of location, radius, type of place, keywords, and api key to return the JSON data for those specifications.
+athanitisC -- 2016-12-06 23:45: Created GooglPlac() function, which uses the Google Maps Places API and the given inputs of location, radius, type of place, keywords, and api key to return the JSON data for those specifications.
 
-Constantine(12:15 AM) Created the crtLists() function, which uses the JSON data/dictionary as well as an extra parameter (price level) to return a list of results/places that fit all of the specifications of the user.
+athanitisC -- 2016-12-07 00:15: Created the crtLists() function, which uses the JSON data/dictionary as well as an extra parameter (price level) to return a list of results/places that fit all of the specifications of the user.
 
-Constantine(12:50 AM) Created the main function that combines all the user input and utilizes the GooglePlac and crtLists helper functions. Additionally, I was able to use an ip geolocator to that gives us the user's computer's location (which is then used in the main google maps function).
+athanitisC -- 2016-12-07 00:50: Created the main function that combines all the user input and utilizes the GooglePlac and crtLists helper functions. Additionally, I was able to use an ip geolocator to that gives us the user's computer's location (which is then used in the main google maps function).
 
 
 12/7/16
@@ -25,7 +25,7 @@ nancyC -- 2016-12-07 20:00:  Added time and date inputs for Eventbrite. Tried to
 
 anthonyL -- 2016-12-07 21:02: Fixed formed page. Started a barebones results page to output the data requested from the Yelp API. Still need to figure out what to do with the results.
 
-Constantine(12:30 AM) Tweaked results function in app.py to output results from the Google Maps API. Edited results.html to print out GM results in a list.
+athanitisC -- 2016-12-08 00:30: Tweaked results function in app.py to output results from the Google Maps API. Edited results.html to print out GM results in a list.
 
 
 12/8/16
@@ -36,11 +36,11 @@ xinhuixu -- 2016-12-08 13:40: Home styling
 
 nancyC -- 2016-12-08 10:30: Successfully implemented Eventbrite with urllib instead of requests. Made a HTML page to show Eventbrite search results.
 
-Constantine(11:00 PM): Added a couple of lines of code and created a keys.txt file on the computer (not repo) in order to extract/read the file and receive the Google Maps key.
+athanitisC -- 2016-12-08 23:00: Added a couple of lines of code and created a keys.txt file on the computer (not repo) in order to extract/read the file and receive the Google Maps key.
 
 anthonyL -- 2016-12-08 23:21: Changed frontend/home.html page to utilize the bootstrap element modal. Added the functions for saving user settings and changing user settings.
 
-Constantine(11:48 PM): Edited the database format and created an inputPrefs function in the dumbbell file.
+athanitisC -- 2016-12-08 23:48: Edited the database format and created an inputPrefs function in the dumbbell file.
 
 12/9/16
 
@@ -59,3 +59,7 @@ athanitisC -- 2016-12-10 18:20: Edited yelp output function to give only some of
 nancyC -- 2016-12-10 22:00: Linked Eventbrite get request with HTML form. Displays results in results_events.html. Backend has some bugs relating to date/time input that need to be fixed. Included photo in results page for Eventbrite.
 
 xinhuixu -- 2016-12-10 22:41 home ravamped
+
+12/11/16
+
+athanitisC -- 2016-12-11 23:37: Removed major comments in the main function to ouput both yelp and google maps results. Utilized the place details api from google maps to output more specific details for places (like number and rating).

@@ -27,7 +27,7 @@ LNG = str(location["longitude"])
 import urllib
 
 
-def GooglPlac(lat, lng, radius, typeOfPlace,keyword, key):
+def GooglPlacSear(lat, lng, radius, typeOfPlace,keyword, key):
     Latitude = str(lat)
     Longitude = str(lng)
     User_Location = Latitude + "," + Longitude
@@ -61,10 +61,21 @@ def GooglPlac(lat, lng, radius, typeOfPlace,keyword, key):
    # print jsonData
     return jsonData
 
+def GooglPlacDet(ID,key):
+    url = ('https://maps.googleapis.com/maps/api/place/details/json?'
+           'placeid=%s'
+           '&key=%s') %(ID, key)
+    print url
+    
+    urlInfo = urllib.urlopen(url)
+    jsonUntouched = urlInfo.read()
+    jsonData = json.loads(jsonUntouched)
+   # print jsonData
+    return jsonData
 
 
 
-def crtLists(jsonData, maxPriceLevel):
+def crtLists(jsonData, maxPriceLevel,key):
    # print maxPriceLevel
     #must convert to int because form takes it in as a string
     maxPriceLevel = int(maxPriceLevel)
@@ -77,7 +88,14 @@ def crtLists(jsonData, maxPriceLevel):
           #THAT DON'T HAVE PRICE LEVELS :(
           if i["price_level"] <= maxPriceLevel:
               # took out  i["geometry"]["location"]....because the user probably won't care about the latitude/longitude
-              resList.append([i["name"]+",",i["vicinity"],str(i["price_level"])])
+             
+              print i["id"]
+              details = GooglPlacDet(i["place_id"],key)
+              details= details["result"]
+              address = details["formatted_address"]
+              number = details["formatted_phone_number"]
+              rating = details["rating"]
+              resList.append([i["name"],address,str(i["price_level"]),str(number),str(rating)])
    # print resList
     return resList
 
@@ -95,11 +113,11 @@ def allInOneFunc(lat, lng, radius, typeOfPlace,keyword, maxPriceLevel):
    # f = open("/../../keys.txt","r")
     key = f.readline()
     f.close()
-    print key
-    x = GooglPlac(lat, lng, radius, typeOfPlace,keyword, key)
+   # print key
+    x = GooglPlacSear(lat, lng, radius, typeOfPlace,keyword, key)
     #x is the dictionary parsed from the json data
 
-    y = crtLists(x,maxPriceLevel)
+    y = crtLists(x,maxPriceLevel,key)
     #y is the list of places that fit the user's parameters
 
     return y
