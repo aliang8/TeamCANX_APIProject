@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MyDay Form</title>
+    <link rel="stylesheet" type="text/css" href="../static/component.css">
+    <link rel="stylesheet" type="text/css" href="../static/default.css">
+    <link rel="stylesheet" type="text/css" href="../static/form_new.css">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <script src="../static/js/modernizr.custom.js"></script>
+</head>
+
+<body class="nl-blurred">
+  <div class="container-fluid main component">
+    <h1>What's up?</h1>
+    <h3>{{message}}</h3>
+    <p><b>Location field is required!</b></p>
+    
+    <form action="/results/" method="POST" id="nl-form" class="nl-form">
+      <p>I'm thinking about
+	{% if prefs[1] == '' %}
+        <input type="text" name="search" placeholder="any activity" data-subline="Example: <em>food, restaurants, Starbucks</em>">
+	{% else %}
+        <input value="{{prefs[1]}}" type="text" name="search" placeholder="anytime" data-subline="Example: <em>food, restaurants, Starbucks</em>">
+        {% endif %}
+	for
+	{% if prefs[4] == '' %}
+        <select name="startKey" id="date">
+          <option value="">anytime</option>
+          <option value="today">today</option>
+          <option value="tomorrow">tomorrow</option>
+          <option value="this_week">this week</option>
+          <option value="this_weekend">this weekend</option>
+          <option value="next_week">next week</option>
+          <option value="this_month">this month</option>
+          <option value="next_month">next month</option>
+        </select>
+	{% endif %}
+	. My budget is around
+        <input type="text" name="price" placeholder="any price level" data-subline="Example: Any number from <em>1</em> to <em>5</em>">
+	. I'm looking for places 
+	{% if prefs[0] == '' %}
+        <input type="text" name="radius" placeholder="any radius" data-subline="Example: <em>2</em> or <em>120</em> kilometers">
+	{% else %}
+	<input value="{{prefs[0]}}" type="text" name="radius" placeholder="{{prefs[0]}}" data-subline="Example: <em>2</em> or <em>120</em> kilometers">
+	{% endif %}
+	
+        from 
+	{% if prefs[3] == '' %}
+        <input type="text" name="location" placeholder="this location" data-subline="Example: <em>345 Chambers Street</em>" required>
+	{% else %}
+	<input value="{{prefs[3]}}" type="text" name="location" placeholder="{{prefs[3]}}" data-subline="Example: <em>345 Chambers Street</em>" required>
+        {% endif %}
+	
+	<br> Number of results:
+        <select name="limit" id="limit">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+	Sort By:
+        <input type="text" name="sort_by" placeholder="Sort by" data-subline="Example: <em>best</em>,<em>distance</em>, or <em>date</em>">
+	
+      </p>
+      
+      <div class="nl-submit-wrap">
+        <button class="nl-submit" id="save" name="save" type="submit">Save!</button>
+      </div>
+      <div class="nl-submit-wrap">
+        <button class="nl-submit" id="search" name="places" type="submit">Search for places to go!</button>
+      </div>
+      <div class="nl-submit-wrap">
+        <button class="nl-submit" id="search" name="events" type="submit">Search for event!</button>
+      </div>
+      <div class="nl-overlay"></div>
+    </form>
+  </div>
+  
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+  <script src="../static/js/nlform.js"></script>
+  <script>
+    var nlform = new NLForm(document.getElementById('nl-form'));
+  </script>
+</body>
+
+</html>
