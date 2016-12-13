@@ -1,19 +1,44 @@
 <!DOCTYPE html>
 
 <html>
-  <head> </head>
-  <body>
-    <h3> Eventbrite Stuff </h3>
-    {{ URL }}
-    {% for d in events %}
-      <img src={{d["logo"]}} alt="N/A">
-      <h4> {{d["name"]}} </h4>
-      <p> Start: {{d["start"]}} </p>
-      <p> End: {{d["end"]}} </p>
-      <p> Description: {{d["description"]}} </p>
-      <p> <a href="{{d['url']}}"> URL </a> </p>
-    {% endfor %}
 
-  </body>
+<head>
+    <title> OMG EVENTS!</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/home.css">
+    <link rel="stylesheet" href="../static/results.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>RESULTS FROM EVENTBRITE API</h2>
+        <hr>
+        <table class="myday-table-odd myday-table myday-table-bordered">
+            <thead>
+            </thead>
+
+            <tbody>
+                {% for d in events %}
+                <tr>
+                    <td><img src={{d[ "logo"]}} alt="N/A"></td>
+                    <td>
+                        <h4> {{d["name"]}} </h4></td>
+                    <td>
+                        <p> Start: {{d["start"]}} </p>
+                    </td>
+                    <td>
+                        <p> End: {{d["end"]}} </p>
+                    </td>
+                    <td>
+                        <p> Description: {{d["description"]}} </p>
+                    </td>
+                    <td>
+                        <p> <a href="{{d['url']}}">{{d["name"]}}</a> </p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</body>
 
 </html>
