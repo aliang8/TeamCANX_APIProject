@@ -63,3 +63,7 @@ xinhuixu -- 2016-12-10 22:41 home ravamped
 12/11/16
 
 athanitisC -- 2016-12-11 23:37: Removed major comments in the main function to ouput both yelp and google maps results. Utilized the place details api from google maps to output more specific details for places (like number and rating).
+
+12/12/16
+
+athanitisC -- 2016-12-12 21:51: Removed the max price level requirement from the form. Now, the results page can display places with and without price levels from the Google Maps api.
