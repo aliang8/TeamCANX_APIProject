@@ -80,30 +80,20 @@ def results():
             #print "Price: " + price
             location = request.form['location']
             #print "Location: " + location
-            date = request.form['date']
-            #print "Date: " + date
             limit = request.form.get('limit')
             #print "Limit: " + limit
-
-
-            if 'save' in request.form:
-                message = "SUCCESSFULLY UPDATED PREFERENCES"
-                functions.changePrefs(radius,category,search,price,location,date,session['username'])
-                return render_template("form.html", message = message)
-            elif 'search' in request.form:
-                data = []
-                params = api.get_search_params(search,limit,0,category,radius,False)
-                ret = api.yelp_lookup(location,["",""],["","","",""],params)
-                for business in ret:
-                    for key, value in business.iteritems():
-                        info = []
-                        for key, val in value.iteritems():
-                            info.append([key.title(),val])
-                        data.append(info)
+            data = []
+            params = api.get_search_params(search,limit,0,category,radius,False)
+            ret = api.yelp_lookup(location,["",""],["","","",""],params)
+            for business in ret:
+                for key, value in business.iteritems():
+                    info = []
+                    for key, val in value.iteritems():
+                        info.append([key.title(),val])
+                    data.append(info)
             typeOfPlace = search
             keyword = search
             maxPriceLevel = price
-
             rsltList = api.allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, maxPriceLevel)
             return render_template("results.html",data = data, results = rsltList)
         elif "events" in request.form:
@@ -117,32 +107,10 @@ def results():
             #d["start_date.keyword"] = request.form['startKey']
             #print d
             return render_template("results_events.html", events = api.getEvents(d), URL = api.getEvents(d)[0])
-        #else:
-        # save button
-            '''
-
-        #test case
-        radius = 500
-        typeOfPlace = "restaurant"
-        keyword = "pizza"
-        maxPriceLevel = 1
-
-        '''
-    '''
-
-    #test case
-    radius = 500
-    typeOfPlace = "restaurant"
-    keyword = "pizza"
-    maxPriceLevel = 1
-
-    '''
-    typeOfPlace = search
-    keyword = search
-    maxPriceLevel = price
-
-    rsltList = api.allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, maxPriceLevel)
-    return render_template("results.html",data = data, results = rsltList)
+        else:
+            message = "SUCCESSFULLY UPDATED PREFERENCES"
+            functions.changePrefs(radius,category,search,price,location,date,session['username'])
+            return render_template("form.html", message = message)
 
 @app.route("/events-list")
 def events_list():
