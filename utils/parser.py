@@ -13,7 +13,7 @@ import urllib
 import urllib2
 
 
-# Automatically geolocate the connecting IP
+#Can be used to geolocate by using IP address
 f = urllib2.urlopen('http://freegeoip.net/json/')
 json_string = f.read()
 f.close()
@@ -25,6 +25,32 @@ LNG = str(location["longitude"])
 #----------------------------------------
 #Google Maps
 import urllib
+
+
+def geoCode(location,key):
+
+    url=('https://maps.googleapis.com/maps/api/geocode/json?'
+         'address=%s'
+         '&key=%s')%(location, key)
+   # print url
+    urlInfo = urllib.urlopen(url)
+    jsonUntouched = urlInfo.read()
+    jsonData = json.loads(jsonUntouched)
+ 
+
+    latLong = []
+   # print
+    #print
+    #print
+    res =  jsonData["results"][0]["geometry"]["location"]
+    #print res
+    #print
+    #print
+    #print
+    latLong.append(res["lat"])
+    latLong.append(res["lng"])
+    #print latLong
+    return latLong
 
 
 def GooglPlacSear(lat, lng, radius, typeOfPlace,keyword, key):
@@ -65,7 +91,7 @@ def GooglPlacDet(ID,key):
     url = ('https://maps.googleapis.com/maps/api/place/details/json?'
            'placeid=%s'
            '&key=%s') %(ID, key)
-    print url
+   # print url
 
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
@@ -79,17 +105,33 @@ def crtLists(jsonData, maxPriceLevel,key):
    # print maxPriceLevel
     #must convert to int because form takes it in as a string
     maxPriceLevel = int(maxPriceLevel)
-    print maxPriceLevel
+    #print maxPriceLevel
     resList = []
     res = jsonData["results"]
     for i in res:
         if maxPriceLevel == 0:
-            print i["id"]
+          #  print i["id"]
             details = GooglPlacDet(i["place_id"],key)
             details= details["result"]
+
+            '''
             address = details["formatted_address"]
             number = details["formatted_phone_number"]
             rating = details["rating"]
+            '''
+            
+
+            address = "N/A"
+            if "formatted_address" in details:
+                address = details["formatted_address"]
+            number = "N/A"    
+            if "formatted_phone_number" in details:
+                number = details["formatted_phone_number"]
+
+            rating = "N/A"    
+            if "rating" in details:
+                rating = details["rating"]
+            
             if "price_level" in i:
                 
                 resList.append([i["name"],address,str(i["price_level"]),str(number),str(rating)])
@@ -102,12 +144,23 @@ def crtLists(jsonData, maxPriceLevel,key):
           if i["price_level"] <= maxPriceLevel:
               # took out  i["geometry"]["location"]....because the user probably won't care about the latitude/longitude
 
-              print i["id"]
+            #  print i["id"] + "-----THis is the id"
               details = GooglPlacDet(i["place_id"],key)
+
+            #  print details
               details= details["result"]
-              address = details["formatted_address"]
-              number = details["formatted_phone_number"]
-              rating = details["rating"]
+           
+              address = "N/A"
+              if "formatted_address" in details:
+                  address = details["formatted_address"]
+              number = "N/A"    
+              if "formatted_phone_number" in details:
+                  number = details["formatted_phone_number"]
+
+              rating = "N/A"    
+              if "rating" in details:
+                  rating = details["rating"]
+                  
               resList.append([i["name"],address,str(i["price_level"]),str(number),str(rating)])
    # print resList
     return resList
@@ -116,17 +169,23 @@ def crtLists(jsonData, maxPriceLevel,key):
 
 
 ###This is the main function
-###User inputs the latitude?, longitude?, radius, type of place, keyword, and minPricelevel----type of place and keyword must be strings
-def allInOneFunc(lat, lng, radius, typeOfPlace,keyword, maxPriceLevel):
+    ###User inputs the latitude?, longitude?, radius, type of place, keyword, and minPricelevel----type of place and keyword must be strings
+def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel):
 
     #f = open("/Users/Flamingo/Documents/SoftDev/flask-intro/softdev/keys.txt","r")
     #f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
-   ## basepath = os.path.dirname("parser.py")
-   # filepath = os.path.abspath(os.path.join(basepath, "..","..","keys.txt"))
-   # f = open("/../../keys.txt","r")
+    ## basepath = os.path.dirname("parser.py")
+    # filepath = os.path.abspath(os.path.join(basepath, "..","..","keys.txt"))
+    # f = open("/../../keys.txt","r")
     key = "AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk"
     #f.close()
-   # print key
+    # print key
+
+   
+    latLong = geoCode(location,key)
+    lat = latLong[0]
+    lng = latLong[1]
+    
     x = GooglPlacSear(lat, lng, radius, typeOfPlace,keyword, key)
     #x is the dictionary parsed from the json data
 

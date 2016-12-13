@@ -97,7 +97,7 @@ def results():
                 maxPriceLevel = "0"
             else:
                 maxPriceLevel = price
-            rsltList = api.allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, maxPriceLevel)
+            rsltList = api.allInOneFunc(location,radius, typeOfPlace, keyword, maxPriceLevel)
             return render_template("results.html",data = data, results = rsltList)
         elif "events" in request.form:
             d = {}
