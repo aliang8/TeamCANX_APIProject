@@ -37,12 +37,11 @@ def geoCode(location,key):
     jsonUntouched = urlInfo.read()
     jsonData = json.loads(jsonUntouched)
 
-
     latLong = []
    # print
     #print
     #print
-    res =  jsonData["results"][0]["geometry"]["location"]
+    res = jsonData["results"][0]["geometry"]["location"]
     #print res
     #print
     #print
@@ -295,10 +294,11 @@ def getEvents(d):
     inputs = ""
     for key in d.keys():
         if d[key]: # if not empty
-            if key == "location.address":
-                latLong = geoCode(d["location.address"],"AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk")
-                inputs += "&%s=%s"%("location.latitude", latLong[0])
-                inputs += "&%s=%s"%("location.longitude", latLong[1])
+            if key == "location":
+                latLong = geoCode(d["location"],"AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk")
+                print latLong
+                inputs += "&%s=%s"%("location.latitude", str(latLong[0]))
+                inputs += "&%s=%s"%("location.longitude", str(latLong[1]))
             else:
                 inputs += "&%s=%s"%(key, d[key])
     url = ("https://www.eventbriteapi.com/v3/events/search/?token=BV442UWQUREICGJW7V2A" + inputs)
@@ -321,6 +321,7 @@ def getEvents(d):
         ret.append(holder)
     return ret
 
+"""
 # Converts 2016-12-12T08:00:00 -> month-day-year hour:minute
 def formatTime(utc):
     month = utc[5:7]
@@ -335,13 +336,14 @@ def toUTC_start(year, month, day, hour, minute):
 
 def toUTC_end(year, month, day, hour, minute):
     return "&start_date.range_end=" + "%s-%s-%sT%s:%s:00"%(year, month, day, hour, minute)
+"""
 
 # example call
 # start: 12/16 9AM
 # end: 12/16 8 PM
 
-#d1 = {"q":"food"}
-#print getEvents(d1)
+#d1 = {"location.address":"345 chambers st"}
+#getEvents(d1)
 #print convertToUTC("2016", "12", "16", "09", "00")
 #print convertToUTC("2016", "12", "16", "20", "00")
 

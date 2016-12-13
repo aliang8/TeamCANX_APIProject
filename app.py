@@ -134,11 +134,12 @@ def results_events():
     if request.method == 'POST':
         d = {}
         d["q"] = request.form['keyword']
-        d["location.address"] = request.form['address']
+        d["location"] = request.form['location']
         d["location.within"] = request.form['radius']
         d["sort_by"] = request.form['sort_by']
         d["price"] = request.form['price']
         d["start_date.keyword"] = request.form['startKey']
+        """
         # DATE & TIME
         d["year_start"] = request.form['year_start']
         d["month_start"] = request.form['month_start']
@@ -150,6 +151,7 @@ def results_events():
         d["day_end"] = request.form['day_end']
         d["hour_end"] = request.form['hour_end']
         d["minute_end"] = request.form['minute_end']
+        """
         #print d
         return render_template("results_events.html", events = api.getEvents(d), URL = api.getEvents(d)[0])
 
