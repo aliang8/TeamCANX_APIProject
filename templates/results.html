@@ -57,9 +57,21 @@
                 <tr>
                     {% for detail in place %}
                     <td>
-                        {{detail}}
+                      {{detail}}
+		     <!-- {% if loop.index == 1 %}
+		      {{detail}}
+		      {% endif %}-->
                     </td>
-                    {% endfor %}
+		    {% endfor %}
+		    
+		    <td>
+		 
+			<!--<input type="submit" value="add to Calendar">-->
+			<button onclick="alert('{{place[0]}}' + '{{place[1]}}'+ '{{place[2]}}'+ '{{place[3]}}+ '{{place[4]}}'')"> add</button>
+		    
+		    </td>
+		   
+                   
                 </tr>
                 {% endfor %}
             </tbody>

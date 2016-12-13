@@ -155,12 +155,7 @@ def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel):
     # f = open("/../../keys.txt","r")
     #key = "AIzaSyAvax-neSqo1-HnK4ajfSQKcdWZUl8FJYc"
     key = f.readline()
-    
-    print key
-    print
-    print
-    print
-    print
+   
     
     latLong = geoCode(location,key)
     lat = latLong[0]
@@ -171,7 +166,7 @@ def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel):
 
     y = crtLists(x,maxPriceLevel,key)
     #y is the list of places that fit the user's parameters
-
+    #list contains, in order, : [name, address, price level, phone number, rating]
     return y
 
 
