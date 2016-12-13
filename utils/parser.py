@@ -38,17 +38,9 @@ def geoCode(location,key):
     jsonData = json.loads(jsonUntouched)
 
     latLong = []
-   # print
-    #print
-    #print
     res = jsonData["results"][0]["geometry"]["location"]
-    #print res
-    #print
-    #print
-    #print
     latLong.append(res["lat"])
     latLong.append(res["lng"])
-    #print latLong
     return latLong
 
 
@@ -161,7 +153,6 @@ def crtLists(jsonData, maxPriceLevel,key):
                   rating = details["rating"]
 
               resList.append([i["name"],address,str(i["price_level"]),str(number),str(rating)])
-   # print resList
     return resList
 
 
@@ -171,15 +162,10 @@ def crtLists(jsonData, maxPriceLevel,key):
     ###User inputs the latitude?, longitude?, radius, type of place, keyword, and minPricelevel----type of place and keyword must be strings
 def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel):
 
-    #f = open("/Users/Flamingo/Documents/SoftDev/flask-intro/softdev/keys.txt","r")
+    f = open("/Users/Flamingo/Documents/SoftDev/flask-intro/softdev/keys.txt","r")
     #f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
-    ## basepath = os.path.dirname("parser.py")
-    # filepath = os.path.abspath(os.path.join(basepath, "..","..","keys.txt"))
     # f = open("/../../keys.txt","r")
-    key = "AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk"
-    #f.close()
-    # print key
-
+    #key = "AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk"
 
     latLong = geoCode(location,key)
     lat = latLong[0]
@@ -192,16 +178,6 @@ def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel):
     #y is the list of places that fit the user's parameters
 
     return y
-
-
-#test case
-radius = 500
-typeOfPlace = "restaurant"
-keyword = "pizza"
-maxPriceLevel = 1
-##Lat and Lng are created at the top: they are the computer's ip address' location
-#print allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, maxPriceLevel)
-
 
 #==========================================YELP API============================================
 
@@ -263,8 +239,6 @@ def yelp_lookup(loc,coords,bounds,params):
         ret[name]['display_phone'] = business.display_phone
         ret[name]['location_address'] = ' '.join(business.location.display_address)
         ret[name]['url'] = business.url
-        #ret[name]['review_count'] = business.review_count
-        #ret[name]['categories'] = business.categories
         #ret[name]['location_coordinate_latitude'] = business.location.coordinate.latitude
         #ret[name]['location_coordinate_longitude'] = business.location.coordinate.longitude
         ret[name]['deals'] = business.deals
