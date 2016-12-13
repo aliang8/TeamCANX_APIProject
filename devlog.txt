@@ -71,3 +71,5 @@ athanitisC -- 2016-12-11 23:37: Removed major comments in the main function to o
 anthonyL -- 2016-12-12 20:41: Made it so that users can now save their input, removed the category input field because it was somewhat unnescessary (might consider adding it back) fixed the layout for the events page
 
 athanitisC -- 2016-12-12 21:51: Removed the max price level requirement from the form. Now, the results page can display places with and without price levels from the Google Maps api.
+
+xinhuixu -- 2016-12-13 13:50: Started modifying form templates + init custom css
