@@ -32,19 +32,23 @@ def geoCode(location,key):
     url=('https://maps.googleapis.com/maps/api/geocode/json?'
          'address=%s'
          '&key=%s')%(location, key)
-   # print url
+
+    
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
     jsonData = json.loads(jsonUntouched)
 
     latLong = []
+
+
     res = jsonData["results"][0]["geometry"]["location"]
     latLong.append(res["lat"])
     latLong.append(res["lng"])
+    
     return latLong
 
 
-def GooglPlacSear(lat, lng, radius, typeOfPlace,keyword, key):
+def GooglPlacSear(lat, lng, radius, keyword, key):
     Latitude = str(lat)
     Longitude = str(lng)
     User_Location = Latitude + "," + Longitude
@@ -55,61 +59,48 @@ def GooglPlacSear(lat, lng, radius, typeOfPlace,keyword, key):
     #I believe it's possible to have more than one keyword
 
 
-   # print User_Location
-   # print keyword
-    if keyword == "":
-        url = ('https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
-               'location=%s'
-               '&radius=%s'
-               '&type=%s'
-               '&key=%s') % (User_Location, radius, typeOfPlace, key)
-    else:
-        url = ('https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
-               'location=%s'
-               '&radius=%s'
-               '&type=%s'
-               '&keyword=%s'
-               '&key=%s') % (User_Location, radius, typeOfPlace,keyword, key)
-  #  print url
+   
+    url = ('https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
+          'location=%s'
+          '&radius=%s'
+          '&keyword=%s'
+          '&key=%s') % (User_Location, radius, keyword, key)
+   
+
     #Getting Json data
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
     jsonData = json.loads(jsonUntouched)
-   # print jsonData
+
     return jsonData
 
 def GooglPlacDet(ID,key):
     url = ('https://maps.googleapis.com/maps/api/place/details/json?'
            'placeid=%s'
            '&key=%s') %(ID, key)
-   # print url
+
 
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
     jsonData = json.loads(jsonUntouched)
-   # print jsonData
+ 
     return jsonData
 
 
 
 def crtLists(jsonData, maxPriceLevel,key):
-   # print maxPriceLevel
-    #must convert to int because form takes it in as a string
+
     maxPriceLevel = int(maxPriceLevel)
-    #print maxPriceLevel
+ 
     resList = []
     res = jsonData["results"]
     for i in res:
         if maxPriceLevel == 0:
-          #  print i["id"]
+        
             details = GooglPlacDet(i["place_id"],key)
             details= details["result"]
 
-            '''
-            address = details["formatted_address"]
-            number = details["formatted_phone_number"]
-            rating = details["rating"]
-            '''
+ 
 
 
             address = "N/A"
@@ -123,22 +114,19 @@ def crtLists(jsonData, maxPriceLevel,key):
             if "rating" in details:
                 rating = details["rating"]
 
+                
             if "price_level" in i:
-
                 resList.append([i["name"],address,str(i["price_level"]),str(number),str(rating)])
             else:
                 resList.append([i["name"],address,"N/A",str(number),str(rating)])
-       # print i
+  
         elif "price_level" in i:
-          #THIS MEANS THAT WE MUST COMPLETELY IGNORE THE GOOGLE API RESULTS
-          #THAT DON'T HAVE PRICE LEVELS :(
+     
           if i["price_level"] <= maxPriceLevel:
-              # took out  i["geometry"]["location"]....because the user probably won't care about the latitude/longitude
-
-            #  print i["id"] + "-----THis is the id"
+ 
               details = GooglPlacDet(i["place_id"],key)
 
-            #  print details
+          
               details= details["result"]
 
               address = "N/A"
@@ -159,25 +147,37 @@ def crtLists(jsonData, maxPriceLevel,key):
 
 
 ###This is the main function
-    ###User inputs the latitude?, longitude?, radius, type of place, keyword, and minPricelevel----type of place and keyword must be strings
+    ###User inputs the location, radius, type of place, keyword, and maxPricelevel----type of place and keyword must be strings
 def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel):
 
-    f = open("/Users/Flamingo/Documents/SoftDev/flask-intro/softdev/keys.txt","r")
-    #f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
+    #f = open("/Users/Flamingo/Documents/SoftDev/flask-intro/softdev/keys.txt","r")
+    f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
     # f = open("/../../keys.txt","r")
-    #key = "AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk"
-
+    #key = "AIzaSyAvax-neSqo1-HnK4ajfSQKcdWZUl8FJYc"
+    key = f.readline()
+    
+    print key
+    print
+    print
+    print
+    print
+    
     latLong = geoCode(location,key)
     lat = latLong[0]
     lng = latLong[1]
 
-    x = GooglPlacSear(lat, lng, radius, typeOfPlace,keyword, key)
+    x = GooglPlacSear(lat, lng, radius, keyword, key)
     #x is the dictionary parsed from the json data
 
     y = crtLists(x,maxPriceLevel,key)
     #y is the list of places that fit the user's parameters
 
     return y
+
+
+
+
+
 
 #==========================================YELP API============================================
 
