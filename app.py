@@ -46,8 +46,8 @@ def authenticate():
 @app.route("/form/")
 def form():
     message = "EDIT YOUR PREFERENCES FOR BETTER RESULTS"
-    #prefs = functions.getUserPrefs(session['username'])
-    return render_template("form.html", message = message)
+    prefs = functions.getUserPrefs(session['username'])
+    return render_template("form.html", message = message, prefs = prefs)
 
 @app.route("/form/events")
 def form_e():
@@ -72,8 +72,6 @@ def results():
         if 'places' in request.form:
             radius = request.form['radius']
             #print "Radius: " + radius
-            category = request.form['category']
-            #print "Place: " + category
             search = request.form['search']
             #print "Search: " + search
             price =  request.form['price']
@@ -82,9 +80,11 @@ def results():
             #print "Location: " + location
             limit = request.form.get('limit')
             #print "Limit: " + limit
+            date = request.form.get('startKey')
+
             '''
             data = []
-            params = api.get_search_params(search,limit,0,category,radius,False)
+            params = api.get_search_params(search,limit,0,radius,False)
             ret = api.yelp_lookup(location,["",""],["","","",""],params)
             for business in ret:
                 for key, value in business.iteritems():
@@ -113,9 +113,17 @@ def results():
             #print d
             return render_template("results_events.html", events = api.getEvents(d), URL = api.getEvents(d)[0])
         else:
+            radius = request.form['radius']
+            search = request.form['search']
+            price =  request.form['price']
+            location = request.form['location']
+            limit = request.form.get('limit')
+            date = request.form.get('startKey')
+
             message = "SUCCESSFULLY UPDATED PREFERENCES"
-            functions.changePrefs(radius,category,search,price,location,date,session['username'])
-            return render_template("form.html", message = message)
+            functions.changePrefs(radius,search,price,location,date,session['username'])
+            prefs = functions.getUserPrefs(session['username'])
+            return render_template("form.html", message = message, prefs = prefs)
 
 @app.route("/events-list")
 def events_list():

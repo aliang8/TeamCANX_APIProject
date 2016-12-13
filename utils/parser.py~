@@ -224,6 +224,8 @@ def get_search_params(term,limit,sort,category,radius,deals):
         params['limit'] = limit
     if sort:
         params['sort'] = sort
+    if category:
+        params['category_filter'] = category
     if radius:
        params['radius_filter'] = radius
     if deals:

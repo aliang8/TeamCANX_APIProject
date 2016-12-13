@@ -9,12 +9,12 @@ def initializeTables():
     db = sql.connect(DATA)
     c = db.cursor()
     c.execute("CREATE TABLE IF NOT EXISTS accounts (username TEXT NOT NULL, password TEXT NOT NULL, userID INTEGER PRIMARY KEY autoincrement)")
-    c.execute("CREATE TABLE IF NOT EXISTS settings (radius INTEGER, category TEXT, search TEXT, price INTEGER, location TEXT, date TEXT, userID INTEGER)")
+    c.execute("CREATE TABLE IF NOT EXISTS settings (radius INTEGER, search TEXT, price INTEGER, location TEXT, date TEXT, userID INTEGER)")
     db.commit()
     db.close()
 
 #Allows users to update their preferences
-def changePrefs(radius, category, search, price, location, date, user):
+def changePrefs(radius, search, price, location, date, user):
     db = sql.connect(DATA)
     c = db.cursor()
     data = c.execute("SELECT userID FROM accounts WHERE username = ?", (user,))
@@ -22,9 +22,9 @@ def changePrefs(radius, category, search, price, location, date, user):
     exists = c.execute("SELECT 1 FROM settings WHERE userID = ?", (userID,))
     exist = exists.fetchall()
     if len(exist) != 0:
-        c.execute("UPDATE settings SET radius=?, category=?, search=?, price=?, location=?, date=? WHERE userID = ?", (radius,category,search,price,location,date,userID,))
+        c.execute("UPDATE settings SET radius=?, search=?, price=?, location=?, date=? WHERE userID = ?", (radius,search,price,location,date,userID,))
     else:
-        c.execute("INSERT INTO settings VALUES(?,?,?,?,?,?,?)", (radius,category,search,price,location,date,userID,))
+        c.execute("INSERT INTO settings VALUES(?,?,?,?,?,?)", (radius,search,price,location,date,userID,))
     db.commit()
     db.close()
     
@@ -36,7 +36,10 @@ def getUserPrefs(user):
     userID = data.fetchone()[0]
     data = c.execute("SELECT * FROM settings WHERE userID = ?", (userID,))
     prefs = data.fetchall()
-    return prefs[0]
+    if len(prefs) > 0:
+        return prefs[0]
+    else:
+        return ("","","","","",0,)
 
 def register(username, password):
     hashpass = hashlib.sha224(password).hexdigest()
