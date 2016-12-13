@@ -76,7 +76,7 @@ def results():
             #print "Place: " + category
             search = request.form['search']
             #print "Search: " + search
-            price = request.form['price']
+            price =  request.form['price']
             #print "Price: " + price
             location = request.form['location']
             #print "Location: " + location
@@ -93,7 +93,10 @@ def results():
                     data.append(info)
             typeOfPlace = search
             keyword = search
-            maxPriceLevel = price
+            if price == "":
+                maxPriceLevel = "0"
+            else:
+                maxPriceLevel = price
             rsltList = api.allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, maxPriceLevel)
             return render_template("results.html",data = data, results = rsltList)
         elif "events" in request.form:

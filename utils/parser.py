@@ -83,8 +83,20 @@ def crtLists(jsonData, maxPriceLevel,key):
     resList = []
     res = jsonData["results"]
     for i in res:
+        if maxPriceLevel == 0:
+            print i["id"]
+            details = GooglPlacDet(i["place_id"],key)
+            details= details["result"]
+            address = details["formatted_address"]
+            number = details["formatted_phone_number"]
+            rating = details["rating"]
+            if "price_level" in i:
+                
+                resList.append([i["name"],address,str(i["price_level"]),str(number),str(rating)])
+            else:
+                resList.append([i["name"],address,"N/A",str(number),str(rating)])
        # print i
-        if "price_level" in i:
+        elif "price_level" in i:
           #THIS MEANS THAT WE MUST COMPLETELY IGNORE THE GOOGLE API RESULTS
           #THAT DON'T HAVE PRICE LEVELS :(
           if i["price_level"] <= maxPriceLevel:
