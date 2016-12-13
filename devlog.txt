@@ -67,3 +67,5 @@ athanitisC -- 2016-12-11 23:37: Removed major comments in the main function to o
 12/12/16
 
 athanitisC -- 2016-12-12 21:51: Removed the max price level requirement from the form. Now, the results page can display places with and without price levels from the Google Maps api.
+
+athanitisC -- 2016-12-12 22:51: Tweaked input functions to use location inputed instead of location from IP address. Also, fixed errors caused from possibly outputs that are null from the api.
