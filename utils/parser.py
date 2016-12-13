@@ -36,7 +36,7 @@ def geoCode(location,key):
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
     jsonData = json.loads(jsonUntouched)
- 
+
 
     latLong = []
    # print
@@ -119,21 +119,21 @@ def crtLists(jsonData, maxPriceLevel,key):
             number = details["formatted_phone_number"]
             rating = details["rating"]
             '''
-            
+
 
             address = "N/A"
             if "formatted_address" in details:
                 address = details["formatted_address"]
-            number = "N/A"    
+            number = "N/A"
             if "formatted_phone_number" in details:
                 number = details["formatted_phone_number"]
 
-            rating = "N/A"    
+            rating = "N/A"
             if "rating" in details:
                 rating = details["rating"]
-            
+
             if "price_level" in i:
-                
+
                 resList.append([i["name"],address,str(i["price_level"]),str(number),str(rating)])
             else:
                 resList.append([i["name"],address,"N/A",str(number),str(rating)])
@@ -149,18 +149,18 @@ def crtLists(jsonData, maxPriceLevel,key):
 
             #  print details
               details= details["result"]
-           
+
               address = "N/A"
               if "formatted_address" in details:
                   address = details["formatted_address"]
-              number = "N/A"    
+              number = "N/A"
               if "formatted_phone_number" in details:
                   number = details["formatted_phone_number"]
 
-              rating = "N/A"    
+              rating = "N/A"
               if "rating" in details:
                   rating = details["rating"]
-                  
+
               resList.append([i["name"],address,str(i["price_level"]),str(number),str(rating)])
    # print resList
     return resList
@@ -181,11 +181,11 @@ def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel):
     #f.close()
     # print key
 
-   
+
     latLong = geoCode(location,key)
     lat = latLong[0]
     lng = latLong[1]
-    
+
     x = GooglPlacSear(lat, lng, radius, typeOfPlace,keyword, key)
     #x is the dictionary parsed from the json data
 
@@ -294,33 +294,14 @@ Todo:
 def getEvents(d):
     inputs = ""
     for key in d.keys():
-        if (d[key]): # if not empty & isn't time input
-            inputs += "&%s=%s"%(key, d[key])
-    #if d["year_start"] and d["month_start"] and d["day_start"] and d["hour_start"] and d["minute_start"]:
-    #    startRange = toUTC_start(d["year_start"], d["month_start"], d["day_start"], d["hour_start"], d["minute_start"])
-    #if d["year_end"] and d["month_end"] and d["day_end"] and d["hour_end"] and d["minute_end"]:
-    #    endRange = toUTC_end(d["year_end"], d["month_end"], d["day_end"], d["hour_end"], d["minute_end"])
+        if d[key]: # if not empty
+            if key == "location.address":
+                latLong = geoCode(d["location.address"],"AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk")
+                inputs += "&%s=%s"%("location.latitude", latLong[0])
+                inputs += "&%s=%s"%("location.longitude", latLong[1])
+            else:
+                inputs += "&%s=%s"%(key, d[key])
     url = ("https://www.eventbriteapi.com/v3/events/search/?token=BV442UWQUREICGJW7V2A" + inputs)
-    '''
-    # RIP requests code
-    response = requests.get(
-        "https://www.eventbriteapi.com/v3/events/search/",
-        headers = {
-            "Authorization": "Bearer BV442UWQUREICGJW7V2A",
-            "q": d["keyword"], #Return events matching the given keywords.
-            "sort_by": d["sort"], # Options are "date", "distance" and "best"
-            "location.address": d["address"],
-            "location.within": d["radius"], # int followed by "mi" or "km"
-            "price" : d["price"], # only "free" or "paid"
-            "start_date.keyword" : d["startKey"], # this_week, next_week, this_weekend, next_month, this_month, tomorrow, today
-            "start_date.range_start" : startRange, # local datetime format
-            "start_date.range_end" : endRange,
-            "location.latitude": d["lat"],
-            "location.longitude": d["long"],
-        },
-        verify = True,  # Verify SSL certificate
-    )
-    '''
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
     eventsDict = json.loads(jsonUntouched)["events"]
