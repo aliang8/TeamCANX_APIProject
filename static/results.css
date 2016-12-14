@@ -1,49 +1,5 @@
-.myday-table {
-    border-collapse: collapse;
-    border-spacing: 20;
-    empty-cells: show;
-    border: 1px solid #cbcbcb;
-    margin: 0px;
+.table a {
+    color: black;
 }
 
-.myday-table td {
-    border-left: 1px solid red;
-    border-width: 0 0 0 1px;
-    font-size: inherit;
-    margin: 0px;
-    overflow: visible;
-    padding: 0.5em 1em;
-}
 
-.myday-table td:first-child {
-    border-left-width: 0;
-}
-
-.myday-table td {
-    background-color: transparent;
-}
-
-.myday-table-odd td {
-    background-color: #f2f2f2;
-}
-
-.myday-table-striped tr:nth-child(2n-1) td {
-    background-color: #f2f2f2;
-}
-
-.myday-table-bordered td {
-    border-bottom: 1px solid #cbcbcb;
-}
-
-.myday-table-bordered tbody > tr:last-child > td {
-    border-bottom-width: 0;
-}
-
-.myday-table-horizontal td {
-    border-width: 0 0 1px 0;
-    border-bottom: 1px solid #cbcbcb;
-}
-
-.myday-table-horizontal tbody > tr:last-child > td {
-    border-bottom-width: 0;
-}

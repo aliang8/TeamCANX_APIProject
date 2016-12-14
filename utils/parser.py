@@ -33,22 +33,18 @@ def geoCode(location,key):
          'address=%s'
          '&key=%s')%(location, key)
 
-    
+
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
     jsonData = json.loads(jsonUntouched)
 
     latLong = []
 
-    print jsonData
-    print
-    print
-    print
     if jsonData["results"] != []:
         res = jsonData["results"][0]["geometry"]["location"]
         latLong.append(res["lat"])
         latLong.append(res["lng"])
-    
+ 
     return latLong
 
 
@@ -63,13 +59,13 @@ def GooglPlacSear(lat, lng, radius, keyword, key):
     #I believe it's possible to have more than one keyword
 
 
-   
+
     url = ('https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
           'location=%s'
           '&radius=%s'
           '&keyword=%s'
           '&key=%s') % (User_Location, radius, keyword, key)
-   
+
 
     #Getting Json data
     urlInfo = urllib.urlopen(url)
@@ -87,7 +83,7 @@ def GooglPlacDet(ID,key):
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
     jsonData = json.loads(jsonUntouched)
- 
+
     return jsonData
 
 
@@ -95,16 +91,16 @@ def GooglPlacDet(ID,key):
 def crtLists(jsonData, maxPriceLevel,key):
 
     maxPriceLevel = int(maxPriceLevel)
- 
+
     resList = []
     res = jsonData["results"]
     for i in res:
         if maxPriceLevel == 0:
-        
+
             details = GooglPlacDet(i["place_id"],key)
             details= details["result"]
 
- 
+
 
 
             address = "N/A"
@@ -118,19 +114,19 @@ def crtLists(jsonData, maxPriceLevel,key):
             if "rating" in details:
                 rating = details["rating"]
 
-                
+
             if "price_level" in i:
                 resList.append([i["name"],address,str(i["price_level"]),str(number),str(rating)])
             else:
                 resList.append([i["name"],address,"N/A",str(number),str(rating)])
-  
+
         elif "price_level" in i:
-     
+
           if i["price_level"] <= maxPriceLevel:
- 
+
               details = GooglPlacDet(i["place_id"],key)
 
-          
+
               details= details["result"]
 
               address = "N/A"
@@ -155,12 +151,12 @@ def crtLists(jsonData, maxPriceLevel,key):
 def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel):
 
     #f = open("/Users/Flamingo/Documents/SoftDev/flask-intro/softdev/keys.txt","r")
-    f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
+    #f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
     # f = open("/../../keys.txt","r")
     #key = "AIzaSyAvax-neSqo1-HnK4ajfSQKcdWZUl8FJYc"
-    key = f.readline()
-   
-    
+    key = "AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk"
+
+
     latLong = geoCode(location,key)
     if latLong == []:
         return []
@@ -249,33 +245,30 @@ def yelp_lookup(loc,coords,bounds,params):
         ret[name]['reservation_url'] = business.reservation_url
         ret[name]['eat24_url'] = business.eat24_url
     return [ret]
-'''
+
 #Test Queries
 params = get_search_params('food',5,0,'food',1000,False)
 ret = yelp_lookup('1946 76 Street Brooklyn New York 11214',["",""],["","","",""],params)
 ret = yelp_lookup('',[37.77493,-122.419415],["","","",""],params)
 #neat formatted json print
-print(json.dumps(ret, indent=4, sort_keys=True))
+#print(json.dumps(ret, indent=4, sort_keys=True))
 
-'''
+
 
 #====Eventbrite================================================================
 
-'''
-Todo:
--using google api to convert address -> lat,lng
--testing
-'''
 # returns list of (sub)dictionaries of each event's logo, name, description, url, start & end date & time
 def getEvents(d):
     inputs = ""
     for key in d.keys():
         if d[key]: # if not empty
             if key == "location":
-                latLong = geoCode(d["location"],"AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk")
-                print latLong
-                inputs += "&%s=%s"%("location.latitude", str(latLong[0]))
-                inputs += "&%s=%s"%("location.longitude", str(latLong[1]))
+                latLongL = geoCode(d["location"],"AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk")
+                #print latLong
+                inputs += "&%s=%s"%("location.latitude", str(latLongL[0]))
+                inputs += "&%s=%s"%("location.longitude", str(latLongL[1]))
+            elif key == "limit":
+                break
             else:
                 inputs += "&%s=%s"%(key, d[key])
     url = ("https://www.eventbriteapi.com/v3/events/search/?token=BV442UWQUREICGJW7V2A" + inputs)
@@ -283,7 +276,7 @@ def getEvents(d):
     jsonUntouched = urlInfo.read()
     eventsDict = json.loads(jsonUntouched)["events"]
     ret = [] # returned list
-    ret.append(url)
+    #ret.append(url)
     for event in eventsDict:
         holder = {} # sublist for each entry
         if (event["logo"]):
@@ -296,9 +289,13 @@ def getEvents(d):
         #print event["end"]["local"]
         holder["end"] = formatTime(event["end"]["local"])  # end date & time in UTC
         ret.append(holder)
-    return ret
+    if d["limit"]:
+        limit = int(d["limit"])+1
+        return ret[0:limit]
+    else:
+        return ret
 
-"""
+
 # Converts 2016-12-12T08:00:00 -> month-day-year hour:minute
 def formatTime(utc):
     month = utc[5:7]
@@ -307,7 +304,7 @@ def formatTime(utc):
     timeIndex = utc.index('T')
     time = utc[timeIndex+1:-3]
     return "%s/%s/%s %s"%(month, day, year, time)
-
+"""
 def toUTC_start(year, month, day, hour, minute):
     return "&start_date.range_start=" + "%s-%s-%sT%s:%s:00"%(year, month, day, hour, minute)
 
@@ -319,8 +316,8 @@ def toUTC_end(year, month, day, hour, minute):
 # start: 12/16 9AM
 # end: 12/16 8 PM
 
-#d1 = {"location.address":"345 chambers st"}
-#getEvents(d1)
+#d1 = {"location":"345 chambers st", "limit": "1"}
+#print getEvents(d1)
 #print convertToUTC("2016", "12", "16", "09", "00")
 #print convertToUTC("2016", "12", "16", "20", "00")
 
