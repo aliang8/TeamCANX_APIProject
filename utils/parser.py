@@ -40,11 +40,11 @@ def geoCode(location,key):
 
     latLong = []
 
-
-    res = jsonData["results"][0]["geometry"]["location"]
-    latLong.append(res["lat"])
-    latLong.append(res["lng"])
-
+    if jsonData["results"] != []:
+        res = jsonData["results"][0]["geometry"]["location"]
+        latLong.append(res["lat"])
+        latLong.append(res["lng"])
+ 
     return latLong
 
 
@@ -158,16 +158,20 @@ def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel):
 
 
     latLong = geoCode(location,key)
-    lat = latLong[0]
-    lng = latLong[1]
+    if latLong == []:
+        return []
+    else:
+        
+        lat = latLong[0]
+        lng = latLong[1]
 
-    x = GooglPlacSear(lat, lng, radius, keyword, key)
-    #x is the dictionary parsed from the json data
+        x = GooglPlacSear(lat, lng, radius, keyword, key)
+        #x is the dictionary parsed from the json data
 
-    y = crtLists(x,maxPriceLevel,key)
-    #y is the list of places that fit the user's parameters
-    #list contains, in order, : [name, address, price level, phone number, rating]
-    return y
+        y = crtLists(x,maxPriceLevel,key)
+        #y is the list of places that fit the user's parameters
+        #list contains, in order, : [name, address, price level, phone number, rating]
+        return y
 
 
 

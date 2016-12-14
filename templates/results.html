@@ -65,12 +65,12 @@
 		    {% endfor %}
 		    
 		    <td>
-		 
+		      <form>
 			<!--<input type="submit" value="add to Calendar">-->
-			<button onclick="alert('{{place[0]}}' + '{{place[1]}}'+ '{{place[2]}}'+ '{{place[3]}}+ '{{place[4]}}'')"> add</button>
-		    
+			<button type = "submit" value = "('{{place[0]}}'+','+'{{place[1]}}'+','+'{{place[2]}}'+','+'{{place[3]}}'+','+'{{place[4]}}')">Add to To-Do List</button>
+		      </form>
 		    </td>
-		   
+		    
                    
                 </tr>
                 {% endfor %}
