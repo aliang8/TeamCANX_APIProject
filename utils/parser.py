@@ -151,10 +151,10 @@ def crtLists(jsonData, maxPriceLevel,key):
 def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel):
 
     #f = open("/Users/Flamingo/Documents/SoftDev/flask-intro/softdev/keys.txt","r")
-    f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
+    #f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
     # f = open("/../../keys.txt","r")
     #key = "AIzaSyAvax-neSqo1-HnK4ajfSQKcdWZUl8FJYc"
-    key = f.readline()
+    key = "AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk"
 
 
     latLong = geoCode(location,key)

@@ -137,7 +137,7 @@ def results_events():
         d = {}
         d["q"] = request.form['keyword']
         d["location"] = request.form['location']
-        d["location.within"] = request.form['radius']
+        d["location.within"] = request.form['radius']+"km"
         d["sort_by"] = request.form['sort_by']
         d["price"] = request.form['price']
         d["start_date.keyword"] = request.form['startKey']
