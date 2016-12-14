@@ -236,6 +236,7 @@ def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel, resNum):
              #   print y[i]
                 results.append(y[i])
                 i= i+1
+              #  print results
         else:
             i = 0
             while i<len(y):
