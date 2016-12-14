@@ -37,7 +37,7 @@
                   </td>
 		  <td>
 		    <form action="/events-list" method="GET">
-		      <input type="submit" name="{{d['url']}}|{{d['name']}}|{{d['start']}}|{{d['end']}}|{{d['description']}}" value="Add to Calendar">
+		      <input type="submit" name="({{d['url']}},{{d['name']}},{{d['start']}},{{d['end']}},{{d['description']}},)" value="Add to Calendar">
 		    </form>
 		  </td>
 		</tr>

@@ -65,7 +65,7 @@
 		    {% endfor %}
 		    
 		    <td>
-		      <form action="/events-list/" method="GET">
+		      <form>
 			<!--<input type="submit" value="add to Calendar">-->
 			<button type = "submit" value = "('{{place[0]}}'+','+'{{place[1]}}'+','+'{{place[2]}}'+','+'{{place[3]}}'+','+'{{place[4]}}')">Add to To-Do List</button>
 		      </form>
