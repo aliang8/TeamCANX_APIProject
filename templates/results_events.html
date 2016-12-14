@@ -3,42 +3,44 @@
 <html>
 
 <head>
-    <title> OMG EVENTS!</title>
+    <title>Ev3ntz</title>
+    <link rel="stylesheet" href="../static/results.css">
     <link rel="stylesheet" href="../static/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/home.css">
-    <link rel="stylesheet" href="../static/results.css">
+
 </head>
 
 <body>
     <div class="container">
-        <h2>RESULTS FROM EVENTBRITE API</h2>
-        <hr>
-        <table class="myday-table-odd myday-table myday-table-bordered">
-            <thead>
-            </thead>
-
+      <h1>Here are Some Lit Events</h1>
+     <h4><i>Generously provided by the Eventbrite API</i></h4>
+     <div class="table-responsive">
+        <table class="table myday-table-odd myday-table myday-table-bordered">
+            <thead class="myday_thead">
+	      <tr>
+		<th>Event</th>
+		<th>Time</th>
+		<th>Description</th>
+	      </tr>
+	    </thead>
             <tbody>
                 {% for d in events %}
                 <tr>
-                    <td><img src={{d[ "logo"]}} alt="N/A"></td>
-                    <td>
-                        <h4> {{d["name"]}} </h4></td>
-                    <td>
+                  <td><img src={{d[ "logo"]}} alt="N/A">
+		    <h2> <a href="{{d['url']}}">{{d["name"]}}</a> </h2>
+                    </td>
+		    <td>
                         <p> Start: {{d["start"]}} </p>
-                    </td>
-                    <td>
                         <p> End: {{d["end"]}} </p>
-                    </td>
                     <td>
                         <p> Description: {{d["description"]}} </p>
                     </td>
-                    <td>
-                        <p> <a href="{{d['url']}}">{{d["name"]}}</a> </p>
-                    </td>
+                    
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+     </div>
 </body>
 
 </html>

@@ -1,19 +1,30 @@
+.myday-thead{
+    height: 3em;
+    vertical-align: center;
+}
 .myday-table {
     border-collapse: collapse;
-    border-spacing: 20;
+    /*border-spacing: 20;*/
+    
     empty-cells: show;
     border: 1px solid #cbcbcb;
     margin: 0px;
 }
+tr {
+    height: 5em;
+}
 
 .myday-table td {
-    border-left: 1px solid red;
     border-width: 0 0 0 1px;
     font-size: inherit;
     margin: 0px;
     overflow: visible;
-    padding: 0.5em 1em;
 }
+
+.myday-table a{
+    color: black;
+}
+
 
 .myday-table td:first-child {
     border-left-width: 0;
