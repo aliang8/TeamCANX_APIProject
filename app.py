@@ -100,7 +100,13 @@ def results():
             else:
                 maxPriceLevel = price
             rsltList = api.allInOneFunc(location,radius, typeOfPlace, keyword, maxPriceLevel)
-            return render_template("results.html", results = rsltList)
+            if rsltList == []:
+                message = "Sorry, GoogleMaps API doesn't recognize that location. Try again."
+                prefs = functions.getUserPrefs(session['username'])
+                return render_template("form.html", message = message, prefs = prefs)
+
+            else:
+                return render_template("results.html", results = rsltList)
         elif "events" in request.form:
             d = {}
             d["q"] = request.form["search"]
