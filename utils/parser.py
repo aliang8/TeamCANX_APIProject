@@ -312,8 +312,8 @@ def toUTC_end(year, month, day, hour, minute):
 # start: 12/16 9AM
 # end: 12/16 8 PM
 
-d1 = {"location":"345 chambers st", "limit": "1"}
-print getEvents(d1)
+#d1 = {"location":"345 chambers st", "limit": "1"}
+#print getEvents(d1)
 #print convertToUTC("2016", "12", "16", "09", "00")
 #print convertToUTC("2016", "12", "16", "20", "00")
 
