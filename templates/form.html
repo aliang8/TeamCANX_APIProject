@@ -41,9 +41,9 @@
         <input type="text" name="price" placeholder="any price level" data-subline="Example: Any number from <em>1</em> to <em>5</em>">
 	. I'm looking for places 
 	{% if prefs[0] == '' %}
-        <input type="text" name="radius" placeholder="any radius" data-subline="Example: <em>2</em> or <em>120</em> kilometers">
+        <input type="text" name="radius" placeholder="any radius" data-subline="Example: <em>2</em> or <em>45</em> kilometers">
 	{% else %}
-	<input value="{{prefs[0]}}" type="text" name="radius" placeholder="{{prefs[0]}}" data-subline="Example: <em>2</em> or <em>120</em> meters"> meters radius
+	<input value="{{prefs[0]}}" type="text" name="radius" placeholder="{{prefs[0]}}" data-subline="Example: <em>2</em> or <em>45</em> kilometers"> kilometers radius
 	{% endif %}
 	
         from 

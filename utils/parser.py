@@ -32,16 +32,22 @@ def geoCode(location,key):
     url=('https://maps.googleapis.com/maps/api/geocode/json?'
          'address=%s'
          '&key=%s')%(location, key)
-
+    '''
     print url
     print
     print
     print
+    '''
+    
+    #the below url is taken directly from google maps api. definitely works
+  #  url ="https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyA_3f_WfYGDXotfqwZMBNhnlP1BEGOLY_Q"
+
+   # print url
     
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
     jsonData = json.loads(jsonUntouched)
-    print jsonData
+   # print jsonData
     
     latLong = []
 
@@ -71,7 +77,14 @@ def GooglPlacSear(lat, lng, radius, keyword, key):
           '&keyword=%s'
           '&key=%s') % (User_Location, radius, keyword, key)
 
-
+    '''
+    print url
+    print
+    print
+    print
+    print
+    '''
+    
     #Getting Json data
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
@@ -159,14 +172,16 @@ def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel, resNum):
     #f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
     # f = open("/../../keys.txt","r")
     #key = "AIzaSyAvax-neSqo1-HnK4ajfSQKcdWZUl8FJYc"
-    key = "AIzaSyDTC7goMjY9rG3oRUSu0s-qCPbdDE1XCOo"
+    key = "AIzaSyA_3f_WfYGDXotfqwZMBNhnlP1BEGOLY_Q"
 
 
     latLong = geoCode(location,key)
+    '''
     print latLong
     print
     print
     print
+    '''
     
     if latLong == []:
         return []
@@ -174,6 +189,9 @@ def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel, resNum):
         
         lat = latLong[0]
         lng = latLong[1]
+        radius = int(radius)
+        radius = radius * 1000
+        radius = str(radius)
 
         x = GooglPlacSear(lat, lng, radius, keyword, key)
         #x is the dictionary parsed from the json data
@@ -183,20 +201,38 @@ def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel, resNum):
         #list contains, in order, : [name, address, price level, phone number, rating]
 
 
-       
+        '''
         print y
+        print
+        print
+        print
+        print
+        print y[0]
+        '''
 
         results = []
 
+        resNum = int(resNum)
+
+        '''
         print resNum
         print
         print
         print
         print
         print len(y)
+
+        print
+        print
+        print
+        '''
+        
         if resNum < len(y):
             i = 0
-            while i<resNum:
+           # print i
+            while i <resNum:
+             #   print i
+             #   print y[i]
                 results.append(y[i])
                 i= i+1
         else:
@@ -204,11 +240,11 @@ def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel, resNum):
             while i<len(y):
                 results.append(y[i])
                 i = i +1
-        print results
-    
-
+      
+      #  print results
         
-       ## return y
+        return results
+       # return y
 
 
 
