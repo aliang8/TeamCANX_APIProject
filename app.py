@@ -104,7 +104,7 @@ def results():
         elif "events" in request.form:
             d = {}
             d["q"] = request.form["search"]
-            d["location.address"] = request.form['location']
+            d["location"] = request.form['location']
             d["location.within"] = request.form['radius']
             d["sort_by"] = request.form['sort_by']
             d["start_date.keyword"] = request.form["startKey"]
