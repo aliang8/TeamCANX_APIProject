@@ -253,12 +253,6 @@ ret = yelp_lookup('',[37.77493,-122.419415],["","","",""],params)
 
 #====Eventbrite================================================================
 
-'''
-Todo:
--using google api to convert address -> lat,lng
--limiting number of events
--testing
-'''
 # returns list of (sub)dictionaries of each event's logo, name, description, url, start & end date & time
 def getEvents(d):
     inputs = ""
@@ -269,6 +263,8 @@ def getEvents(d):
                 #print latLong
                 inputs += "&%s=%s"%("location.latitude", str(latLongL[0]))
                 inputs += "&%s=%s"%("location.longitude", str(latLongL[1]))
+            elif key == "limit":
+                break
             else:
                 inputs += "&%s=%s"%(key, d[key])
     url = ("https://www.eventbriteapi.com/v3/events/search/?token=BV442UWQUREICGJW7V2A" + inputs)
@@ -276,7 +272,7 @@ def getEvents(d):
     jsonUntouched = urlInfo.read()
     eventsDict = json.loads(jsonUntouched)["events"]
     ret = [] # returned list
-    ret.append(url)
+    #ret.append(url)
     for event in eventsDict:
         holder = {} # sublist for each entry
         if (event["logo"]):
@@ -289,7 +285,11 @@ def getEvents(d):
         #print event["end"]["local"]
         holder["end"] = formatTime(event["end"]["local"])  # end date & time in UTC
         ret.append(holder)
-    return ret
+    if d["limit"]:
+        limit = int(d["limit"])+1
+        return ret[0:limit]
+    else:
+        return ret
 
 
 # Converts 2016-12-12T08:00:00 -> month-day-year hour:minute
@@ -312,7 +312,7 @@ def toUTC_end(year, month, day, hour, minute):
 # start: 12/16 9AM
 # end: 12/16 8 PM
 
-d1 = {"location":"345 chambers st"}
+d1 = {"location":"345 chambers st", "limit": "1"}
 print getEvents(d1)
 #print convertToUTC("2016", "12", "16", "09", "00")
 #print convertToUTC("2016", "12", "16", "20", "00")

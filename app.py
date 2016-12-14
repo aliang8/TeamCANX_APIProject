@@ -108,6 +108,8 @@ def results():
             d["location.within"] = request.form['radius']
             d["sort_by"] = request.form['sort_by']
             d["start_date.keyword"] = request.form["startKey"]
+            d["limit"] = request.form.get('limit')
+
             #d["price"] = request.form['price']
             #d["start_date.keyword"] = request.form['startKey']
             #print d
