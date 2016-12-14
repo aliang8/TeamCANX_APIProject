@@ -33,11 +33,16 @@ def geoCode(location,key):
          'address=%s'
          '&key=%s')%(location, key)
 
-
+    print url
+    print
+    print
+    print
+    
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
     jsonData = json.loads(jsonUntouched)
-
+    print jsonData
+    
     latLong = []
 
     if jsonData["results"] != []:
@@ -98,7 +103,7 @@ def crtLists(jsonData, maxPriceLevel,key):
         if maxPriceLevel == 0:
 
             details = GooglPlacDet(i["place_id"],key)
-            details= details["result"]
+            details = details["result"]
 
 
 
@@ -148,16 +153,21 @@ def crtLists(jsonData, maxPriceLevel,key):
 
 ###This is the main function
     ###User inputs the location, radius, type of place, keyword, and maxPricelevel----type of place and keyword must be strings
-def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel):
+def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel, resNum):
 
     #f = open("/Users/Flamingo/Documents/SoftDev/flask-intro/softdev/keys.txt","r")
     #f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
     # f = open("/../../keys.txt","r")
     #key = "AIzaSyAvax-neSqo1-HnK4ajfSQKcdWZUl8FJYc"
-    key = "AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk"
+    key = "AIzaSyDTC7goMjY9rG3oRUSu0s-qCPbdDE1XCOo"
 
 
     latLong = geoCode(location,key)
+    print latLong
+    print
+    print
+    print
+    
     if latLong == []:
         return []
     else:
@@ -171,7 +181,34 @@ def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel):
         y = crtLists(x,maxPriceLevel,key)
         #y is the list of places that fit the user's parameters
         #list contains, in order, : [name, address, price level, phone number, rating]
-        return y
+
+
+       
+        print y
+
+        results = []
+
+        print resNum
+        print
+        print
+        print
+        print
+        print len(y)
+        if resNum < len(y):
+            i = 0
+            while i<resNum:
+                results.append(y[i])
+                i= i+1
+        else:
+            i = 0
+            while i<len(y):
+                results.append(y[i])
+                i = i +1
+        print results
+    
+
+        
+       ## return y
 
 
 

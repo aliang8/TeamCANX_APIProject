@@ -99,7 +99,7 @@ def results():
                 maxPriceLevel = "0"
             else:
                 maxPriceLevel = price
-            rsltList = api.allInOneFunc(location,radius, typeOfPlace, keyword, maxPriceLevel)
+            rsltList = api.allInOneFunc(location,radius, typeOfPlace, keyword, maxPriceLevel, limit)
             if rsltList == []:
                 message = "Sorry, GoogleMaps API doesn't recognize that location. Try again."
                 prefs = functions.getUserPrefs(session['username'])
