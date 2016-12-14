@@ -133,9 +133,37 @@ def results():
             prefs = functions.getUserPrefs(session['username'])
             return render_template("form.html", message = message, prefs = prefs)
 
-@app.route("/events-list")
+@app.route("/events-list", methods=['GET'])
 def events_list():
-    return render_template("events-list.html");
+    if request.method == 'GET':
+        args =  request.args.keys()[0]
+        words = args.split("|")
+        '''
+        print
+        print
+        print
+        print args
+        print
+        print
+        print
+        print words
+        print
+        print
+        print
+        print words[1]
+        print
+        print 
+        print
+        '''
+        url = words[0]
+        name = words[1]
+        start = words[2]
+        end = words[3]
+        description = words[4]
+        functions.addEvent(url,name,start,end,description,session['username'])
+    else:
+        events = functions.getEvent(session['username'])
+        return render_template("events-list.html", events = events);
 
 @app.route("/results/events", methods=['POST','GET'])
 def results_events():

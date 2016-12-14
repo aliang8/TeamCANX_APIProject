@@ -46,8 +46,8 @@ def authenticate():
 @app.route("/form/")
 def form():
     message = "EDIT YOUR PREFERENCES FOR BETTER RESULTS"
-    #prefs = functions.getUserPrefs(session['username'])
-    return render_template("form.html", message = message)
+    prefs = functions.getUserPrefs(session['username'])
+    return render_template("form.html", message = message, prefs = prefs)
 
 @app.route("/form/events")
 def form_e():
@@ -72,8 +72,6 @@ def results():
         if 'places' in request.form:
             radius = request.form['radius']
             #print "Radius: " + radius
-            category = request.form['category']
-            #print "Place: " + category
             search = request.form['search']
             #print "Search: " + search
             price =  request.form['price']
@@ -82,9 +80,11 @@ def results():
             #print "Location: " + location
             limit = request.form.get('limit')
             #print "Limit: " + limit
+            date = request.form.get('startKey')
+
             '''
             data = []
-            params = api.get_search_params(search,limit,0,category,radius,False)
+            params = api.get_search_params(search,limit,0,radius,False)
             ret = api.yelp_lookup(location,["",""],["","","",""],params)
             for business in ret:
                 for key, value in business.iteritems():
@@ -99,23 +99,39 @@ def results():
                 maxPriceLevel = "0"
             else:
                 maxPriceLevel = price
-            rsltList = api.allInOneFunc(location,radius, typeOfPlace, keyword, maxPriceLevel)
-            return render_template("results.html", results = rsltList)
+            rsltList = api.allInOneFunc(location,radius, typeOfPlace, keyword, maxPriceLevel, limit)
+            if rsltList == []:
+                message = "Sorry, GoogleMaps API doesn't recognize that location. Try again."
+                prefs = functions.getUserPrefs(session['username'])
+                return render_template("form.html", message = message, prefs = prefs)
+
+            else:
+                return render_template("results.html", results = rsltList)
         elif "events" in request.form:
             d = {}
             d["q"] = request.form["search"]
-            d["location.address"] = request.form['location']
+            d["location"] = request.form['location']
             d["location.within"] = request.form['radius']
             d["sort_by"] = request.form['sort_by']
             d["start_date.keyword"] = request.form["startKey"]
+            d["limit"] = request.form.get('limit')
+
             #d["price"] = request.form['price']
             #d["start_date.keyword"] = request.form['startKey']
             #print d
             return render_template("results_events.html", events = api.getEvents(d), URL = api.getEvents(d)[0])
         else:
+            radius = request.form['radius']
+            search = request.form['search']
+            price =  request.form['price']
+            location = request.form['location']
+            limit = request.form.get('limit')
+            date = request.form.get('startKey')
+
             message = "SUCCESSFULLY UPDATED PREFERENCES"
-            functions.changePrefs(radius,category,search,price,location,date,session['username'])
-            return render_template("form.html", message = message)
+            functions.changePrefs(radius,search,price,location,date,session['username'])
+            prefs = functions.getUserPrefs(session['username'])
+            return render_template("form.html", message = message, prefs = prefs)
 
 @app.route("/events-list")
 def events_list():
@@ -126,11 +142,12 @@ def results_events():
     if request.method == 'POST':
         d = {}
         d["q"] = request.form['keyword']
-        d["location.address"] = request.form['address']
-        d["location.within"] = request.form['radius']
+        d["location"] = request.form['location']
+        d["location.within"] = request.form['radius']+"km"
         d["sort_by"] = request.form['sort_by']
         d["price"] = request.form['price']
         d["start_date.keyword"] = request.form['startKey']
+        """
         # DATE & TIME
         d["year_start"] = request.form['year_start']
         d["month_start"] = request.form['month_start']
@@ -142,6 +159,7 @@ def results_events():
         d["day_end"] = request.form['day_end']
         d["hour_end"] = request.form['hour_end']
         d["minute_end"] = request.form['minute_end']
+        """
         #print d
         return render_template("results_events.html", events = api.getEvents(d), URL = api.getEvents(d)[0])
 

@@ -10,15 +10,41 @@ def initializeTables():
     c = db.cursor()
     c.execute("CREATE TABLE IF NOT EXISTS accounts (username TEXT NOT NULL, password TEXT NOT NULL, userID INTEGER PRIMARY KEY autoincrement)")
     c.execute("CREATE TABLE IF NOT EXISTS settings (radius INTEGER, search TEXT, price INTEGER, location TEXT, date TEXT, userID INTEGER)")
+    c.execute("CREATE TABLE IF NOT EXISTS events (url TEXT, name TEXT, start TEXT, end TEXT, description TEXT, userID INTEGER)")
+    c.execute("CREATE TABLE IF NOT EXISTS places (radius INTEGER, search TEXT, price INTEGER, location TEXT, userID INTEGER)")
     db.commit()
     db.close()
 
-#Allows users to update their preferences
-def changePrefs(radius, search, price, location, date, user):
+def getUserID(user):
     db = sql.connect(DATA)
     c = db.cursor()
     data = c.execute("SELECT userID FROM accounts WHERE username = ?", (user,))
     userID = data.fetchone()[0]
+    return userID
+
+#Insert a favorited event/place into database
+def addEvent(url,name,start,end,description,user):
+    db = sql.connect(DATA)
+    c = db.cursor()
+    userID = getUserID(user)
+    c.execute("INSERT INTO events VALUES(?,?,?,?,?,?)", (url,name,start,end,description,userID,))
+    db.commit()
+    db.close()
+    
+#Gets current user's events
+def getEvent(user):
+    db = sql.connect(DATA)
+    c = db.cursor()
+    userID = getUserID(user)
+    data = c.execute("SELECT * FROM events WHERE userID = ?", (userID,))
+    events = data.fetchall()
+    return events
+
+#Allows users to update their preferences
+def changePrefs(radius,search,price,location,date,user):
+    db = sql.connect(DATA)
+    c = db.cursor()
+    userID = getUserID(user)
     exists = c.execute("SELECT 1 FROM settings WHERE userID = ?", (userID,))
     exist = exists.fetchall()
     if len(exist) != 0:
@@ -32,8 +58,7 @@ def changePrefs(radius, search, price, location, date, user):
 def getUserPrefs(user):
     db = sql.connect(DATA)
     c = db.cursor()
-    data = c.execute("SELECT userID FROM accounts WHERE username = ?", (user,))
-    userID = data.fetchone()[0]
+    userID = getUserID(user)
     data = c.execute("SELECT * FROM settings WHERE userID = ?", (userID,))
     prefs = data.fetchall()
     if len(prefs) > 0:

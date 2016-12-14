@@ -158,9 +158,9 @@ def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel, resNum):
     #f = open("/Users/Flamingo/Documents/SoftDev/flask-intro/softdev/keys.txt","r")
     #f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
     # f = open("/../../keys.txt","r")
-    #key = "AIzaSyAvax-neSqo1-HnK4ajfSQKcdWZUl8FJYc"
-    key = "AIzaSyDTC7goMjY9rG3oRUSu0s-qCPbdDE1XCOo"
-
+    key = "AIzaSyAvax-neSqo1-HnK4ajfSQKcdWZUl8FJYc"
+    #key = "AIzaSyDTC7goMjY9rG3oRUSu0s-qCPbdDE1XCOo"
+    #key = f.readline()
 
     latLong = geoCode(location,key)
     print latLong

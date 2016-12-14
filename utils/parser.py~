@@ -32,27 +32,28 @@ def geoCode(location,key):
     url=('https://maps.googleapis.com/maps/api/geocode/json?'
          'address=%s'
          '&key=%s')%(location, key)
-   # print url
+
+    print url
+    print
+    print
+    print
+    
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
     jsonData = json.loads(jsonUntouched)
-
+    print jsonData
+    
     latLong = []
-   # print
-    #print
-    #print
-    res = jsonData["results"][0]["geometry"]["location"]
-    #print res
-    #print
-    #print
-    #print
-    latLong.append(res["lat"])
-    latLong.append(res["lng"])
-    #print latLong
+
+    if jsonData["results"] != []:
+        res = jsonData["results"][0]["geometry"]["location"]
+        latLong.append(res["lat"])
+        latLong.append(res["lng"])
+ 
     return latLong
 
 
-def GooglPlacSear(lat, lng, radius, typeOfPlace,keyword, key):
+def GooglPlacSear(lat, lng, radius, keyword, key):
     Latitude = str(lat)
     Longitude = str(lng)
     User_Location = Latitude + "," + Longitude
@@ -63,61 +64,48 @@ def GooglPlacSear(lat, lng, radius, typeOfPlace,keyword, key):
     #I believe it's possible to have more than one keyword
 
 
-   # print User_Location
-   # print keyword
-    if keyword == "":
-        url = ('https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
-               'location=%s'
-               '&radius=%s'
-               '&type=%s'
-               '&key=%s') % (User_Location, radius, typeOfPlace, key)
-    else:
-        url = ('https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
-               'location=%s'
-               '&radius=%s'
-               '&type=%s'
-               '&keyword=%s'
-               '&key=%s') % (User_Location, radius, typeOfPlace,keyword, key)
-  #  print url
+
+    url = ('https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
+          'location=%s'
+          '&radius=%s'
+          '&keyword=%s'
+          '&key=%s') % (User_Location, radius, keyword, key)
+
+
     #Getting Json data
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
     jsonData = json.loads(jsonUntouched)
-   # print jsonData
+
     return jsonData
 
 def GooglPlacDet(ID,key):
     url = ('https://maps.googleapis.com/maps/api/place/details/json?'
            'placeid=%s'
            '&key=%s') %(ID, key)
-   # print url
+
 
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
     jsonData = json.loads(jsonUntouched)
-   # print jsonData
+
     return jsonData
 
 
 
 def crtLists(jsonData, maxPriceLevel,key):
-   # print maxPriceLevel
-    #must convert to int because form takes it in as a string
+
     maxPriceLevel = int(maxPriceLevel)
-    #print maxPriceLevel
+
     resList = []
     res = jsonData["results"]
     for i in res:
         if maxPriceLevel == 0:
-          #  print i["id"]
-            details = GooglPlacDet(i["place_id"],key)
-            details= details["result"]
 
-            '''
-            address = details["formatted_address"]
-            number = details["formatted_phone_number"]
-            rating = details["rating"]
-            '''
+            details = GooglPlacDet(i["place_id"],key)
+            details = details["result"]
+
+
 
 
             address = "N/A"
@@ -131,22 +119,19 @@ def crtLists(jsonData, maxPriceLevel,key):
             if "rating" in details:
                 rating = details["rating"]
 
-            if "price_level" in i:
 
+            if "price_level" in i:
                 resList.append([i["name"],address,str(i["price_level"]),str(number),str(rating)])
             else:
                 resList.append([i["name"],address,"N/A",str(number),str(rating)])
-       # print i
-        elif "price_level" in i:
-          #THIS MEANS THAT WE MUST COMPLETELY IGNORE THE GOOGLE API RESULTS
-          #THAT DON'T HAVE PRICE LEVELS :(
-          if i["price_level"] <= maxPriceLevel:
-              # took out  i["geometry"]["location"]....because the user probably won't care about the latitude/longitude
 
-            #  print i["id"] + "-----THis is the id"
+        elif "price_level" in i:
+
+          if i["price_level"] <= maxPriceLevel:
+
               details = GooglPlacDet(i["place_id"],key)
 
-            #  print details
+
               details= details["result"]
 
               address = "N/A"
@@ -161,46 +146,73 @@ def crtLists(jsonData, maxPriceLevel,key):
                   rating = details["rating"]
 
               resList.append([i["name"],address,str(i["price_level"]),str(number),str(rating)])
-   # print resList
     return resList
 
 
 
 
 ###This is the main function
-    ###User inputs the latitude?, longitude?, radius, type of place, keyword, and minPricelevel----type of place and keyword must be strings
-def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel):
+    ###User inputs the location, radius, type of place, keyword, and maxPricelevel----type of place and keyword must be strings
+def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel, resNum):
 
     #f = open("/Users/Flamingo/Documents/SoftDev/flask-intro/softdev/keys.txt","r")
     #f = open("C:\Users\Constantine\Desktop\Soft Dev\keys.txt","r")
-    ## basepath = os.path.dirname("parser.py")
-    # filepath = os.path.abspath(os.path.join(basepath, "..","..","keys.txt"))
     # f = open("/../../keys.txt","r")
-    key = "AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk"
-    #f.close()
-    # print key
+    #key = "AIzaSyAvax-neSqo1-HnK4ajfSQKcdWZUl8FJYc"
+    key = "AIzaSyDTC7goMjY9rG3oRUSu0s-qCPbdDE1XCOo"
 
 
     latLong = geoCode(location,key)
-    lat = latLong[0]
-    lng = latLong[1]
+    print latLong
+    print
+    print
+    print
+    
+    if latLong == []:
+        return []
+    else:
+        
+        lat = latLong[0]
+        lng = latLong[1]
 
-    x = GooglPlacSear(lat, lng, radius, typeOfPlace,keyword, key)
-    #x is the dictionary parsed from the json data
+        x = GooglPlacSear(lat, lng, radius, keyword, key)
+        #x is the dictionary parsed from the json data
 
-    y = crtLists(x,maxPriceLevel,key)
-    #y is the list of places that fit the user's parameters
+        y = crtLists(x,maxPriceLevel,key)
+        #y is the list of places that fit the user's parameters
+        #list contains, in order, : [name, address, price level, phone number, rating]
 
-    return y
+
+       
+        print y
+
+        results = []
+
+        print resNum
+        print
+        print
+        print
+        print
+        print len(y)
+        if resNum < len(y):
+            i = 0
+            while i<resNum:
+                results.append(y[i])
+                i= i+1
+        else:
+            i = 0
+            while i<len(y):
+                results.append(y[i])
+                i = i +1
+        print results
+    
+
+        
+       ## return y
 
 
-#test case
-radius = 500
-typeOfPlace = "restaurant"
-keyword = "pizza"
-maxPriceLevel = 1
-##Lat and Lng are created at the top: they are the computer's ip address' location
-#print allInOneFunc(LAT,LNG,radius, typeOfPlace, keyword, maxPriceLevel)
+
+
 
 
 #==========================================YELP API============================================
@@ -263,8 +275,6 @@ def yelp_lookup(loc,coords,bounds,params):
         ret[name]['display_phone'] = business.display_phone
         ret[name]['location_address'] = ' '.join(business.location.display_address)
         ret[name]['url'] = business.url
-        #ret[name]['review_count'] = business.review_count
-        #ret[name]['categories'] = business.categories
         #ret[name]['location_coordinate_latitude'] = business.location.coordinate.latitude
         #ret[name]['location_coordinate_longitude'] = business.location.coordinate.longitude
         ret[name]['deals'] = business.deals
@@ -272,33 +282,30 @@ def yelp_lookup(loc,coords,bounds,params):
         ret[name]['reservation_url'] = business.reservation_url
         ret[name]['eat24_url'] = business.eat24_url
     return [ret]
-'''
+
 #Test Queries
 params = get_search_params('food',5,0,'food',1000,False)
 ret = yelp_lookup('1946 76 Street Brooklyn New York 11214',["",""],["","","",""],params)
 ret = yelp_lookup('',[37.77493,-122.419415],["","","",""],params)
 #neat formatted json print
-print(json.dumps(ret, indent=4, sort_keys=True))
+#print(json.dumps(ret, indent=4, sort_keys=True))
 
-'''
+
 
 #====Eventbrite================================================================
 
-'''
-Todo:
--using google api to convert address -> lat,lng
--testing
-'''
 # returns list of (sub)dictionaries of each event's logo, name, description, url, start & end date & time
 def getEvents(d):
     inputs = ""
     for key in d.keys():
         if d[key]: # if not empty
             if key == "location":
-                latLong = geoCode(d["location"],"AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk")
-                print latLong
-                inputs += "&%s=%s"%("location.latitude", str(latLong[0]))
-                inputs += "&%s=%s"%("location.longitude", str(latLong[1]))
+                latLongL = geoCode(d["location"],"AIzaSyDDsPeb49Cwld-euMdYU_F4WTTzBjpuSrk")
+                #print latLong
+                inputs += "&%s=%s"%("location.latitude", str(latLongL[0]))
+                inputs += "&%s=%s"%("location.longitude", str(latLongL[1]))
+            elif key == "limit":
+                break
             else:
                 inputs += "&%s=%s"%(key, d[key])
     url = ("https://www.eventbriteapi.com/v3/events/search/?token=BV442UWQUREICGJW7V2A" + inputs)
@@ -306,7 +313,7 @@ def getEvents(d):
     jsonUntouched = urlInfo.read()
     eventsDict = json.loads(jsonUntouched)["events"]
     ret = [] # returned list
-    ret.append(url)
+    #ret.append(url)
     for event in eventsDict:
         holder = {} # sublist for each entry
         if (event["logo"]):
@@ -319,9 +326,13 @@ def getEvents(d):
         #print event["end"]["local"]
         holder["end"] = formatTime(event["end"]["local"])  # end date & time in UTC
         ret.append(holder)
-    return ret
+    if d["limit"]:
+        limit = int(d["limit"])+1
+        return ret[0:limit]
+    else:
+        return ret
 
-"""
+
 # Converts 2016-12-12T08:00:00 -> month-day-year hour:minute
 def formatTime(utc):
     month = utc[5:7]
@@ -330,7 +341,7 @@ def formatTime(utc):
     timeIndex = utc.index('T')
     time = utc[timeIndex+1:-3]
     return "%s/%s/%s %s"%(month, day, year, time)
-
+"""
 def toUTC_start(year, month, day, hour, minute):
     return "&start_date.range_start=" + "%s-%s-%sT%s:%s:00"%(year, month, day, hour, minute)
 
@@ -342,8 +353,8 @@ def toUTC_end(year, month, day, hour, minute):
 # start: 12/16 9AM
 # end: 12/16 8 PM
 
-#d1 = {"location.address":"345 chambers st"}
-#getEvents(d1)
+#d1 = {"location":"345 chambers st", "limit": "1"}
+#print getEvents(d1)
 #print convertToUTC("2016", "12", "16", "09", "00")
 #print convertToUTC("2016", "12", "16", "20", "00")
 
