@@ -93,5 +93,3 @@ athanitisC -- 2016-12-14 16:32: Fixed output limit error. Fixed key error. Chang
 nancyC -- 2016-12-14 19:00: Fixed bugs in search for Eventbrite. Added price and limit inputs. Tried to limit description on Eventbrite.
 
 xinhuixu -- 2016-12-14 22:07: Revamped form styling, add logout + about buttons, home page cleanup
-
-anthonyC -- 2016-12-14 22:13: WE ARE DONE and its AMAZING! Finished events list, allowed to remove items

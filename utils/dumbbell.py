@@ -40,7 +40,14 @@ def addEvent(url,name,start,end,description,user):
         c.execute("INSERT INTO events VALUES(?,?,?,?,?,?)", (url,name,start,end,description,userID,))
     db.commit()
     db.close()
-    
+
+#Removes the event from database
+def removeEvent(name, userID):
+    db = sql.connect(DATA)
+    c = db.cursor()
+    c.execute("DELETE from events WHERE name=? and userID=?", (name,userID,))
+    db.commit()
+    db.close()
 
 #Gets current user's events
 def getEvent(user):
