@@ -27,21 +27,10 @@ def addEvent(url,name,start,end,description,user):
     db = sql.connect(DATA)
     c = db.cursor()
     userID = getUserID(user)
-    data = c.execute("SELECT name FROM events WHERE userID = ?", (userID,))
-    exists = data.fetchall()
-    if exists:
-        entry = exists[0]
-        for e in entry:
-            if e == name:
-                return 0
-            else:
-                c.execute("INSERT INTO events VALUES(?,?,?,?,?,?)", (url,name,start,end,description,userID,))
-    else:
-        c.execute("INSERT INTO events VALUES(?,?,?,?,?,?)", (url,name,start,end,description,userID,))
+    c.execute("INSERT INTO events VALUES(?,?,?,?,?,?)", (url,name,start,end,description,userID,))
     db.commit()
     db.close()
     
-
 #Gets current user's events
 def getEvent(user):
     db = sql.connect(DATA)
