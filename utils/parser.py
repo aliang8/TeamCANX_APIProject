@@ -38,24 +38,24 @@ def geoCode(location,key):
     print
     print
     '''
-    
+
     #the below url is taken directly from google maps api. definitely works
   #  url ="https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyA_3f_WfYGDXotfqwZMBNhnlP1BEGOLY_Q"
 
    # print url
-    
+
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
     jsonData = json.loads(jsonUntouched)
    # print jsonData
-    
+
     latLong = []
 
     if jsonData["results"] != []:
         res = jsonData["results"][0]["geometry"]["location"]
         latLong.append(res["lat"])
         latLong.append(res["lng"])
- 
+
     return latLong
 
 
@@ -84,7 +84,7 @@ def GooglPlacSear(lat, lng, radius, keyword, key):
     print
     print
     '''
-    
+
     #Getting Json data
     urlInfo = urllib.urlopen(url)
     jsonUntouched = urlInfo.read()
@@ -183,11 +183,11 @@ def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel, resNum):
     print
     print
     '''
-    
+
     if latLong == []:
         return []
     else:
-        
+
         lat = latLong[0]
         lng = latLong[1]
         radius = int(radius)
@@ -227,7 +227,7 @@ def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel, resNum):
         print
         print
         '''
-        
+
         if resNum < len(y):
             i = 0
            # print i
@@ -242,9 +242,9 @@ def allInOneFunc(location, radius, typeOfPlace,keyword, maxPriceLevel, resNum):
             while i<len(y):
                 results.append(y[i])
                 i = i +1
-      
+
       #  print results
-        
+
         return results
        # return y
 
@@ -322,9 +322,9 @@ def yelp_lookup(loc,coords,bounds,params):
     return [ret]
 
 #Test Queries
-params = get_search_params('food',5,0,'food',1000,False)
-ret = yelp_lookup('1946 76 Street Brooklyn New York 11214',["",""],["","","",""],params)
-ret = yelp_lookup('',[37.77493,-122.419415],["","","",""],params)
+#params = get_search_params('food',5,0,'food',1000,False)
+#ret = yelp_lookup('1946 76 Street Brooklyn New York 11214',["",""],["","","",""],params)
+#ret = yelp_lookup('',[37.77493,-122.419415],["","","",""],params)
 #neat formatted json print
 #print(json.dumps(ret, indent=4, sort_keys=True))
 
@@ -343,7 +343,7 @@ def getEvents(d):
                 inputs += "&%s=%s"%("location.latitude", str(latLongL[0]))
                 inputs += "&%s=%s"%("location.longitude", str(latLongL[1]))
             elif key == "limit":
-                break
+                inputs += ""
             else:
                 inputs += "&%s=%s"%(key, d[key])
     url = ("https://www.eventbriteapi.com/v3/events/search/?token=BV442UWQUREICGJW7V2A" + inputs)
@@ -365,7 +365,7 @@ def getEvents(d):
         holder["end"] = formatTime(event["end"]["local"])  # end date & time in UTC
         ret.append(holder)
     if d["limit"]:
-        limit = int(d["limit"])+1
+        limit = int(d["limit"])
         return ret[0:limit]
     else:
         return ret
@@ -391,8 +391,8 @@ def toUTC_end(year, month, day, hour, minute):
 # start: 12/16 9AM
 # end: 12/16 8 PM
 
-#d1 = {"location":"345 chambers st", "limit": "1"}
-#print getEvents(d1)
+d1 = {"location":"345 chambers st", "limit": "1", "location.within":"30km", "price":"free"}
+print getEvents(d1)
 #print convertToUTC("2016", "12", "16", "09", "00")
 #print convertToUTC("2016", "12", "16", "20", "00")
 

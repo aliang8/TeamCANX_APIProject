@@ -15,7 +15,7 @@
     <h1>What's up?</h1>
     <h3>{{message}}</h3>
     <p><b>Location field is required!</b></p>
-    
+
     <form action="/results/" method="POST" id="nl-form" class="nl-form">
       I'm thinking about
 	{% if prefs[1] == '' %}
@@ -36,36 +36,42 @@
           <option value="next_month">next month</option>
         </select>
 	{% endif %}
-	
+
 	. My budget is around
 	{% if prefs[2] == '' %}
         <input type="text" name="price" placeholder="any price level" data-subline="Example: Any number from <em>1</em> to <em>5</em>">
 	{% else %}
 	<input type="text" value="{{prefs[2]}}" name="price" placeholder="{{prefs[2]}}" data-subline="Example: Any number from <em>1</em> to <em>5</em>">
 	{% endif %}
-	. I'm looking for places 
+	. I'm looking for places
 	{% if prefs[0] == '' %}
         <input type="text" name="radius" placeholder="any radius" data-subline="Example: <em>2</em> or <em>45</em> kilometers">
 	{% else %}
 	<input value="{{prefs[0]}}" type="text" name="radius" placeholder="{{prefs[0]}}" data-subline="Example: <em>2</em> or <em>45</em> kilometers"> kilometers radius
 	{% endif %}
-	
-        from 
+
+        kilometers from
 	{% if prefs[3] == '' %}
         <input type="text" name="location" placeholder="this location" data-subline="Example: <em>345 Chambers Street</em>" required>
 	{% else %}
 	<input value="{{prefs[3]}}" type="text" name="location" placeholder="{{prefs[3]}}" data-subline="Example: <em>345 Chambers Street</em>" required>
         {% endif %}
 	.
-	I want to see 
-        <select name="limit" id="limit">
-          <option value="1">1</option>
-          <option value="3">3</option>
-          <option value="5">5</option>
-	  <option value="7">7</option>
-        </select> results. (If searching for an event, I want it sorted
-	
-        <input type="text" name="sort_by" placeholder="this way" data-subline="Example: <em>best</em>,<em>distance</em>, or <em>date</em>">.)
+	I want to see
+  <select name="limit" id="limit">
+    <option value="1">1</option>
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="20">20</option>
+  </select>
+    result(s). I want my events sorted by
+        <select name="sort_by" id="sort_by">
+          <option value="">nothing</option>
+          <option value="best">best</option>
+          <option value="distance">distance</option>
+          <option value="date">date</option>
+        </select>.
+
       <div class="nl-submit-wrap">
         <button class="nl-submit" id="save" name="save" type="submit">Save!</button>
       </div>
@@ -78,8 +84,8 @@
       <div class="nl-overlay"></div>
     </form>
   </div>
-  
-  
+
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="../static/js/bootstrap.min.js"></script>
   <script src="../static/js/nlform.js"></script>
