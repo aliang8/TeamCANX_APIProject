@@ -25,7 +25,19 @@
                             <p class="desc">United States Holiday</p>
                         </div>
                     </li>
-		    
+                    <hr>
+                    <h2>MY EVENTS</h2> {% for event in events %}
+                    <li>
+                        <time>
+                            <span class="month">{{event[2]}} - {{event[3]}}</span>
+                        </time>
+                        <div class="info">
+                            <h2 class="title">{{event[1]}}</h2>
+                            <p class="desc">{{event[4]}}</p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                    <!--
                     <li>
                         <time datetime="2014-07-20 0000">
                             <span class="day">8</span>
@@ -79,6 +91,7 @@
                             </ul>
                         </div>
                     </li>
+    -->
                 </ul>
             </div>
         </div>
