@@ -30,8 +30,12 @@ def addEvent(url,name,start,end,description,user):
     data = c.execute("SELECT name FROM events WHERE userID = ?", (userID,))
     exists = data.fetchall()
     if exists:
-        if not (name,) in exists:
-            c.execute("INSERT INTO events VALUES(?,?,?,?,?,?)", (url,name,start,end,description,userID,))
+        entry = exists[0]
+        for e in entry:
+            if e == name:
+                return 0
+            else:
+                c.execute("INSERT INTO events VALUES(?,?,?,?,?,?)", (url,name,start,end,description,userID,))
     else:
         c.execute("INSERT INTO events VALUES(?,?,?,?,?,?)", (url,name,start,end,description,userID,))
     db.commit()
