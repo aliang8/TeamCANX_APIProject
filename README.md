@@ -7,9 +7,7 @@
 <h3>What our site does?<h3>
 ---
 
-MyDay Event Planner allows our user to find the best ways to spend the day with friends and family.
-
-//guys add to this part
+MyDay Event Planner allows our user to find the best ways to spend the day with friends, family, and themselves by discovering awesome, personalized places and events to go to.
 
 <h3>How to use our site?</h3>
 ---
