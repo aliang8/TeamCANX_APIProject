@@ -49,8 +49,8 @@
 	  {% else %}
 	  <input value="{{prefs[0]}}" type="text" name="radius" placeholder="{{prefs[0]}}" data-subline="Example: <em>2</em> or <em>45</em> kilometers"> kilometers radius
 	  {% endif %}
-
-          kilometers from
+	  *
+          from
 	  {% if prefs[3] == '' %}
           <input type="text" name="location" placeholder="this location" data-subline="Example: <em>345 Chambers Street</em>" required>
 	  {% else %}
@@ -68,17 +68,17 @@
 	  
           <input type="text" name="sort_by" placeholder="this way" data-subline="Example: <em>best</em>,<em>distance</em>, or <em>date</em>">.)
 
-	  <h4><small>*Location field is required!</small></h4>
-
+	  <h4><small>*REQUIRED FIELD</small></h4>
+	  
 	  <div class="submit-wrap">
 	    <div class="pull-left">
-	      <button type="button" class="nl-submit save" id="save" name="save" type="submit">Save!</button>
+	      <button class="nl-submit save" id="save" name="save" type="submit">Save!</button>
 	    </div>
 	    <div class="pull-right">
-              <button type="button" class="nl-submit places" id="search" name="places" type="submit">Search for places to go!</button>
+              <button class="nl-submit places" id="search" name="places" type="submit">Search for places to go!</button>
 	    </div>
 	    <div class="pull-right">
-              <button type="button" class="nl-submit events" id="search" name="events" type="submit">Search for event!</button>
+              <button class="nl-submit events" id="search" name="events" type="submit">Search for event!</button>
 	    </div>
 	  </div>
 	  <div class="nl-overlay"></div>
