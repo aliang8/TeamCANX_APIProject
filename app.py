@@ -141,16 +141,25 @@ def results():
 @app.route("/events-list", methods=['GET'])
 def events_list():
     if request.method == 'GET':
-        args = request.args.keys()[0]
-        words = args.split("|")
-        url = words[0]
-        name = words[1]
-        start = words[2]
-        end = words[3]
-        description = words[4]
-        functions.addEvent(url,name,start,end,description,session['username'])
-        events = functions.getEvent(session['username'])
-        return render_template("events-list.html", events = events);
+        if 'Add to Calendar' in request.args.values():
+            args = request.args.keys()[0]
+            words = args.split("|")
+            url = words[0]
+            name = words[1]
+            start = words[2]
+            end = words[3]
+            description = words[4]
+            functions.addEvent(url,name,start,end,description,session['username'])
+            events = functions.getEvent(session['username'])
+            return render_template("events-list.html", events = events);
+        elif 'Remove Event' in request.args.values():
+            args = request.args.keys()[0]
+            words = args.split("|")
+            name = words[0]
+            userID = words[1]
+            functions.removeEvent(name,userID)
+            events = functions.getEvent(session['username'])
+            return render_template("events-list.html", events = events);
 
 @app.route("/results/events", methods=['POST','GET'])
 def results_events():
