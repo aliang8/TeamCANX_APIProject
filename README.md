@@ -3,10 +3,10 @@
 
 <h3>Specific Installation Instructions:</h3>
 ---
+$python app.py
 
-<h3>What our site does?<h3>
+<h3>What our site does?</h3>
 ---
-
 MyDay Event Planner allows our user to find the best ways to spend the day with friends, family, and themselves by discovering awesome, personalized places and events to go to.
 
 <h3>How to use our site?</h3>
