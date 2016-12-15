@@ -1,0 +1,15 @@
+.logout {
+    position: absolute;
+    top:1.5em;
+    right:1.5em;
+}
+#logout{
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+}
+#logout-inverse{
+    background: transparent;
+    color: black;
+    border: 1px solid black;
+}
