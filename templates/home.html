@@ -11,6 +11,11 @@
 
   <body class="nl-blurred">
     <div id="full">
+      <div id="pop-wrap">
+      <button type="button" id="pop" class="btn btn-secondary" data-container="body" data-toggle="popover" data-trigger="hover" data-content="MyDay helps you discover awesome, personalized places and events to go to. MyDay is designed & developed by Anthony Liang, Nancy Cao, Constantine Athanitis and Xinhui Xu."data-placement="bottom">
+	about
+      </button>
+      </div>
       <p id="msg">{{message}}<p>
       <div id="box">
       <h1 id="brand">MyDay</h1>
@@ -85,7 +90,11 @@
   $('#login').modal('hide');
   $('#signup').modal('hide');
 </script>
-
+<script>
+  $(document).ready(function(){
+  $('[data-toggle="popover"]').popover();
+  });
+</script>
 </body>
 
 </html>
