@@ -13,7 +13,7 @@ MyDay Event Planner allows our user to find the best ways to spend the day with 
 
 <h3>How to use our site?</h3>
 ---
-Begin at our pretty login page. You can sign up/ register, and login.
+Begin at our pretty login page. You can sign up/ register, and login. There's also an about popover.
 
 Then you will be taken to a multi-purposed form. This is technically your settings/ search page. Here you can specify certain parameters to limit your search, but note that location is required for the Google Maps API to work.
 
