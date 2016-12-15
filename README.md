@@ -3,17 +3,15 @@
 
 <h3>Specific Installation Instructions:</h3>
 ---
+$python app.py
 
-<h3>What our site does?<h3>
+<h3>What our site does?</h3>
 ---
-
-MyDay Event Planner allows our user to find the best ways to spend the day with friends and family.
-
-//guys add to this part
+MyDay Event Planner allows our user to find the best ways to spend the day with friends, family, and themselves by discovering awesome, personalized places and events to go to.
 
 <h3>How to use our site?</h3>
 ---
-Begin at our beautifully designed login page. You can sign up/ register, and login.
+Begin at our pretty login page. You can sign up/ register, and login. There's also an about popover.
 
 Then you will be taken to a multi-purposed form. This is technically your settings/ search page. Here you can specify certain parameters to limit your search, but note that location is required for the Google Maps API to work.
 
