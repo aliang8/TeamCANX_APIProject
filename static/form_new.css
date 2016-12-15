@@ -1,14 +1,32 @@
-body {
-     background-color: white;
-     color: grey;
+#full {
+    background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(full.jpg);
+    height: 100vh;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-
-.main {
-      padding-top: 0px;
+.h1, h1 {
+    color: 
+}
+#wrapper {
+    background: white;
+    padding: 2.25em;
+    padding-top: 0em;
 }
 
 .nl-form {
-
-	 font-size: 2em;
+    font-size: 2.25em;
+}
+.nl-form .nl-submit {
+    background: white;
+    color: black;
 }
 
+.pull-right {
+    margin-right: 0.5em;
+}
+.nl-form input, .nl-form select, .nl-form button {
+    border: 1px solid black;
+}
