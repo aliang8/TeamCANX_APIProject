@@ -26,8 +26,9 @@
             <tbody>
                 {% for d in events %}
                 <tr>
-                  <td><a href="{{d['url']}}"><img src={{d[ "logo"]}} alt="N/A"></a>
-		    <h2> <a href="{{d['url']}}">{{d["name"]}}</a> </h2>
+                  <td>
+                    <img src="{{d['url']}}" alt="Image not found" onerror="this.src='http://static.wixstatic.com/media/7f0bd5_f40af472f8ae4dba818eb1f868edaf50.jpg_256';" />
+		                  <h2> <a href="{{d['url']}}">{{d["name"]}}</a> </h2>
                   </td>
 		  <td>
                     <p> <b>Start:</b> {{d["start"]}} </p>

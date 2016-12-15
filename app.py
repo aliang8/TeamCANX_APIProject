@@ -111,11 +111,16 @@ def results():
             d = {}
             d["q"] = request.form["search"]
             d["location"] = request.form['location']
-            d["location.within"] = request.form['radius']
+            d["location.within"] = request.form['radius'] + "km"
             d["sort_by"] = request.form['sort_by']
             d["start_date.keyword"] = request.form["startKey"]
             d["limit"] = request.form.get('limit')
-
+            price = request.form["price"]
+            if (price):
+                if price == "1":
+                    d["price"] = "free"
+                else:
+                    d["price"] = "paid"
             #d["price"] = request.form['price']
             #d["start_date.keyword"] = request.form['startKey']
             #print d
@@ -152,7 +157,7 @@ def events_list():
         print
         print words[1]
         print
-        print 
+        print
         print
         '''
         url = words[0]

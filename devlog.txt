@@ -92,3 +92,5 @@ athanitisC -- 2016-12-13 23:37: Fixed location input confusion, so that an error
 12/14/16
 
 athanitisC -- 2016-12-14 16:32: Fixed output limit error. Fixed key error. Changed input from meters to kilometers
+
+nancyC -- 2016-12-14 19:00: Fixed bugs in search for Eventbrite. Added price and limit inputs. Tried to limit description on Eventbrite.
